@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VirtualStore.Catalog.Core.Responses;
 using VirtualStore.Catalog.Core.Services.Interfaces;
 using VirtualStore.Catalog.Domain.Responses;
 
@@ -32,7 +33,7 @@ public class AuthorizeController : ControllerBase
     [Route("token")]
     [AllowAnonymous]
     [ProducesResponseType(typeof(TokenAuthorizationResponse), StatusCodes.Status200OK)]
-    //[ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
-    //[ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetToken() => Ok(await _authorizeService.GetAuthorizationToken());
 }
