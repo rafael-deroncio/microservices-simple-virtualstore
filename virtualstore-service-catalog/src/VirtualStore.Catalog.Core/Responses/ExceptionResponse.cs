@@ -10,4 +10,3 @@ public class ExceptionResponse
 
     public string[] Messages { get; set; }
 }
-}

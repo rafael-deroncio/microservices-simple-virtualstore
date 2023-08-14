@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
-using VirtualStore.Catalog.API.Settings;
+﻿using VirtualStore.Catalog.API.Settings;
+using VirtualStore.Catalog.Core.Middlewares;
 
 namespace VirtualStore.Catalog.API.Extensions;
 
