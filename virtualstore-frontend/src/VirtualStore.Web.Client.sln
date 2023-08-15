@@ -3,12 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualStore.Web.Client", "VirtualStore.Web.Client\VirtualStore.Web.Client.csproj", "{286DCD67-30D8-4A84-9E29-1210236A8E8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{286DCD67-30D8-4A84-9E29-1210236A8E8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{286DCD67-30D8-4A84-9E29-1210236A8E8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{286DCD67-30D8-4A84-9E29-1210236A8E8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{286DCD67-30D8-4A84-9E29-1210236A8E8D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {40187B4A-8757-4CE7-9388-EE1CA5DC9C56}
 	EndGlobalSection
 EndGlobal
