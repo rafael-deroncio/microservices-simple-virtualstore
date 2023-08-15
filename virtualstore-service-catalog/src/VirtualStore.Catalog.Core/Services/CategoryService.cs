@@ -11,6 +11,11 @@ public class CategoryService : ICategoryService
         throw new NotImplementedException();
     }
 
+    public Task<bool> DeleteCategory(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<IEnumerable<CategoryResponse>> GetCategories()
     {
         throw new NotImplementedException();

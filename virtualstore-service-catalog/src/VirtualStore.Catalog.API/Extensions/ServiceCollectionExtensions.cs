@@ -217,6 +217,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IAuthorizeService, AuthorizeService>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<ICategoryService, CategoryService>();
 
         return services;
     }
