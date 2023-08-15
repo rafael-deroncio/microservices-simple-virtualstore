@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VirtualStore.Catalog.Core.Configurations.Enums;
 using VirtualStore.Catalog.Core.Responses;
+using VirtualStore.Catalog.Core.Services.Interfaces;
 using VirtualStore.Catalog.Domain.Requests;
 using VirtualStore.Catalog.Domain.Responses;
 
@@ -16,6 +17,17 @@ namespace VirtualStore.Catalog.API.Controllers;
 [Authorize]
 public class ProductController : Controller
 {
+    private readonly IProductService _productService;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProductController"/> class.
+    /// </summary>
+    /// <param name="productService">The product service instance used for product management operations.</param>
+    public ProductController(IProductService productService)
+    {
+        _productService = productService;
+    }
+
     /// <summary>
     /// Retrieves a product by its ID.
     /// </summary>
@@ -26,7 +38,8 @@ public class ProductController : Controller
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> GetProduct(int id) => Ok();
+    public async Task<ActionResult> GetProduct(int id)
+        => Ok(await _productService.GetProduct(id));
 
     /// <summary>
     /// Retrieves a list of products.
@@ -37,7 +50,8 @@ public class ProductController : Controller
     [ProducesResponseType(typeof(IEnumerable<ProductResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> GetProducts() => Ok();
+    public async Task<ActionResult> GetProducts()
+        => Ok(await _productService.GetProducts());
 
     /// <summary>
     /// Creates a new product.
@@ -49,7 +63,8 @@ public class ProductController : Controller
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> PostProduct([FromBody] ProductRequest request) => Ok();
+    public async Task<ActionResult> PostProduct([FromBody] ProductRequest request)
+        => Ok(await _productService.CreateProduct(request));
 
     /// <summary>
     /// Updates an existing product.
@@ -62,7 +77,8 @@ public class ProductController : Controller
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> UpdateProduct(int id, [FromBody] ProductRequest request) => Ok();
+    public async Task<ActionResult> UpdateProduct(int id, [FromBody] ProductRequest request)
+        => Ok(await _productService.UpdateProduct(id, request));
 
     /// <summary>
     /// Deletes a product by its ID.
@@ -74,5 +90,6 @@ public class ProductController : Controller
     [ProducesResponseType(typeof(bool), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> DeleteProduct(int id) => Ok();
+    public async Task<ActionResult> DeleteProduct(int id)
+        => Ok(await _productService.DeleteProduct(id));
 }

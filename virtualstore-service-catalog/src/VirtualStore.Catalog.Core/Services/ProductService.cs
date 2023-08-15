@@ -11,6 +11,11 @@ public class ProductService : IProductService
         throw new NotImplementedException();
     }
 
+    public Task<bool> DeleteProduct(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<ProductResponse> GetProduct(int id)
     {
         throw new NotImplementedException();
