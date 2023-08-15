@@ -1,4 +1,5 @@
 using VirtualStore.Catalog.API.Extensions;
+using VirtualStore.Catalog.Core.Configurations.Mappers;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,8 @@ builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
 
 builder.Services.AddAuthenticationSwaggerJwtBearer();
+
+builder.Services.AddSingleton<IObjectConverter, ObjectConverter>();
 
 WebApplication app = builder.Build();
 

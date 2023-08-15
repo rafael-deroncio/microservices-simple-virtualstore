@@ -2,6 +2,6 @@
 
 namespace VirtualStore.Catalog.Core.Model;
 
-public class CategorytModel : CategoryDTO
+public class CategoryModel : CategoryDTO
 {
 }
