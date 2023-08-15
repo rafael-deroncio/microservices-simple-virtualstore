@@ -36,7 +36,6 @@ public interface IProductService
     /// <returns>A task representing the asynchronous operation. The result is a ProductResponse object representing the updated product.</returns>
     Task<ProductResponse> UpdateProduct(int id, ProductRequest product);
 
-
     /// <summary>
     /// Deletes a product based on its ID.
     /// </summary>

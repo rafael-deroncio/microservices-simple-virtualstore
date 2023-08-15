@@ -43,7 +43,7 @@ public class ExceptionHandlerMiddleware
             {
                 ResponseType = ExceptionResponseTypeEnum.Error,
                 Tittle = "Erro",
-                Messages = new[] { $"Ocorreu um erro durante o processamento da solicitação. {ex.Message}" }
+                Messages = new[] { $"An error occurred while processing the request. {ex.Message}" }
             };
 
             string jsonResponse = JsonSerializer.Serialize(errorResponse);
