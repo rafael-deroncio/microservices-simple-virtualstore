@@ -1,6 +1,6 @@
 ﻿namespace VirtualStore.Catalog.Core.Configurations.Enums; 
 
-public enum ExceptionResponseTypeEnum
+public enum ExceptionResponseType
 {
     Information,
     Warning,

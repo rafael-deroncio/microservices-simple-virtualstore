@@ -9,7 +9,7 @@ public class AutoMapperConfig
     {
         return new MapperConfiguration(
             cfg => { 
-                cfg.AddProfile(new RequestoToResponseProfile());
+                cfg.AddProfile(new RequestToResponseProfile());
                 cfg.AddProfile(new RequestToArgumentProfile());
                 cfg.AddProfile(new ModelToResponseProfile());
             });

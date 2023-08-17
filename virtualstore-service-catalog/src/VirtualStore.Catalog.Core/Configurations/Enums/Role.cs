@@ -1,6 +1,6 @@
 ﻿namespace VirtualStore.Catalog.Core.Configurations.Enums;
 
-public enum RoleEnum
+public enum Role
 {
     MicroserviceRequestClient,
     OutherRequestClient

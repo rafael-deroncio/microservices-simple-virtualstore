@@ -9,5 +9,6 @@ public class ProductResponse
     public decimal Price { get; set; }
     public int Stock { get; set; }
     public bool Active { get; set; }
-    public int IdCategory { get; set; }
+    public string CategoryName { get; set; }
+    public int CategoryId { get; set; }
 }

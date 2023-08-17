@@ -55,7 +55,7 @@ public class JwtTokenService : IJwtTokenService
         return new(new[]
         {
                 new Claim(type: ClaimTypes.Name, value: "microservice-request-client"),
-                new Claim(type: ClaimTypes.Role, value: nameof(RoleEnum.MicroserviceRequestClient))
+                new Claim(type: ClaimTypes.Role, value: nameof(Role.MicroserviceRequestClient))
         });
     }
 

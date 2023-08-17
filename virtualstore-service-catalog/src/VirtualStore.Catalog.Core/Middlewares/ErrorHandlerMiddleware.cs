@@ -41,7 +41,7 @@ public class ExceptionHandlerMiddleware
         {
             ExceptionResponse errorResponse = new()
             {
-                ResponseType = ExceptionResponseTypeEnum.Error,
+                ResponseType = ExceptionResponseType.Error,
                 Tittle = "Erro",
                 Messages = new[] { $"An error occurred while processing the request. {ex.Message}" }
             };

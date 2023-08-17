@@ -4,9 +4,9 @@ using AutoMapper;
 
 namespace VirtualStore.Catalog.Core.Configurations.Mappers.Profiles;
 
-public class RequestoToResponseProfile : Profile
+public class RequestToResponseProfile : Profile
 {
-    public RequestoToResponseProfile()
+    public RequestToResponseProfile()
     {
         CreateMap<ProductRequest, ProductResponse>().ReverseMap();
         CreateMap<CategoryRequest, CategoryResponse>().ReverseMap();

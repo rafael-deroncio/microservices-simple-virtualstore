@@ -34,7 +34,7 @@ public class ProductController : Controller
     /// <param name="id">The ID of the product.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpGet("{id:int}")]
-    [Authorize(Roles = nameof(RoleEnum.MicroserviceRequestClient))]
+    [Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -46,7 +46,7 @@ public class ProductController : Controller
     /// </summary>
     /// <returns>An action result representing the response.</returns>
     [HttpGet]
-    [Authorize(Roles = nameof(RoleEnum.MicroserviceRequestClient))]
+    [Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
     [ProducesResponseType(typeof(IEnumerable<ProductResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -59,7 +59,7 @@ public class ProductController : Controller
     /// <param name="request">The product information to create.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpPost]
-    [Authorize(Roles = nameof(RoleEnum.MicroserviceRequestClient))]
+    [Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -73,7 +73,7 @@ public class ProductController : Controller
     /// <param name="request">The updated product information.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpPut("{id:int}")]
-    [Authorize(Roles = nameof(RoleEnum.MicroserviceRequestClient))]
+    [Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -86,7 +86,7 @@ public class ProductController : Controller
     /// <param name="id">The ID of the product to delete.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpDelete("{id:int}")]
-    [Authorize(Roles = nameof(RoleEnum.MicroserviceRequestClient))]
+    [Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
     [ProducesResponseType(typeof(bool), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
