@@ -1,19 +1,24 @@
-var builder = WebApplication.CreateBuilder(args);
+using VirtualStore.Web.Client.Extensions;
+using VirtualStore.Web.Core.Configurations.Mappers;
 
-// Add services to the container.
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+builder.Services.AddHttpClientCustom(builder.Configuration);
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+builder.Services.AddServicesDependencyInjection();
+
+builder.Services.AddRepositoriesDependencyInjection();
+
+builder.Services.AddSingleton<IObjectConverter, ObjectConverter>();
+
+WebApplication app = builder.Build();
+
+app.UseEnvironmentIsDevelopment(app.Environment);
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
