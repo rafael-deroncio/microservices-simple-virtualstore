@@ -14,33 +14,92 @@ public class ProductService : IProductService
         _objectConverter = objectConverter;
     }
 
-    public Task<ProductResponse> CreateProduct(ProductRequest product)
+    public async Task<ProductResponse> CreateProduct(ProductRequest product)
     {
-        throw new NotImplementedException();
+        await Task.Delay(100);
+        return new ProductResponse
+        {
+            Id = 1,
+            Name = "Product 1",
+            Description = "Description for Product 1",
+            Brand = "Brand A",
+            Price = 99.99m,
+            Stock = 10,
+            Active = true,
+            CategoryName = "Category X",
+            CategoryId = 101
+        };
     }
 
-    public Task<bool> DeleteProduct(int id)
+    public async Task<bool> DeleteProduct(int id)
     {
-        throw new NotImplementedException();
+        await Task.Delay(100);
+        return true;
     }
 
-    public Task<ProductResponse> GetProduct(int id)
+    public async Task<ProductResponse> GetProduct(int id)
     {
-        throw new NotImplementedException();
+        await Task.Delay(100);
+        return new ProductResponse
+        {
+            Id = 1,
+            Name = "Product 1",
+            Description = "Description for Product 1",
+            Brand = "Brand A",
+            Price = 99.99m,
+            Stock = 10,
+            Active = true,
+            CategoryName = "Category X",
+            CategoryId = 101
+        };
     }
 
-    public Task<IEnumerable<ProductResponse>> GetProducts()
+    public async Task<IEnumerable<ProductResponse>> GetProducts()
     {
-        throw new NotImplementedException();
+        await Task.Delay(100);
+        return new List<ProductResponse>
+        {
+            new ProductResponse
+            {
+                Id = 1,
+                Name = "Product 1",
+                Description = "Description for Product 1",
+                Brand = "Brand A",
+                Price = 99.99m,
+                Stock = 10,
+                Active = true,
+                CategoryName = "Category X",
+                CategoryId = 101
+            },
+            new ProductResponse
+            {
+                Id = 2,
+                Name = "Product 2",
+                Description = "Description for Product 2",
+                Brand = "Brand B",
+                Price = 199.99m,
+                Stock = 5,
+                Active = true,
+                CategoryName = "Category Y",
+                CategoryId = 102
+            }
+        };
     }
 
-    public Task<ProductResponse> UpdateProduct(int id, ProductRequest product)
+    public async Task<ProductResponse> UpdateProduct(int id, ProductRequest product)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> UpdateProduct(int id)
-    {
-        throw new NotImplementedException();
+        await Task.Delay(100);
+        return new ProductResponse
+        {
+            Id = 1,
+            Name = "Product 1",
+            Description = "Description for Product 1",
+            Brand = "Brand A",
+            Price = 99.99m,
+            Stock = 10,
+            Active = true,
+            CategoryName = "Category X",
+            CategoryId = 101
+        };
     }
 }

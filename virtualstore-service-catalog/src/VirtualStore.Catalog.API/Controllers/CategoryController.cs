@@ -14,7 +14,7 @@ namespace VirtualStore.Catalog.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class CategoryController : Controller
 {
     private readonly ICategoryService _categoryService;
@@ -34,7 +34,7 @@ public class CategoryController : Controller
     /// <param name="id">The ID of the category.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpGet("{id:int}")]
-    [Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    //[Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
     [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -46,7 +46,7 @@ public class CategoryController : Controller
     /// </summary>
     /// <returns>An action result representing the response.</returns>
     [HttpGet]
-    [Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    //[Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
     [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]

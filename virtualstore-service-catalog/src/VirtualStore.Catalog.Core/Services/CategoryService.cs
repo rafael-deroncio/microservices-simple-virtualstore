@@ -14,33 +14,67 @@ public class CategoryService : ICategoryService
         _objectConverter = objectConverter;
     }
 
-    public Task<CategoryResponse> CreateCategory(CategoryRequest category)
+    public async Task<CategoryResponse> CreateCategory(CategoryRequest category)
     {
-        throw new NotImplementedException();
+        await Task.Delay(100);
+        return new CategoryResponse
+        {
+            Id = 1,
+            Name = "Category A",
+            Description = "Description for Category A",
+            Active = true
+        };
     }
 
-    public Task<bool> DeleteCategory(int id)
+    public async Task<bool> DeleteCategory(int id)
     {
-        throw new NotImplementedException();
+        await Task.Delay(100);
+        return true;
     }
 
-    public Task<IEnumerable<CategoryResponse>> GetCategories()
+    public async Task<IEnumerable<CategoryResponse>> GetCategories()
     {
-        throw new NotImplementedException();
+        await Task.Delay(100);
+        return new List<CategoryResponse>
+        {
+            new CategoryResponse
+            {
+                Id = 1,
+                Name = "Category A",
+                Description = "Description for Category A",
+                Active = true
+            },
+            new CategoryResponse
+            {
+                Id = 2,
+                Name = "Category B",
+                Description = "Description for Category B",
+                Active = true
+            }
+        };
     }
 
-    public Task<CategoryResponse> GetCategory(int id)
+    public async Task<CategoryResponse> GetCategory(int id)
     {
-        throw new NotImplementedException();
+        await Task.Delay(100);
+        return new CategoryResponse
+        {
+            Id = 1,
+            Name = "Category A",
+            Description = "Description for Category A",
+            Active = true
+        };
     }
 
-    public Task<CategoryResponse> UpdateCategory(int id, CategoryRequest category)
+    public async Task<CategoryResponse> UpdateCategory(int id, CategoryRequest category)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> UpdateCategory(int id)
-    {
-        throw new NotImplementedException();
+        await Task.Delay(100);
+        return new CategoryResponse
+        {
+            Id = 1,
+            Name = "Category A",
+            Description = "Description for Category A",
+            Active = true
+        };
     }
 }

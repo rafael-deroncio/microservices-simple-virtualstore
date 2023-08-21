@@ -25,5 +25,5 @@ public class ProductRequest
     public int Stock { get; set; }
 
     [Required(ErrorMessage = "The Category ID is required.")]
-    public int IdCategory { get; set; }
+    public int CategoryId { get; set; }
 }
