@@ -8,7 +8,7 @@ public class ClientBaseRepository
     private readonly IHttpClientFactory _httpClientFactory;
 
     protected static JsonSerializerOptions JsonOptions =>
-        new() { PropertyNameCaseInsensitive = false };
+        new() { PropertyNameCaseInsensitive = true };
 
     protected ClientBaseRepository(IHttpClientFactory httpClient)
     {

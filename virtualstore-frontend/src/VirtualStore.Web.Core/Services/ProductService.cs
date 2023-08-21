@@ -1,6 +1,9 @@
-﻿using VirtualStore.Web.Core.Configurations.Mappers;
-using VirtualStore.Web.Core.Models;
+﻿using Microsoft.Extensions.Logging;
+using System;
+using VirtualStore.Web.Core.Configurations.Mappers;
+using VirtualStore.Web.Core.ViewModels;
 using VirtualStore.Web.Core.Repositories.Interfaces;
+using VirtualStore.Web.Core.Requests;
 using VirtualStore.Web.Core.Responses;
 using VirtualStore.Web.Core.Services.Interfaces;
 
@@ -10,36 +13,57 @@ public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
     private readonly IObjectConverter _objectConverter;
+    private readonly ILogger<IProductService> _logger;
 
-    public ProductService(IProductRepository productRepository, IObjectConverter objectConverter)
+    public ProductService(IProductRepository productRepository, IObjectConverter objectConverter, ILogger<IProductService> logger)
     {
         _productRepository = productRepository;
         _objectConverter = objectConverter;
+        _logger = logger;
     }
 
-    public Task<ProductViewModel> CreateProductAsync(ProductViewModel product)
+    public async Task<ProductViewModel> CreateProductAsync(ProductViewModel product)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _logger.LogInformation("Request {0} received to products/post/new", Guid.NewGuid().ToString());
+            ProductRequest request = _objectConverter.Map<ProductRequest>(product);
+            ProductResponse response = await _productRepository.CreateProductAsync(request);
+            return _objectConverter.Map<ProductViewModel>(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while {Action}.", nameof(CreateProductAsync));
+            return null;
+        }
     }
 
-    public Task<bool> DeleteProductAsync(int id)
+    public async Task<bool> DeleteProductAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _logger.LogInformation("Request {0} received to products/delete", Guid.NewGuid().ToString());
+            return await _productRepository.DeleteProductAsync(id);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while {Action}.", nameof(DeleteProductAsync));
+            return false;
+        }
     }
 
     public async Task<ProductViewModel> GetProductAsync(int id)
     {
         try
         {
+            _logger.LogInformation("Request {0} received to products/get/id:int", Guid.NewGuid().ToString());
             ProductResponse product = await _productRepository.GetProductAsync(id);
-            if (product is null)
-                return null;
-
             return _objectConverter.Map<ProductViewModel>(product);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
+            _logger.LogError(ex, "Error occurred while {Action}.", nameof(GetProductAsync));
+            return null;
         }
     }
 
@@ -47,20 +71,30 @@ public class ProductService : IProductService
     {
         try
         {
+            _logger.LogInformation("Request {0} received to products/get/all", Guid.NewGuid().ToString());
             IEnumerable<ProductResponse> products = await _productRepository.GetProductsAsync();
-            if (products is null)
-                return null;
-
             return _objectConverter.Map<IEnumerable<ProductViewModel>>(products);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
+            _logger.LogError(ex, "Error occurred while {Action}.", nameof(GetProductsAsync));
+            return null;
         }
     }
 
-    public Task<ProductViewModel> UpdateProductAsync(int id, ProductViewModel product)
+    public async Task<ProductViewModel> UpdateProductAsync(int id, ProductViewModel product)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _logger.LogInformation("Request {0} received to products/put/id:int", Guid.NewGuid().ToString());
+            ProductRequest request = _objectConverter.Map<ProductRequest>(product);
+            ProductResponse response = await _productRepository.UpdateProductAsync(id, request);
+            return _objectConverter.Map<ProductViewModel>(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while {Action}.", nameof(UpdateProductAsync));
+            return null;
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using VirtualStore.Web.Core.Configurations;
 using VirtualStore.Web.Core.Repositories;
@@ -17,12 +19,12 @@ public static class ServiceCollectionExtension
         services.AddHttpClient();
 
         // user
-        services.AddHttpClient("SiginApi", client =>
+        services.AddHttpClient("IdentityApi", client =>
         {
             UriBuilder builder = new()
             {
-                Scheme = configuration["ApiClient:SiginApi:Scheme"],
-                Host = configuration["ApiClient:SiginApi:Host"],
+                Scheme = configuration["ApiClient:IdentityApi:Scheme"],
+                Host = configuration["ApiClient:IdentityApi:Host"],
             };
 
             client.BaseAddress = builder.Uri;
@@ -55,8 +57,10 @@ public static class ServiceCollectionExtension
             UriBuilder builder = new()
             {
                 Scheme = configuration["ApiClient:CategoryApi:Scheme"],
+                Port = Int32.Parse(configuration["ApiClient:CategoryApi:Port"]),
                 Host = configuration["ApiClient:CategoryApi:Host"],
             };
+
 
             client.BaseAddress = builder.Uri;
         });
@@ -92,14 +96,29 @@ public static class ServiceCollectionExtension
 
     public static IServiceCollection AddServicesDependencyInjection(this IServiceCollection services)
     {
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IIdentityManagementService, IdentityManagementService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ICategoryService, CategoryService>();
         return services;
     }
     public static IServiceCollection AddRepositoriesDependencyInjection(this IServiceCollection services)
     {
+        services.AddSingleton<IUserClientRepository, UserClientRepository>();
         services.AddSingleton<IProductRepository, ProductClientRepository>();
         services.AddSingleton<ICategoryRepository, CategoryClientRepository>();
+        return services;
+    }
+
+    public static IServiceCollection AddCookieSchemeAuthentication(this IServiceCollection services)
+    {
+        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(options =>
+                    {
+                        options.LoginPath = "/Account/Login";
+                        options.Cookie.Name = "virtualstore-auth-cookie";
+                    });
+
         return services;
     }
 }

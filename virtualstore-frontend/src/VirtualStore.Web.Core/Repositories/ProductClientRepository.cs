@@ -59,8 +59,9 @@ public class ProductClientRepository : ClientBaseRepository, IProductRepository
     public async Task<IEnumerable<ProductResponse>> GetProductsAsync()
     {
         using HttpResponseMessage response = await GetClient(_service).GetAsync(_options.Endpoint);
+
         if (response.IsSuccessStatusCode)
-            return JsonSerializer.Deserialize<IEnumerable<ProductResponse>>(
+            return await JsonSerializer.DeserializeAsync<IEnumerable<ProductResponse>>(
                 await response.Content.ReadAsStreamAsync(), JsonOptions);
 
         return null;
@@ -73,7 +74,7 @@ public class ProductClientRepository : ClientBaseRepository, IProductRepository
             encoding: Encoding.UTF8,
             mediaType: "application/json");
 
-        using HttpResponseMessage response = await GetClient(_service).PostAsync(_options.Endpoint + id, request);
+        using HttpResponseMessage response = await GetClient(_service).PutAsync(_options.Endpoint + id, request);
         if (response.IsSuccessStatusCode)
             return JsonSerializer.Deserialize<ProductResponse>(
                 await response.Content.ReadAsStreamAsync(), JsonOptions);

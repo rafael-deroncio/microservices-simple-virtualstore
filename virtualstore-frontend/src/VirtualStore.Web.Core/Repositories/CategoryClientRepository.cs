@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using System.Text;
 using System.Text.Json;
+using VirtualStore.Web.Core.Configurations;
 using VirtualStore.Web.Core.Configurations.Enum;
 using VirtualStore.Web.Core.Configurations.Options;
 using VirtualStore.Web.Core.Repositories.Interfaces;
@@ -14,10 +15,10 @@ public class CategoryClientRepository : ClientBaseRepository, ICategoryRepositor
     private readonly ClientService _service;
     private readonly ApiClientOptions _options;
 
-    public CategoryClientRepository(IHttpClientFactory httpClient, IOptions<ApiClientOptions> options) : base(httpClient)
+    public CategoryClientRepository(IHttpClientFactory httpClient, IOptions<ApiClientConfiguration> options) : base(httpClient)
     {
         _service = ClientService.Category;
-        _options = options.Value;
+        _options = options.Value.CategoryApi;
     }
 
     public async Task<CategoryResponse> CreateCategoryAsync(CategoryRequest category)
