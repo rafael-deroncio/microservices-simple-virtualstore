@@ -32,7 +32,7 @@ public class SignOutController : ControllerBase
     /// </summary>
     /// <param name="request">The sign-out request.</param>
     /// <returns>Returns a sign-out response if successful, or an exception response if failed.</returns>
-    [HttpGet]
+    [HttpPost]
     [AllowAnonymous]
     [ProducesResponseType(typeof(SignOutResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status401Unauthorized)]

@@ -32,7 +32,7 @@ public class LogInController : ControllerBase
     /// </summary>
     /// <param name="request">The log-in request.</param>
     /// <returns>Returns a log-in response if successful, or an exception response if failed.</returns>
-    [HttpGet]
+    [HttpPost]
     [AllowAnonymous]
     [ProducesResponseType(typeof(LogInResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status401Unauthorized)]
