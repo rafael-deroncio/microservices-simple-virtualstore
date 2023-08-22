@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  service-cart:
+    image: postgres:latest
+    container_name: service-cart
+    restart: always
+    environment:
+      POSTGRES_USER: virtualstore_db_creator
+      POSTGRES_PASSWORD: ^L#yix031tmv
+      POSTGRES_DB: service-cart
+    ports:
+      - "5432:5432"
+
+  service-catalog:
+    image: postgres:latest
+    volumes:
+      - ./service-catalog-create.sql:/docker-entrypoint-initdb.d/service-catalog-create.sql
+      - ./service-catalog-insert.sql:/docker-entrypoint-initdb.d/service-catalog-insert.sql
+    container_name: service-catalog
+    restart: always
+    environment:
+      POSTGRES_USER: virtualstore_db_creator
+      POSTGRES_PASSWORD: m#FmnF9S7lS7
+      POSTGRES_DB: service-catalog
+    ports:
+      - "5433:5432"
+
+  service-discount:
+    image: postgres:latest
+    container_name: service-discount
+    restart: always
+    environment:
+      POSTGRES_USER: virtualstore_db_creator
+      POSTGRES_PASSWORD: mNO40585#35F
+      POSTGRES_DB: service-discount
+    ports:
+      - "5434:5432"
+
+  service-identity:
+    image: postgres:latest
+    container_name: service-identity
+    restart: always
+    environment:
+      POSTGRES_USER: virtualstore_db_creator
+      POSTGRES_PASSWORD: vJd19864!XRZ
+      POSTGRES_DB: service-identity
+    ports:
+      - "5435:5432"
