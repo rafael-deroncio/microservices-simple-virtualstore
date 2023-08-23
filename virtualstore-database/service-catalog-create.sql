@@ -1,8 +1,9 @@
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS catalog;
+DROP TABLE IF EXISTS category;
 
-CREATE TABLE catalog (
-    id_catalog SERIAL PRIMARY KEY,
+CREATE TABLE category (
+    id_category SERIAL PRIMARY KEY,
     name TEXT,
     description TEXT,
     active INTEGER,
@@ -17,8 +18,8 @@ CREATE TABLE product (
     price REAL,
     stock INTEGER,
     active INTEGER,
-    catalog_id INTEGER,
+    id_category INTEGER,
     registration_date DATE,
     modification_date DATE,
-    FOREIGN KEY (catalog_id) REFERENCES catalog(id_catalog)
+    FOREIGN KEY (id_category) REFERENCES category(id_category)
 );

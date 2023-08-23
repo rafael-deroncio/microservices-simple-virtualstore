@@ -1,4 +1,4 @@
-INSERT INTO catalog (name, description, active, registration_date)
+INSERT INTO category (name, description, active, registration_date)
 VALUES
   ('Vestuário Infantil', 'Roupas e acessórios para crianças', 1, CURRENT_TIMESTAMP),
   ('Vestuário Feminino', 'Roupas e acessórios para mulheres', 1, CURRENT_TIMESTAMP),
@@ -90,7 +90,7 @@ VALUES
   ('Produtos para Cabelos Cacheados', 'Produtos para cabelos cacheados', 1, CURRENT_TIMESTAMP),
   ('Moda Plus Size', 'Roupas e acessórios plus size', 1, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Camiseta Manga Curta', 'Camiseta de algodão com estampa divertida', 'Nike', 19.99, 50, 1, 1, CURRENT_TIMESTAMP),
     ('Vestido Estampado', 'Vestido estampado com flores para meninas', 'Carters', 39.99, 30, 1, 1, CURRENT_TIMESTAMP),
@@ -103,7 +103,7 @@ VALUES
     ('Conjunto Body e Calça', 'Conjunto de body e calça para bebês', 'Ralph Lauren', 14.99, 60, 1, 1, CURRENT_TIMESTAMP),
     ('Camisa Polo Infantil', 'Camisa polo elegante para crianças', 'Tommy Hilfiger', 39.99, 20, 1, 1, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Vestido de Festa', 'Vestido de festa elegante para mulheres', 'Zara', 89.99, 30, 1, 2, CURRENT_TIMESTAMP),
     ('Blusa de Renda', 'Blusa de renda delicada para mulheres', 'Forever 21', 29.99, 50, 1, 2, CURRENT_TIMESTAMP),
@@ -116,7 +116,7 @@ VALUES
     ('Camiseta Básica', 'Camiseta básica de algodão para mulheres', 'Gap', 19.99, 60, 1, 2, CURRENT_TIMESTAMP),
     ('Jaqueta de Couro', 'Jaqueta de couro estilosa para mulheres', 'All Saints', 179.99, 15, 1, 2, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Cerveja Artesanal IPA', 'Cerveja artesanal Indian Pale Ale', 'Colorado', 9.99, 100, 1, 3, CURRENT_TIMESTAMP),
     ('Vinho Tinto Reserva', 'Vinho tinto reserva encorpado', 'Quinta do Crasto', 29.99, 50, 1, 3, CURRENT_TIMESTAMP),
@@ -129,7 +129,7 @@ VALUES
     ('Tequila Reposado', 'Tequila reposado envelhecida em barril de carvalho', 'Patrón', 54.99, 20, 1, 3, CURRENT_TIMESTAMP),
     ('Cachaça Artesanal', 'Cachaça artesanal brasileira', 'Leblon', 29.99, 30, 1, 3, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Gouda', 'Queijo gouda holandês', 'Klaver', 8.99, 100, 1, 4, CURRENT_TIMESTAMP),
     ('Queijo Brie', 'Queijo brie francês cremoso', 'President', 12.99, 50, 1, 4, CURRENT_TIMESTAMP),
@@ -142,7 +142,7 @@ VALUES
     ('Queijo Provolone', 'Queijo provolone defumado', 'Santa Clara', 8.99, 20, 1, 4, CURRENT_TIMESTAMP),
     ('Queijo Gruyère', 'Queijo gruyère suíço', 'Emmi', 10.99, 30, 1, 4, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Smartphone', 'Smartphone avançado com câmera de alta resolução', 'Samsung', 799.99, 50, 1, 5, CURRENT_TIMESTAMP),
     ('Notebook', 'Notebook leve e potente para uso profissional', 'Dell', 1299.99, 30, 1, 5, CURRENT_TIMESTAMP),
@@ -155,7 +155,7 @@ VALUES
     ('Roteador Wi-Fi', 'Roteador sem fio para conexão de internet estável', 'TP-Link', 59.99, 60, 1, 5, CURRENT_TIMESTAMP),
     ('Caixa de Som Bluetooth', 'Caixa de som portátil com conectividade Bluetooth', 'JBL', 79.99, 20, 1, 5, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Tênis Esportivo', 'Tênis esportivo confortável para práticas esportivas', 'Nike', 99.99, 100, 1, 6, CURRENT_TIMESTAMP),
     ('Sapato Social Masculino', 'Sapato social elegante para homens', 'Calvin Klein', 129.99, 50, 1, 6, CURRENT_TIMESTAMP),
@@ -168,7 +168,7 @@ VALUES
     ('Sandália Rasteira', 'Sandália rasteira confortável para o verão', 'Ipanema', 39.99, 20, 1, 6, CURRENT_TIMESTAMP),
     ('Sapato Oxford', 'Sapato oxford clássico e elegante', 'Dr. Martens', 119.99, 30, 1, 6, CURRENT_TIMESTAMP);
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Perfume Masculino', 'Perfume masculino marcante e sofisticado', 'Dior', 89.99, 100, 1, 7, CURRENT_TIMESTAMP),
     ('Perfume Feminino', 'Perfume feminino delicado e envolvente', 'Chanel', 99.99, 50, 1, 7, CURRENT_TIMESTAMP),
@@ -181,7 +181,7 @@ VALUES
     ('Perfume Floral', 'Perfume floral romântico', 'Guerlain', 89.99, 20, 1, 7, CURRENT_TIMESTAMP),
     ('Perfume Amadeirado', 'Perfume amadeirado sofisticado', 'Hermès', 99.99, 30, 1, 7, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Romance Bestseller', 'Romance bestseller do New York Times', 'Autor A', 19.99, 100, 1, 8, CURRENT_TIMESTAMP),
     ('Livro de Ficção Científica', 'Livro de ficção científica premiado', 'Autor B', 24.99, 50, 1, 8, CURRENT_TIMESTAMP),
@@ -194,7 +194,7 @@ VALUES
     ('Livro de Arte', 'Livro de arte com belas ilustrações', 'Autor I', 29.99, 20, 1, 8, CURRENT_TIMESTAMP),
     ('Livro de Fantasia', 'Livro de fantasia épica', 'Autor J', 26.99, 30, 1, 8, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Bola de Futebol', 'Bola de futebol oficial para partidas', 'Nike', 19.99, 100, 1, 9, CURRENT_TIMESTAMP),
     ('Raquete de Tênis', 'Raquete de tênis profissional', 'Wilson', 99.99, 50, 1, 9, CURRENT_TIMESTAMP),
@@ -207,7 +207,7 @@ VALUES
     ('Prancha de Surf', 'Prancha de surf para ondas grandes', 'Channel Islands', 299.99, 20, 1, 9, CURRENT_TIMESTAMP),
     ('Bola de Golfe', 'Bola de golfe profissional', 'Titleist', 9.99, 30, 1, 9, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Sofá de Couro', 'Sofá de couro elegante e confortável', 'Vitaly', 999.99, 20, 1, 10, CURRENT_TIMESTAMP),
     ('Mesa de Jantar', 'Mesa de jantar de madeira maciça', 'Etna', 499.99, 15, 1, 10, CURRENT_TIMESTAMP),
@@ -220,7 +220,7 @@ VALUES
     ('Guarda-Roupa Casal', 'Guarda-roupa casal com espelho e gavetas', 'Rufato', 799.99, 8, 1, 10, CURRENT_TIMESTAMP),
     ('Cômoda Infantil', 'Cômoda infantil com design divertido', 'Casatema', 249.99, 15, 1, 10, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Vaso Decorativo', 'Vaso de cerâmica com detalhes pintados à mão', 'Casa das Porcelanas', 49.99, 30, 1, 11, CURRENT_TIMESTAMP),
     ('Quadro Abstrato', 'Quadro abstrato em tela com moldura elegante', 'Arte em Tela', 99.99, 20, 1, 11, CURRENT_TIMESTAMP),
@@ -233,7 +233,7 @@ VALUES
     ('Luminária de Mesa', 'Luminária de mesa com base de madeira', 'Iluminar', 59.99, 20, 1, 11, CURRENT_TIMESTAMP),
     ('Enfeite Decorativo', 'Enfeite decorativo em formato de pássaro', 'Decore & Encante', 19.99, 30, 1, 11, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Boneca de Pelúcia', 'Boneca de pelúcia macia e antialérgica', 'Buba', 39.99, 50, 1, 12, CURRENT_TIMESTAMP),
     ('Carrinho de Controle Remoto', 'Carrinho de controle remoto com alta velocidade', 'Candide', 89.99, 30, 1, 12, CURRENT_TIMESTAMP),
@@ -246,7 +246,7 @@ VALUES
     ('Boneco Articulado', 'Boneco articulado com movimentos realistas', 'Hasbro', 49.99, 30, 1, 12, CURRENT_TIMESTAMP),
     ('Patins Infantis', 'Patins ajustáveis para crianças', 'Traxart', 89.99, 15, 1, 12, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Bolsa de Couro', 'Bolsa de couro legítimo', 'Louis Vuitton', 299.99, 50, 1, 13, CURRENT_TIMESTAMP),
     ('Óculos de Sol', 'Óculos de sol estilo aviador', 'Ray-Ban', 149.99, 30, 1, 13, CURRENT_TIMESTAMP),
@@ -260,7 +260,7 @@ VALUES
     ('Lenços de Cabelo', 'Conjunto de lenços de cabelo', 'Hermès', 59.99, 35, 1, 13, CURRENT_TIMESTAMP);
 
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Guitarra Elétrica', 'Guitarra elétrica de seis cordas', 'Fender', 999.99, 10, 1, 14, CURRENT_TIMESTAMP),
     ('Bateria Acústica', 'Bateria acústica de 5 peças', 'Pearl', 1499.99, 5, 1, 14, CURRENT_TIMESTAMP),
@@ -274,7 +274,7 @@ VALUES
     ('Acordeão', 'Acordeão de piano de 120 baixos', 'Hohner', 1499.99, 4, 1, 14, CURRENT_TIMESTAMP);
 
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Furadeira Sem Fio', 'Furadeira sem fio com bateria de lítio', 'DeWalt', 199.99, 20, 1, 15, CURRENT_TIMESTAMP),
     ('Parafusadeira Elétrica', 'Parafusadeira elétrica com torque ajustável', 'Bosch', 149.99, 25, 1, 15, CURRENT_TIMESTAMP),
@@ -288,7 +288,7 @@ VALUES
     ('Brocas para Metal', 'Conjunto de brocas para metal de alta velocidade', 'Dormer', 24.99, 35, 1, 15, CURRENT_TIMESTAMP);
 
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Azeite de Oliva Extra Virgem', 'Azeite de oliva extra virgem de primeira prensagem', 'Saboroso', 19.99, 50, 1, 16, CURRENT_TIMESTAMP),
     ('Mel Puro', 'Mel puro e natural', 'Apiário Flor da Serra', 12.99, 40, 1, 16, CURRENT_TIMESTAMP),
@@ -302,7 +302,7 @@ VALUES
     ('Melancia Orgânica', 'Melancia orgânica doce e suculenta', 'Sítio do Sol', 6.99, 40, 1, 16, CURRENT_TIMESTAMP);
 
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Creme Facial Hidratante', 'Creme facial hidratante para pele seca', 'Nivea', 19.99, 30, 1, 17, CURRENT_TIMESTAMP),
     ('Shampoo Anticaspa', 'Shampoo anticaspa para couro cabeludo sensível', 'Head & Shoulders', 9.99, 50, 1, 17, CURRENT_TIMESTAMP),
@@ -316,7 +316,7 @@ VALUES
     ('Removedor de Maquiagem', 'Removedor de maquiagem bifásico', 'Neutrogena', 8.99, 20, 1, 17, CURRENT_TIMESTAMP);
 
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Whey Protein', 'Suplemento proteico para ganho de massa muscular', 'Optimum Nutrition', 49.99, 30, 1, 18, CURRENT_TIMESTAMP),
     ('BCAA', 'Suplemento de aminoácidos de cadeia ramificada', 'MuscleTech', 29.99, 40, 1, 18, CURRENT_TIMESTAMP),
@@ -329,7 +329,7 @@ VALUES
     ('Vitamina D', 'Suplemento de vitamina D para saúde óssea', 'Nature s Bounty', 12.99, 50, 1, 18, CURRENT_TIMESTAMP),
     ('ZMA', 'Suplemento de zinco, magnésio e vitamina B6', 'Optimum Nutrition', 19.99, 40, 1, 18, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Anel de Diamante', 'Anel de ouro branco com diamante', 'Tiffany & Co.', 1999.99, 10, 1, 19, CURRENT_TIMESTAMP),
     ('Relógio de Pulso Feminino', 'Relógio de pulso feminino com pulseira de couro', 'Michael Kors', 299.99, 8, 1, 19, CURRENT_TIMESTAMP),
@@ -343,7 +343,7 @@ VALUES
     ('Pulseira de Ouro', 'Pulseira de ouro amarelo 18k', 'H.Stern', 1499.99, 2, 1, 19, CURRENT_TIMESTAMP);
 
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Jaqueta de Couro Preto', 'Jaqueta de couro legítimo, cor preta', 'Schott NYC', 399.99, 10, 1, 20, CURRENT_TIMESTAMP),
     ('Jaqueta de Couro Marrom', 'Jaqueta de couro legítimo, cor marrom', 'Belstaff', 349.99, 8, 1, 20, CURRENT_TIMESTAMP),
@@ -356,7 +356,7 @@ VALUES
     ('Jaqueta de Couro Rosa', 'Jaqueta de couro legítimo, cor rosa', 'IRO', 349.99, 8, 1, 20, CURRENT_TIMESTAMP),
     ('Jaqueta de Couro Laranja', 'Jaqueta de couro legítimo, cor laranja', 'Schott NYC', 369.99, 10, 1, 20, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Cerveja IPA 1', 'Cerveja artesanal estilo IPA', 'Brooklyn Brewery', 9.99, 100, 1, 21, CURRENT_TIMESTAMP),
     ('Cerveja IPA 2', 'Cerveja artesanal estilo IPA', 'Stone Brewing', 8.99, 80, 1, 21, CURRENT_TIMESTAMP),
@@ -370,7 +370,7 @@ VALUES
     ('Cerveja IPA 10', 'Cerveja artesanal estilo IPA', 'Firestone Walker Brewing', 10.99, 105, 1, 21, CURRENT_TIMESTAMP);
 
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Vinho Reserva 1', 'Vinho tinto reserva, safra 2018', 'Quinta do Crasto', 29.99, 50, 1, 22, CURRENT_TIMESTAMP),
     ('Vinho Reserva 2', 'Vinho tinto reserva, safra 2016', 'Château Margaux', 149.99, 30, 1, 22, CURRENT_TIMESTAMP),
@@ -383,7 +383,7 @@ VALUES
     ('Vinho Reserva 9', 'Vinho tinto reserva, safra 2016', 'Château Mouton Rothschild', 179.99, 15, 1, 22, CURRENT_TIMESTAMP),
     ('Vinho Reserva 10', 'Vinho tinto reserva, safra 2019', 'Casa Ferreirinha', 49.99, 35, 1, 22, CURRENT_TIMESTAMP);
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Whisky Single Malt 1', 'Whisky single malt, origem Escócia', 'Macallan', 79.99, 50, 1, 23, CURRENT_TIMESTAMP),
     ('Whisky Single Malt 2', 'Whisky single malt, origem Escócia', 'Glenfiddich', 69.99, 40, 1, 23, CURRENT_TIMESTAMP),
@@ -396,7 +396,7 @@ VALUES
     ('Whisky Single Malt 9', 'Whisky single malt, origem Escócia', 'Bunnahabhain', 84.99, 40, 1, 23, CURRENT_TIMESTAMP),
     ('Whisky Single Malt 10', 'Whisky single malt, origem Escócia', 'Bruichladdich', 89.99, 60, 1, 23, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Rum Premium 1', 'Rum premium, origem Caribe', 'Havana Club', 39.99, 50, 1, 24, CURRENT_TIMESTAMP),
     ('Rum Premium 2', 'Rum premium, origem Caribe', 'Appleton Estate', 34.99, 40, 1, 24, CURRENT_TIMESTAMP),
@@ -409,7 +409,7 @@ VALUES
     ('Rum Premium 9', 'Rum premium, origem Caribe', 'Angostura', 39.99, 40, 1, 24, CURRENT_TIMESTAMP),
     ('Rum Premium 10', 'Rum premium, origem Caribe', 'Barceló', 49.99, 60, 1, 24, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Gin Artesanal 1', 'Gin artesanal, botânicos selecionados', 'Hendrick''s', 29.99, 50, 1, 25, CURRENT_TIMESTAMP),
     ('Gin Artesanal 2', 'Gin artesanal, botânicos selecionados', 'The Botanist', 34.99, 40, 1, 25, CURRENT_TIMESTAMP),
@@ -422,7 +422,7 @@ VALUES
     ('Gin Artesanal 9', 'Gin artesanal, botânicos selecionados', 'Malfy', 29.99, 40, 1, 25, CURRENT_TIMESTAMP),
     ('Gin Artesanal 10', 'Gin artesanal, botânicos selecionados', 'G''Vine', 34.99, 60, 1, 25, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Vodka Premium 1', 'Vodka premium, destilação múltipla', 'Belvedere', 29.99, 50, 1, 26, CURRENT_TIMESTAMP),
     ('Vodka Premium 2', 'Vodka premium, destilação múltipla', 'Grey Goose', 34.99, 40, 1, 26, CURRENT_TIMESTAMP),
@@ -435,7 +435,7 @@ VALUES
     ('Vodka Premium 9', 'Vodka premium, destilação múltipla', 'Chopin', 29.99, 40, 1, 26, CURRENT_TIMESTAMP),
     ('Vodka Premium 10', 'Vodka premium, destilação múltipla', 'Crystal Head', 34.99, 60, 1, 26, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Champagne Brut Moët & Chandon', 'Delicious and elegant Champagne', 'Moët & Chandon', 49.99, 20, 1, 27, CURRENT_TIMESTAMP),
     ('Champagne Brut Veuve Clicquot', 'Renowned Champagne with rich flavors', 'Veuve Clicquot', 59.99, 15, 1, 27, CURRENT_TIMESTAMP),
@@ -450,7 +450,7 @@ VALUES
 
 
 -- Licores Variados
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Licor Baileys Irish Cream', 'Creamy and indulgent liqueur', 'Baileys', 29.99, 20, 1, 27, CURRENT_TIMESTAMP),
     ('Licor Amaretto Disaronno', 'Smooth and almond-flavored liqueur', 'Disaronno', 24.99, 15, 1, 27, CURRENT_TIMESTAMP),
@@ -464,7 +464,7 @@ VALUES
     ('Licor Fruta do Conde', 'Delicious and tropical fruit liqueur', 'Fruta do Conde', 28.99, 15, 1, 27, CURRENT_TIMESTAMP);
 
 -- Tequila Reposado
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Tequila Reposado Herradura', 'Smooth and oak-aged tequila', 'Herradura', 49.99, 20, 1, 29, CURRENT_TIMESTAMP),
     ('Tequila Reposado Don Julio', 'High-quality and refined tequila', 'Don Julio', 59.99, 15, 1, 29, CURRENT_TIMESTAMP),
@@ -478,7 +478,7 @@ VALUES
     ('Tequila Reposado El Jimador', 'Authentic and versatile tequila', 'El Jimador', 24.99, 10, 1, 29, CURRENT_TIMESTAMP);
 
 -- Queijo Gouda
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Gouda Boar''s Head', 'Rich and creamy Dutch cheese', 'Boar''s Head', 9.99, 30, 1, 30, CURRENT_TIMESTAMP),
     ('Queijo Gouda Beemster', 'Aged and flavorful Gouda cheese', 'Beemster', 12.99, 25, 1, 30, CURRENT_TIMESTAMP),
@@ -492,7 +492,7 @@ VALUES
     ('Queijo Gouda Azeitão', 'Portuguese-style Gouda cheese', 'Azeitão', 9.99, 20, 1, 30, CURRENT_TIMESTAMP);
 
 -- Queijo Brie
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Brie President', 'Creamy and mild French cheese', 'President', 7.99, 30, 1, 31, CURRENT_TIMESTAMP),
     ('Queijo Brie Le Chatelain', 'Rich and buttery Brie cheese', 'Le Chatelain', 9.99, 25, 1, 31, CURRENT_TIMESTAMP),
@@ -506,7 +506,7 @@ VALUES
     ('Queijo Brie Triple Crème', 'Luxurious and triple-creme Brie cheese', 'Triple Crème', 12.99, 20, 1, 31, CURRENT_TIMESTAMP);
 
 -- Queijo Cheddar
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Cheddar Cabot', 'Sharp and creamy Vermont cheddar cheese', 'Cabot', 8.99, 30, 1, 32, CURRENT_TIMESTAMP),
     ('Queijo Cheddar Tillamook', 'Award-winning cheddar cheese from Oregon', 'Tillamook', 10.99, 25, 1, 32, CURRENT_TIMESTAMP),
@@ -520,7 +520,7 @@ VALUES
     ('Queijo Cheddar Collier''s', 'Full-bodied and mature Welsh cheddar cheese', 'Collier''s', 12.99, 20, 1, 32, CURRENT_TIMESTAMP);
 
 -- Queijo Roquefort
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Roquefort Société', 'Intense and crumbly blue cheese', 'Société', 11.99, 30, 1, 33, CURRENT_TIMESTAMP),
     ('Queijo Roquefort Papillon', 'Classic and artisanal Roquefort cheese', 'Papillon', 13.99, 25, 1, 33, CURRENT_TIMESTAMP),
@@ -534,7 +534,7 @@ VALUES
     ('Queijo Roquefort Aveyron', 'Traditional blue cheese from Aveyron', 'Aveyron', 16.99, 20, 1, 33, CURRENT_TIMESTAMP);
 
 -- Queijo Cheddar
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Cheddar Cabot', 'Sharp and creamy Vermont cheddar cheese', 'Cabot', 8.99, 30, 1, 34, CURRENT_TIMESTAMP),
     ('Queijo Cheddar Tillamook', 'Award-winning cheddar cheese from Oregon', 'Tillamook', 10.99, 25, 1, 34, CURRENT_TIMESTAMP),
@@ -548,7 +548,7 @@ VALUES
     ('Queijo Cheddar Collier''s', 'Full-bodied and mature Welsh cheddar cheese', 'Collier''s', 12.99, 20, 1, 34, CURRENT_TIMESTAMP);
 
 -- Queijo Parmesão
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Parmesão Reggiano', 'Traditional Italian Parmesan cheese', 'Reggiano', 10.99, 30, 1, 35, CURRENT_TIMESTAMP),
     ('Queijo Parmesão Grana Padano', 'Hard and grainy Italian cheese', 'Grana Padano', 11.99, 25, 1, 35, CURRENT_TIMESTAMP),
@@ -562,7 +562,7 @@ VALUES
     ('Queijo Parmesão Murray''s', 'Artisanal Parmesan cheese from Murray''s', 'Murray''s', 19.99, 20, 1, 35, CURRENT_TIMESTAMP);
 
 -- Queijo Gorgonzola
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Gorgonzola Dolce', 'Creamy and mild Italian blue cheese', 'Dolce', 9.99, 30, 1, 36, CURRENT_TIMESTAMP),
     ('Queijo Gorgonzola Piccante', 'Sharp and pungent Italian blue cheese', 'Piccante', 11.99, 25, 1, 36, CURRENT_TIMESTAMP),
@@ -576,7 +576,7 @@ VALUES
     ('Queijo Gorgonzola Colombo', 'Creamy and full-flavored Gorgonzola cheese', 'Colombo', 12.99, 20, 1, 36, CURRENT_TIMESTAMP);
 
 -- Queijo Cottage
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Cottage Minerva', 'Smooth and creamy cottage cheese', 'Minerva', 6.99, 30, 1, 37, CURRENT_TIMESTAMP),
     ('Queijo Cottage Batavo', 'Light and fresh cottage cheese', 'Batavo', 7.99, 25, 1, 37, CURRENT_TIMESTAMP),
@@ -590,7 +590,7 @@ VALUES
     ('Queijo Cottage Arosa', 'Light and creamy cottage cheese', 'Arosa', 9.99, 20, 1, 37, CURRENT_TIMESTAMP);
 
 -- Queijo Camembert
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Camembert President', 'Creamy and bloomy-rind Camembert cheese', 'President', 7.99, 30, 1, 38, CURRENT_TIMESTAMP),
     ('Queijo Camembert Isigny Ste Mère', 'Artisanal Camembert cheese from Isigny Ste Mère', 'Isigny Ste Mère', 8.99, 25, 1, 38, CURRENT_TIMESTAMP),
@@ -604,7 +604,7 @@ VALUES
     ('Queijo Camembert Lanquetot', 'Mellow and velvety Camembert cheese', 'Lanquetot', 10.99, 20, 1, 38, CURRENT_TIMESTAMP);
 
 -- Queijo Provolone
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Provolone Auricchio', 'Sharp and smoky Italian Provolone cheese', 'Auricchio', 8.99, 30, 1, 39, CURRENT_TIMESTAMP),
     ('Queijo Provolone Mandi', 'Creamy and mild Provolone cheese', 'Mandi', 9.99, 25, 1, 39, CURRENT_TIMESTAMP),
@@ -618,7 +618,7 @@ VALUES
     ('Queijo Provolone Vantia', 'Creamy and tangy Provolone cheese', 'Vantia', 11.99, 20, 1, 39, CURRENT_TIMESTAMP);
 
 -- Queijo Gruyère
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Queijo Gruyère Le Cret', 'Smooth and nutty Swiss Gruyère cheese', 'Le Cret', 9.99, 30, 1, 40, CURRENT_TIMESTAMP),
     ('Queijo Gruyère Emmi', 'Classic Swiss Gruyère cheese', 'Emmi', 10.99, 25, 1, 40, CURRENT_TIMESTAMP),
@@ -632,7 +632,7 @@ VALUES
     ('Queijo Gruyère Urchig', 'Robust and aged Gruyère cheese', 'Urchig', 12.99, 20, 1, 40, CURRENT_TIMESTAMP);
 
 -- Produtos Naturais
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Óleo de Coco Orgânico', 'Óleo de coco prensado a frio e orgânico', 'Orgânico Naturais', 15.99, 30, 1, 41, CURRENT_TIMESTAMP),
     ('Chá Verde', 'Chá verde 100% natural e antioxidante', 'Chá Natural', 10.99, 25, 1, 41, CURRENT_TIMESTAMP),
@@ -646,7 +646,7 @@ VALUES
     ('Barrinha de Frutas', 'Barrinha de frutas naturais e energética', 'Frutas Naturais', 10.99, 20, 1, 41, CURRENT_TIMESTAMP);
 
 -- Artigos para Camping
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Barraca para Camping 4 Pessoas', 'Barraca resistente para camping com capacidade para 4 pessoas', 'CampingLife', 149.99, 30, 1, 42, CURRENT_TIMESTAMP),
     ('Saco de Dormir', 'Saco de dormir leve e compacto', 'OutdoorGear', 89.99, 25, 1, 42, CURRENT_TIMESTAMP),
@@ -660,7 +660,7 @@ VALUES
     ('Bolsa Térmica', 'Bolsa térmica para alimentos e bebidas', 'CampingLife', 19.99, 20, 1, 42, CURRENT_TIMESTAMP);
 
 -- Produtos para Bebês
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Fraldas Descartáveis Tamanho P', 'Pacote de fraldas descartáveis tamanho P', 'BabyCare', 39.99, 30, 1, 43, CURRENT_TIMESTAMP),
     ('Shampoo para Bebês', 'Shampoo suave para bebês com fórmula hipoalergênica', 'BabyCare', 14.99, 25, 1, 43, CURRENT_TIMESTAMP),
@@ -674,7 +674,7 @@ VALUES
     ('Termômetro Digital', 'Termômetro digital para medição de temperatura', 'BabyEssentials', 19.99, 20, 1, 43, CURRENT_TIMESTAMP);
 
 -- Suprimentos para Festas
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Bexigas Coloridas', 'Pacote com 50 bexigas coloridas para festas', 'PartySupplies', 9.99, 30, 1, 44, CURRENT_TIMESTAMP),
     ('Chapéu de Festa', 'Pacote com 10 chapéus de festa coloridos', 'PartySupplies', 12.99, 25, 1, 44, CURRENT_TIMESTAMP),
@@ -688,7 +688,7 @@ VALUES
     ('Balões Metalizados', 'Pacote com 10 balões metalizados para festas', 'PartySupplies', 13.99, 20, 1, 44, CURRENT_TIMESTAMP);
 
 -- Colecionáveis
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Miniaturas de Carros', 'Miniaturas de carros colecionáveis em escala 1:18', 'CollectiblesInc', 39.99, 30, 1, 45, CURRENT_TIMESTAMP),
     ('Bonecos de Ação', 'Bonecos de ação colecionáveis de personagens famosos', 'CollectiblesInc', 24.99, 25, 1, 45, CURRENT_TIMESTAMP),
@@ -702,7 +702,7 @@ VALUES
     ('Action Figures', 'Action figures colecionáveis de personagens de filmes', 'CollectiblesInc', 49.99, 20, 1, 45, CURRENT_TIMESTAMP);
 
 -- Suprimentos para Artesanato
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Kit de Agulhas para Tricô', 'Kit com 12 agulhas de tricô de tamanhos variados', 'CraftSupplies', 9.99, 30, 1, 46, CURRENT_TIMESTAMP),
     ('Tesoura para Artesanato', 'Tesoura de precisão para trabalhos de artesanato', 'CraftSupplies', 8.99, 25, 1, 46, CURRENT_TIMESTAMP),
@@ -716,7 +716,7 @@ VALUES
     ('Arame para Artesanato', 'Rolo de arame flexível para trabalhos de artesanato', 'CraftSupplies', 13.99, 20, 1, 46, CURRENT_TIMESTAMP);
 
 -- Cursos e Treinamentos
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Curso de Fotografia', 'Curso online de fotografia para iniciantes', 'TrainingCenter', 49.99, 30, 1, 47, CURRENT_TIMESTAMP),
     ('Curso de Marketing Digital', 'Curso online de marketing digital com certificado', 'TrainingCenter', 59.99, 25, 1, 47, CURRENT_TIMESTAMP),
@@ -730,7 +730,7 @@ VALUES
     ('Curso de Desenvolvimento Pessoal', 'Curso online de desenvolvimento pessoal com técnicas de autoconhecimento', 'TrainingCenter', 39.99, 18, 1, 47, CURRENT_TIMESTAMP);
 
 -- Produtos para Cabelos Cacheados
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Shampoo para Cabelos Cacheados', 'Shampoo específico para limpeza e hidratação de cabelos cacheados', 'CurlsCare', 14.99, 30, 1, 48, CURRENT_TIMESTAMP),
     ('Condicionador para Cabelos Cacheados', 'Condicionador que hidrata e desembaraça cabelos cacheados', 'CurlsCare', 14.99, 25, 1, 48, CURRENT_TIMESTAMP),
@@ -744,7 +744,7 @@ VALUES
     ('Creme para Pentear para Cabelos Cacheados', 'Creme para pentear que define e controla o volume dos cabelos cacheados', 'CurlsCare', 15.99, 20, 1, 48, CURRENT_TIMESTAMP);
 
 -- Moda Plus Size
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Vestido Plus Size', 'Vestido longo plus size estampado com decote em V', 'CurvyFashion', 79.99, 30, 1, 49, CURRENT_TIMESTAMP),
     ('Calça Jeans Plus Size', 'Calça jeans plus size com modelagem reta e cintura alta', 'CurvyFashion', 59.99, 25, 1, 49, CURRENT_TIMESTAMP),
@@ -758,7 +758,7 @@ VALUES
     ('Body Plus Size', 'Body plus size com decote transpassado e estampa animal print', 'CurvyFashion', 54.99, 20, 1, 49, CURRENT_TIMESTAMP);
 
 -- Produtos para Barba
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Kit Barba Completo', 'Kit com produtos essenciais para cuidados com a barba', 'BeardMasters', 39.99, 20, 1, 50, CURRENT_TIMESTAMP),
     ('Óleo para Barba', 'Óleo nutritivo para hidratar e amaciar os pelos da barba', 'Gentleman Grooming', 19.99, 30, 1, 50, CURRENT_TIMESTAMP),
@@ -772,7 +772,7 @@ VALUES
     ('Escova para Barba', 'Escova de cerdas naturais para pentear e alinhar os pelos da barba', 'BeardBrush', 13.99, 25, 1, 50, CURRENT_TIMESTAMP);
 
 -- Produtos para Piscina
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Boia Inflável para Piscina', 'Boia divertida e colorida para aproveitar na piscina', 'AquaFun', 29.99, 50, 1, 51, CURRENT_TIMESTAMP),
     ('Protetor Solar FPS 50', 'Protetor solar resistente à água para proteção na piscina', 'SunGuard', 12.99, 30, 1, 51, CURRENT_TIMESTAMP),
@@ -786,7 +786,7 @@ VALUES
     ('Tapete Inflável para Piscina', 'Tapete inflável para relaxar e tomar sol na piscina', 'SunLounger', 34.99, 15, 1, 51, CURRENT_TIMESTAMP);
 
 -- Bolsas e Malas
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Mochila Esportiva', 'Mochila espaçosa e resistente para atividades esportivas', 'SportGear', 49.99, 30, 1, 52, CURRENT_TIMESTAMP),
     ('Bolsa de Viagem Grande', 'Bolsa de viagem com amplo espaço para suas aventuras', 'TravelPro', 79.99, 20, 1, 52, CURRENT_TIMESTAMP),
@@ -800,7 +800,7 @@ VALUES
     ('Mochila Antifurto', 'Mochila com sistema antifurto para proteger seus pertences', 'SecurePack', 59.99, 20, 1, 52, CURRENT_TIMESTAMP);
 
 -- Acessórios para Carros
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Carregador Veicular USB', 'Carregador veicular com portas USB para carregar seus dispositivos', 'ChargeDrive', 9.99, 50, 1, 53, CURRENT_TIMESTAMP),
     ('Suporte para Celular', 'Suporte ajustável para celular, ideal para uso em carros', 'DriveMate', 14.99, 30, 1, 53, CURRENT_TIMESTAMP),
@@ -814,7 +814,7 @@ VALUES
     ('Cadeirinha Infantil para Carro', 'Cadeirinha de segurança para transporte de crianças no carro', 'SafeRide', 89.99, 5, 1, 53, CURRENT_TIMESTAMP);
 
 -- Produtos para Unhas
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Kit Manicure Profissional', 'Kit completo com acessórios para manicure profissional', 'ProNails', 49.99, 20, 1, 54, CURRENT_TIMESTAMP),
     ('Esmalte de Longa Duração', 'Esmalte de alta qualidade e longa duração para unhas perfeitas', 'ColorStay', 9.99, 30, 1, 54, CURRENT_TIMESTAMP),
@@ -828,7 +828,7 @@ VALUES
     ('Adesivos para Unhas', 'Adesivos decorativos para unhas com diversos designs', 'NailStickers', 5.99, 25, 1, 54, CURRENT_TIMESTAMP);
 
 -- Moda Fitness
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Legging Esportiva', 'Legging confortável e flexível para prática de exercícios físicos', 'FlexFit', 34.99, 50, 1, 55, CURRENT_TIMESTAMP),
     ('Top Esportivo', 'Top de suporte para atividades físicas de impacto moderado', 'ActiveMotion', 24.99, 30, 1, 55, CURRENT_TIMESTAMP),
@@ -842,7 +842,7 @@ VALUES
     ('Sapatilha de Pilates', 'Sapatilha flexível e antiderrapante para prática de pilates e ioga', 'PilatesFlex', 19.99, 15, 1, 55, CURRENT_TIMESTAMP);
 
 -- Suprimentos para Pet Shop
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Ração para Cães', 'Ração premium para cães adultos de raças médias e grandes', 'PrimeDog', 49.99, 50, 1, 56, CURRENT_TIMESTAMP),
     ('Areia Sanitária para Gatos', 'Areia higiênica absorvente para bandeja de gatos', 'CleanPaws', 9.99, 30, 1, 56, CURRENT_TIMESTAMP),
@@ -856,7 +856,7 @@ VALUES
     ('Cama para Cães e Gatos', 'Cama confortável e aconchegante para cães e gatos de pequeno porte', 'CozyPet', 24.99, 10, 1, 56, CURRENT_TIMESTAMP);
 
 -- Produtos para Churrasco
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Churrasqueira Portátil', 'Churrasqueira compacta e fácil de transportar para churrascos ao ar livre', 'GrillMate', 59.99, 50, 1, 57, CURRENT_TIMESTAMP),
     ('Kit Churrasco', 'Kit completo com utensílios para churrasco', 'BBQMaster', 34.99, 30, 1, 57, CURRENT_TIMESTAMP),
@@ -870,7 +870,7 @@ VALUES
     ('Avental para Churrasco', 'Avental resistente e ajustável para proteção durante o preparo do churrasco', 'GrillGuard', 9.99, 5, 1, 57, CURRENT_TIMESTAMP);
 
 -- Produtos para Casa de Praia
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Cadeira de Praia', 'Cadeira dobrável e leve para aproveitar a praia com conforto', 'BeachComfort', 24.99, 50, 1, 58, CURRENT_TIMESTAMP),
     ('Guarda-Sol', 'Guarda-sol grande e resistente para proteção contra o sol na praia', 'SunShield', 39.99, 30, 1, 58, CURRENT_TIMESTAMP),
@@ -884,7 +884,7 @@ VALUES
     ('Kit Praia Infantil', 'Kit com baldinho, pazinha, rastelo e formas para brincadeiras na praia', 'BeachFun', 9.99, 30, 1, 58, CURRENT_TIMESTAMP);
 
 -- Produtos para Casa de Campo
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Rede de Descanso', 'Rede de descanso confortável para aproveitar momentos de relaxamento na casa de campo', 'Hammock', 34.99, 50, 1, 59, CURRENT_TIMESTAMP),
     ('Cadeira de Camping', 'Cadeira dobrável e resistente para uso em acampamentos e atividades ao ar livre', 'CampComfort', 24.99, 30, 1, 59, CURRENT_TIMESTAMP),
@@ -898,7 +898,7 @@ VALUES
     ('Kit Sobrevivência', 'Kit com itens essenciais para situações de emergência e sobrevivência', 'SurvivalKit', 49.99, 5, 1, 59, CURRENT_TIMESTAMP);
 
 -- Produtos para Home Office
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Mesa de Escritório', 'Mesa de escritório espaçosa e resistente para organização no home office', 'OfficePro', 199.99, 50, 1, 60, CURRENT_TIMESTAMP),
     ('Cadeira Ergonômica', 'Cadeira ergonômica com ajustes de altura e apoio lombar para conforto no trabalho', 'ErgoComfort', 149.99, 30, 1, 60, CURRENT_TIMESTAMP),
@@ -911,7 +911,7 @@ VALUES
     ('Suporte para Notebook', 'Suporte ergonômico para notebook, facilitando a visualização e digitação', 'NoteStand', 14.99, 25, 1, 60, CURRENT_TIMESTAMP),
     ('Quadro de Aviso Magnético', 'Quadro de avisos magnético para anotações e lembretes no home office', 'MemoBoard', 12.99, 10, 1, 60, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Cadeira de Rodas Infantil', 'Cadeira de rodas projetada para crianças com necessidades especiais.', 'AdaptKids', 799.90, 10, 1, 61, CURRENT_TIMESTAMP),
     ('Brinquedo Sensorial', 'Brinquedo com estímulos sensoriais para crianças com autismo.', 'SensoryPlay', 59.90, 20, 1, 61, CURRENT_TIMESTAMP),
@@ -924,7 +924,7 @@ VALUES
     ('Cadeira Adaptada para Alimentação', 'Cadeira de alimentação com suporte e ajustes para crianças com necessidades especiais.', 'EatWell', 179.90, 7, 1, 61, CURRENT_TIMESTAMP),
     ('Brinquedo Inclusivo', 'Brinquedo inclusivo com recursos adaptados para crianças com diferentes habilidades.', 'InclusiveToys', 69.90, 15, 1, 61, CURRENT_TIMESTAMP);
 
-	INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+	INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Capa Protetora para iPhone X', 'Capa de proteção resistente para o modelo iPhone X.', 'TechGuard', 29.90, 50, 1, 62, CURRENT_TIMESTAMP),
     ('Carregador Portátil 10000mAh', 'Carregador de bateria portátil com capacidade de 10000mAh.', 'PowerOn', 79.90, 20, 1, 62, CURRENT_TIMESTAMP),
@@ -937,7 +937,7 @@ VALUES
     ('Lente Externa para Celular', 'Lente externa para melhorar a qualidade das fotos tiradas com o celular.', 'PhotoLens', 69.90, 15, 1, 62, CURRENT_TIMESTAMP),
     ('Capa Personalizada para Samsung Galaxy A50', 'Capa de proteção personalizada para o modelo Samsung Galaxy A50.', 'CustomCase', 34.90, 35, 1, 62, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Kit de Bicos de Confeitar', 'Conjunto de bicos de confeitar para decoração de bolos e doces.', 'SweetDecor', 39.90, 50, 1, 63, CURRENT_TIMESTAMP),
     ('Forma de Silicone para Cupcake', 'Forma de silicone com cavidades para assar cupcakes.', 'BakeMaster', 19.90, 30, 1, 63, CURRENT_TIMESTAMP),
@@ -950,7 +950,7 @@ VALUES
     ('Glitter Comestível', 'Glitter comestível para decorar bolos e doces.', 'EdibleGlitz', 6.90, 100, 1, 63, CURRENT_TIMESTAMP),
     ('Bico Perlê', 'Bico de confeitar Perlê para criar detalhes em bolos e cupcakes.', 'PearlTip', 8.90, 70, 1, 63, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Tinta para Tatuagem Preta', 'Tinta preta para uso profissional em tatuagem.', 'InkMaster', 49.90, 50, 1, 64, CURRENT_TIMESTAMP),
     ('Agulhas para Tatuagem RL', 'Agulhas para tatuagem modelo Round Liner (RL).', 'TattooPro', 12.90, 100, 1, 64, CURRENT_TIMESTAMP),
@@ -963,7 +963,7 @@ VALUES
     ('Stencil para Tatuagem', 'Stencil para transferência de desenhos para a pele antes da tatuagem.', 'SkinTrace', 9.90, 100, 1, 64, CURRENT_TIMESTAMP),
     ('Tinta para Tatuagem Colorida', 'Conjunto de tintas coloridas para uso profissional em tatuagem.', 'ColorWorld', 89.90, 30, 1, 64, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Conjunto de Pincéis Artísticos', 'Conjunto com pincéis de diferentes tamanhos para pintura artística.', 'ArtBrush', 29.90, 50, 1, 65, CURRENT_TIMESTAMP),
     ('Tinta Acrílica', 'Tinta acrílica de alta qualidade para pintura em tela e outros materiais.', 'AcrylicArt', 12.90, 100, 1, 65, CURRENT_TIMESTAMP),
@@ -976,7 +976,7 @@ VALUES
     ('Estojo de Aquarela', 'Estojo com tintas aquarela e pincel para pintura com efeitos de transparência.', 'WatercolorSet', 24.90, 100, 1, 65, CURRENT_TIMESTAMP),
     ('Conjunto de Tintas a Óleo', 'Conjunto com tintas a óleo em tubos para pintura artística.', 'OilPaint', 39.90, 70, 1, 65, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Vara de Pesca Telescópica', 'Vara de pesca telescópica em fibra de carbono.', 'FishMaster', 89.90, 50, 1, 66, CURRENT_TIMESTAMP),
     ('Carretilha de Pesca', 'Carretilha de pesca com sistema de freio e recolhimento suave.', 'ReelPro', 149.90, 30, 1, 66, CURRENT_TIMESTAMP),
@@ -989,7 +989,7 @@ VALUES
     ('Chumbada para Pesca', 'Chumbada de pesca para ajudar no arremesso da isca.', 'WeightCast', 7.90, 200, 1, 66, CURRENT_TIMESTAMP),
     ('Capa de Proteção para Varas', 'Capa protetora para varas de pesca durante o transporte.', 'RodCover', 14.90, 80, 1, 66, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Camiseta de Algodão Orgânico', 'Camiseta feita de algodão orgânico, sustentável e ecologicamente correto.', 'EcoFashion', 39.90, 50, 1, 67, CURRENT_TIMESTAMP),
     ('Calça Jeans Reciclada', 'Calça jeans produzida a partir de materiais reciclados, contribuindo para a sustentabilidade.', 'ReGenDenim', 89.90, 30, 1, 67, CURRENT_TIMESTAMP),
@@ -1002,7 +1002,7 @@ VALUES
     ('Camisa Social Sustentável', 'Camisa social produzida com tecidos sustentáveis, alinhando elegância e responsabilidade ambiental.', 'EcoDressShirt', 69.90, 150, 1, 67, CURRENT_TIMESTAMP),
     ('Óculos de Sol Ecológicos', 'Óculos de sol fabricados com materiais reciclados, uma escolha consciente para proteger seus olhos e o planeta.', 'EcoEyewear', 79.90, 100, 1, 67, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Suplemento Vitamínico para Cães', 'Suplemento vitamínico em forma de tabletes para melhorar a saúde e bem-estar dos cães.', 'VitaPet', 39.90, 50, 1, 68, CURRENT_TIMESTAMP),
     ('Ração Especial para Gatos', 'Ração formulada especialmente para atender às necessidades nutricionais dos gatos.', 'GourmetFeline', 89.90, 30, 1, 68, CURRENT_TIMESTAMP),
@@ -1015,7 +1015,7 @@ VALUES
     ('Shampoo Hipoalergênico para Pets', 'Shampoo suave e hipoalergênico para banho de cães e gatos com pele sensível.', 'GentleCare', 24.90, 150, 1, 68, CURRENT_TIMESTAMP),
     ('Coleira Antipulgas e Carrapatos', 'Coleira eficaz no combate a pulgas e carrapatos em cães e gatos.', 'TickGuard', 49.90, 100, 1, 68, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Ring Light', 'Ring light com ajuste de intensidade para iluminar vídeos e fotos nas redes sociais.', 'GlamLight', 99.90, 50, 1, 69, CURRENT_TIMESTAMP),
     ('Microfone de Lapela', 'Microfone de lapela com excelente qualidade de áudio para gravações de vídeos.', 'ProSound', 59.90, 30, 1, 69, CURRENT_TIMESTAMP),
@@ -1028,7 +1028,7 @@ VALUES
     ('Tripé Profissional', 'Tripé profissional resistente e estável para suportar câmeras e equipamentos de gravação.', 'ProTripod', 69.90, 150, 1, 69, CURRENT_TIMESTAMP),
     ('Microfone USB', 'Microfone de alta qualidade com conexão USB para gravações de áudio com excelente nitidez.', 'USBAudio', 89.90, 100, 1, 69, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Kit Ferramentas de Jardinagem', 'Kit completo de ferramentas de jardinagem, incluindo pá, rastelo, tesoura de poda e muito mais.', 'GardenPro', 79.90, 50, 1, 70, CURRENT_TIMESTAMP),
     ('Vaso Autoirrigável', 'Vaso com sistema de autoirrigação, ideal para manter as plantas saudáveis por mais tempo.', 'SelfGrow', 39.90, 30, 1, 70, CURRENT_TIMESTAMP),
@@ -1042,7 +1042,7 @@ VALUES
     ('Estufa para Mudas', 'Estufa compacta para germinação e proteção de mudas e sementes durante o cultivo.', 'SeedHouse', 69.90, 100, 1, 70, CURRENT_TIMESTAMP);
 
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Vestido Vintage', 'Vestido estilo vintage com estampa retrô e corte clássico, perfeito para looks femininos.', 'RetroChic', 129.90, 50, 1, 71, CURRENT_TIMESTAMP),
     ('Camisa Xadrez', 'Camisa xadrez em estilo vintage, ideal para compor um visual despojado e retrô.', 'VintagePlaid', 79.90, 30, 1, 71, CURRENT_TIMESTAMP),
@@ -1056,7 +1056,7 @@ VALUES
     ('Lenço Estampado', 'Lenço estampado em estilo vintage, perfeito para dar um toque especial aos looks.', 'RetroScarf', 19.90, 100, 1, 71, CURRENT_TIMESTAMP);
 
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Shape de Skate', 'Shape de skate em madeira resistente, ideal para manobras e desempenho nas pistas.', 'ProSkate', 99.90, 50, 1, 72, CURRENT_TIMESTAMP),
     ('Truck para Skate', 'Truck de alta qualidade para skate, garantindo estabilidade e controle nas manobras.', 'SkateTruck', 49.90, 30, 1, 72, CURRENT_TIMESTAMP),
@@ -1070,7 +1070,7 @@ VALUES
     ('Camiseta de Skate', 'Camiseta estilosa e confortável para a prática de skate, com estampas e designs exclusivos.', 'SkateStyle', 24.90, 100, 1, 72, CURRENT_TIMESTAMP);
 
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Tapete de Yoga', 'Tapete de yoga antiderrapante e confortável, proporcionando estabilidade e amortecimento.', 'YogaMat', 79.90, 50, 1, 73, CURRENT_TIMESTAMP),
     ('Bolster para Yoga', 'Bolster de apoio para yoga, auxiliando na execução de posturas e no relaxamento.', 'YogaBolster', 39.90, 30, 1, 73, CURRENT_TIMESTAMP),
@@ -1084,7 +1084,7 @@ VALUES
     ('Meditação Guiada em Áudio', 'Áudio de meditação guiada para auxiliar no relaxamento e concentração durante o yoga.', 'YogaMeditate', 12.90, 200, 1, 73, CURRENT_TIMESTAMP);
 
 	
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Bola de Pilates', 'Bola de pilates para exercícios de fortalecimento, equilíbrio e alongamento.', 'PilateBall', 39.90, 50, 1, 74, CURRENT_TIMESTAMP),
     ('Faixa Elástica de Resistência', 'Faixa elástica de resistência para exercícios de pilates, proporcionando maior desafio muscular.', 'PilateBand', 19.90, 30, 1, 74, CURRENT_TIMESTAMP),
@@ -1097,7 +1097,7 @@ VALUES
     ('Acessórios para Pilates', 'Kit completo de acessórios para pilates, incluindo bola, faixa elástica, rolo e meia.', 'PilateEssentials', 129.90, 150, 1, 74, CURRENT_TIMESTAMP),
     ('Cinto de Alongamento para Pilates', 'Cinto de alongamento para pilates, auxiliando na execução de exercícios de flexibilidade.', 'StretchPro', 14.90, 100, 1, 74, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Almofada de Meditação', 'Almofada confortável para prática de meditação, proporcionando suporte e conforto durante a sessão.', 'MeditateCushion', 59.90, 100, 1, 75, CURRENT_TIMESTAMP),
     ('Tapete de Meditação', 'Tapete de meditação antiderrapante e macio, criando um espaço confortável para a prática de meditação.', 'MeditateMat', 79.90, 80, 1, 75, CURRENT_TIMESTAMP),
@@ -1110,7 +1110,7 @@ VALUES
     ('Banco de Meditação', 'Banco ergonômico para meditação, proporcionando suporte para a postura correta durante a prática.', 'MeditationBench', 69.90, 50, 1, 75, CURRENT_TIMESTAMP),
     ('Máscara para Meditação', 'Máscara confortável para meditação, bloqueando a luz e criando um ambiente tranquilo para a prática.', 'MeditationMask', 14.90, 100, 1, 75, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Shampoo para Cabelos Lisos', 'Shampoo específico para cabelos lisos, proporcionando limpeza e redução de frizz.', 'SmoothShampoo', 24.90, 200, 1, 76, CURRENT_TIMESTAMP),
     ('Condicionador para Cabelos Lisos', 'Condicionador hidratante para cabelos lisos, promovendo maciez e brilho.', 'SmoothConditioner', 24.90, 180, 1, 76, CURRENT_TIMESTAMP),
@@ -1123,7 +1123,7 @@ VALUES
     ('Mousse para Cabelos Lisos', 'Mousse modelador para cabelos lisos, proporcionando volume e fixação aos fios.', 'SmoothMousse', 16.90, 250, 1, 76, CURRENT_TIMESTAMP),
     ('Pomada Modeladora para Cabelos Lisos', 'Pomada modeladora para cabelos lisos, estilizando os fios e garantindo fixação.', 'SmoothStylingPomade', 14.90, 200, 1, 76, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Shampoo para Cabelos Tingidos', 'Shampoo específico para cabelos tingidos, preservando a cor e proporcionando brilho.', 'ColorProtectShampoo', 24.90, 200, 1, 77, CURRENT_TIMESTAMP),
     ('Condicionador para Cabelos Tingidos', 'Condicionador hidratante para cabelos tingidos, promovendo maciez e proteção da cor.', 'ColorProtectConditioner', 24.90, 180, 1, 77, CURRENT_TIMESTAMP),
@@ -1136,7 +1136,7 @@ VALUES
     ('Spray Fixador para Cabelos Tingidos', 'Spray fixador para cabelos tingidos, garantindo fixação dos penteados e proteção da cor.', 'ColorProtectHairspray', 14.90, 200, 1, 77, CURRENT_TIMESTAMP),
     ('Sérum para Pontas Duplas', 'Sérum para pontas duplas em cabelos tingidos, reparando as pontas danificadas e prolongando a cor.', 'SplitEndSerum', 19.90, 150, 1, 77, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Shampoo para Cabelos Grisalhos', 'Shampoo especial para cabelos grisalhos, realçando o brilho prateado dos fios.', 'SilverShampoo', 24.90, 200, 1, 78, CURRENT_TIMESTAMP),
     ('Condicionador para Cabelos Grisalhos', 'Condicionador hidratante para cabelos grisalhos, proporcionando maciez e maleabilidade.', 'SilverConditioner', 24.90, 180, 1, 78, CURRENT_TIMESTAMP),
@@ -1149,7 +1149,7 @@ VALUES
     ('Cera Modeladora para Cabelos Grisalhos', 'Cera modeladora para cabelos grisalhos, conferindo textura e definição aos fios.', 'SilverStylingWax', 16.90, 250, 1, 78, CURRENT_TIMESTAMP),
     ('Shampoo Seco para Cabelos Grisalhos', 'Shampoo seco para cabelos grisalhos, absorvendo a oleosidade e revitalizando os fios.', 'SilverDryShampoo', 19.90, 200, 1, 78, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Shampoo para Cabelos Cacheados', 'Shampoo específico para cabelos cacheados, limpando suavemente os fios e definindo os cachos.', 'CurlShampoo', 24.90, 200, 1, 79, CURRENT_TIMESTAMP),
     ('Condicionador para Cabelos Cacheados', 'Condicionador hidratante para cabelos cacheados, desembaraçando os fios e proporcionando maciez.', 'CurlConditioner', 24.90, 180, 1, 79, CURRENT_TIMESTAMP),
@@ -1162,7 +1162,7 @@ VALUES
     ('Spray Umidificador para Cabelos Cacheados', 'Spray umidificador para cabelos cacheados, revitalizando os cachos e controlando o frizz.', 'CurlMist', 19.90, 180, 1, 79, CURRENT_TIMESTAMP),
     ('Shampoo Low Poo para Cabelos Cacheados', 'Shampoo low poo para cabelos cacheados, promovendo uma limpeza suave e preservando a hidratação natural dos fios.', 'CurlLowPooShampoo', 24.90, 200, 1, 79, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Camisa Social Masculina', 'Camisa social masculina de algodão com corte clássico, ideal para ocasiões formais.', 'FashionMen', 89.90, 100, 1, 80, CURRENT_TIMESTAMP),
     ('Calça Jeans Masculina', 'Calça jeans masculina com lavagem moderna e modelagem slim, perfeita para looks casuais.', 'DenimCo', 109.90, 80, 1, 80, CURRENT_TIMESTAMP),
@@ -1175,7 +1175,7 @@ VALUES
     ('Camisa Polo Masculina', 'Camisa polo masculina de algodão com detalhes em contraste, ideal para um visual esportivo.', 'SportStyle', 69.90, 120, 1, 80, CURRENT_TIMESTAMP),
     ('Sapato Social Masculino', 'Sapato social masculino de couro com design elegante, ótimo para ocasiões formais.', 'ClassicSteps', 179.90, 60, 1, 80, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Óleo de Coco Orgânico', 'Óleo de coco orgânico extra virgem, ideal para uso culinário e cuidados com a pele e cabelos.', 'PureNature', 39.90, 200, 1, 81, CURRENT_TIMESTAMP),
     ('Chá Verde em Sachês', 'Chá verde em sachês 100% natural, rico em antioxidantes e propriedades benéficas para a saúde.', 'GreenTeaDelight', 19.90, 180, 1, 81, CURRENT_TIMESTAMP),
@@ -1188,7 +1188,7 @@ VALUES
     ('Sabonete Artesanal', 'Sabonete artesanal 100% natural, com fragrâncias suaves e ingredientes que cuidam da pele.', 'NaturalEssence', 12.90, 250, 1, 81, CURRENT_TIMESTAMP),
     ('Loção Hidratante Corporal Natural', 'Loção hidratante corporal natural, com ingredientes naturais que nutrem e suavizam a pele.', 'PureSkinCare', 19.90, 200, 1, 81, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Barraca para 4 Pessoas', 'Barraca espaçosa para acomodar confortavelmente até 4 pessoas em acampamentos.', 'OutdoorGear', 299.90, 30, 1, 82, CURRENT_TIMESTAMP),
     ('Saco de Dormir Ultraleve', 'Saco de dormir compacto e ultraleve, ideal para trilhas e aventuras ao ar livre.', 'AdventureSleep', 159.90, 50, 1, 82, CURRENT_TIMESTAMP),
@@ -1201,7 +1201,7 @@ VALUES
     ('Rede de Descanso', 'Rede de descanso confortável e resistente, ideal para relaxar e aproveitar momentos ao ar livre.', 'HammockLife', 59.90, 100, 1, 82, CURRENT_TIMESTAMP),
     ('Kit de Panelas para Camping', 'Kit de panelas compacto e leve para preparar refeições durante acampamentos e atividades ao ar livre.', 'CampCookware', 99.90, 70, 1, 82, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Carrinho de Bebê', 'Carrinho de bebê resistente e confortável, com diversas posições de reclínio e fácil de manusear.', 'BabyWheels', 599.90, 20, 1, 83, CURRENT_TIMESTAMP),
     ('Cadeira de Alimentação', 'Cadeira de alimentação segura e prática, com ajuste de altura e bandeja removível.', 'MealTime', 199.90, 30, 1, 83, CURRENT_TIMESTAMP),
@@ -1214,7 +1214,7 @@ VALUES
     ('Cadeirinha de Balanço', 'Cadeirinha de balanço com movimento suave e diversas posições, ideal para relaxar e acalmar o bebê.', 'BabyRelax', 179.90, 30, 1, 83, CURRENT_TIMESTAMP),
     ('Tapete de Atividades', 'Tapete de atividades macio e colorido, com brinquedos pendurados para estimular o desenvolvimento do bebê.', 'PlayTime', 99.90, 60, 1, 83, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Bolo de Aniversário', 'Bolo de aniversário decorado e personalizado, com diversos sabores e tamanhos disponíveis.', 'SweetCelebration', 99.90, 10, 1, 84, CURRENT_TIMESTAMP),
     ('Balões Coloridos', 'Pacote com balões coloridos em diversos tamanhos, perfeitos para decorar festas e eventos.', 'PartyTime', 9.90, 100, 1, 84, CURRENT_TIMESTAMP),
@@ -1227,7 +1227,7 @@ VALUES
     ('Cobertura de Mesa', 'Cobertura de mesa decorativa para festas, disponível em diferentes cores e estampas.', 'TableCover', 19.90, 60, 1, 84, CURRENT_TIMESTAMP),
     ('Descartáveis para Festa', 'Pacote com pratos, copos, talheres e guardanapos descartáveis para festas e eventos.', 'PartyEssentials', 29.90, 100, 1, 84, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Action Figure - Personagem X', 'Action figure detalhado do personagem X, com articulações e acessórios inclusos.', 'CollectibleHeroes', 199.90, 5, 1, 85, CURRENT_TIMESTAMP),
     ('Cartas Colecionáveis - Edição Especial', 'Pacote com cartas colecionáveis da edição especial, incluindo cartas raras e holográficas.', 'CollectorCards', 49.90, 20, 1, 85, CURRENT_TIMESTAMP),
@@ -1240,7 +1240,7 @@ VALUES
     ('Revista Rara - Edição Especial', 'Revista rara e colecionável da edição especial, com matérias exclusivas e capa personalizada.', 'CollectorsMagazine', 39.90, 25, 1, 85, CURRENT_TIMESTAMP),
     ('Estátua de Personagem - Tamanho Real', 'Estátua em tamanho real do personagem, produzida em resina de alta qualidade e pintada à mão.', 'HeroicStatues', 999.90, 1, 1, 85, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Kit de Pincéis', 'Kit de pincéis para pintura em diferentes tamanhos e formatos, ideais para artesanato e belas artes.', 'ArtBrush', 29.90, 50, 1, 86, CURRENT_TIMESTAMP),
     ('Tesoura de Precisão', 'Tesoura de precisão com lâminas afiadas e ponta fina, perfeita para trabalhos detalhados em artesanato.', 'CraftCut', 19.90, 80, 1, 86, CURRENT_TIMESTAMP),
@@ -1253,7 +1253,7 @@ VALUES
     ('Kit de Agulhas para Costura', 'Kit de agulhas para costura em diferentes tamanhos, perfeito para trabalhos de costura e artesanato têxtil.', 'SewCraft', 14.90, 90, 1, 86, CURRENT_TIMESTAMP),
     ('Lantejoulas e Paetês', 'Pacote com lantejoulas e paetês em diversas cores e formatos, ideais para projetos de customização e artesanato.', 'Sequins', 6.90, 180, 1, 86, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Curso de Fotografia Profissional', 'Aprenda as técnicas avançadas de fotografia, desde o uso da câmera até a edição de imagens.', 'PhotoMasters', 299.90, 10, 1, 87, CURRENT_TIMESTAMP),
     ('Treinamento em Marketing Digital', 'Aprenda as estratégias e ferramentas essenciais para criar campanhas eficazes de marketing digital.', 'DigitalSuccess', 199.90, 20, 1, 87, CURRENT_TIMESTAMP),
@@ -1267,7 +1267,7 @@ VALUES
     ('Treinamento em Comunicação Eficaz', 'Desenvolva suas habilidades de comunicação e seja assertivo em suas interações pessoais e profissionais.', 'EffectiveComm', 149.90, 10, 1, 87, CURRENT_TIMESTAMP);
 
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Shampoo para Cabelos Cacheados', 'Shampoo especialmente formulado para limpar e hidratar os cabelos cacheados, proporcionando definição e maciez.', 'CurlyHair', 29.90, 50, 1, 88, CURRENT_TIMESTAMP),
     ('Condicionador para Cabelos Cacheados', 'Condicionador que desembaraça e nutre os cabelos cacheados, deixando-os mais brilhantes e fáceis de pentear.', 'CurlyHair', 29.90, 50, 1, 88, CURRENT_TIMESTAMP),
@@ -1280,7 +1280,7 @@ VALUES
     ('Spray Umidificador para Cabelos Cacheados', 'Spray umidificador que revitaliza e reativa os cachos dos cabelos cacheados, mantendo-os hidratados e definidos ao longo do dia.', 'CurlyHair', 19.90, 50, 1, 88, CURRENT_TIMESTAMP),
     ('Creme Noturno para Cabelos Cacheados', 'Creme noturno que nutre e restaura os cabelos cacheados enquanto você dorme, proporcionando cachos mais definidos e saudáveis.', 'CurlyHair', 29.90, 50, 1, 88, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, brand, price, stock, active, catalog_id, registration_date)
+INSERT INTO product (name, description, brand, price, stock, active, id_category, registration_date)
 VALUES
     ('Vestido Plus Size Estampado', 'Vestido estampado plus size com modelagem soltinha e tecido leve, perfeito para looks descontraídos e confortáveis.', 'FashionCurve', 89.90, 30, 1, 89, CURRENT_TIMESTAMP),
     ('Blusa Plus Size Básica', 'Blusa básica plus size confeccionada em malha de algodão, ideal para compor diversos looks casuais.', 'FashionCurve', 49.90, 50, 1, 89, CURRENT_TIMESTAMP),
