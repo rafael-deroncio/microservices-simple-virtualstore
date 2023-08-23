@@ -42,15 +42,16 @@ public class ProductController : Controller
         => Ok(await _productService.GetProduct(id));
 
     /// <summary>
-    /// Retrieves a list of products.
+    /// Retrieves a paged list of products.
     /// </summary>
+    /// <param name="pagination">contains 'page number' and 'page size' to pagination request</param>
     /// <returns>An action result representing the response.</returns>
     [HttpGet]
     //[Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
     [ProducesResponseType(typeof(IEnumerable<ProductResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> GetProducts()
+    public async Task<ActionResult> GetProducts([FromQuery] PaginationRequest pagination)
         => Ok(await _productService.GetProducts());
 
     /// <summary>
