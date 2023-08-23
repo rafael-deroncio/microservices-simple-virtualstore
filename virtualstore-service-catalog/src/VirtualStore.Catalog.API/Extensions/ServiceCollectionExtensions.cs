@@ -5,6 +5,8 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
 using VirtualStore.Catalog.API.Settings;
+using VirtualStore.Catalog.Core.Repositories;
+using VirtualStore.Catalog.Core.Repositories.Interfaces;
 using VirtualStore.Catalog.Core.Services;
 using VirtualStore.Catalog.Core.Services.Interfaces;
 
@@ -230,6 +232,9 @@ public static class ServiceCollectionExtensions
     /// <returns>The modified IServiceCollection.</returns>
     public static IServiceCollection AddRepositoriesDependencyInjection(this IServiceCollection services)
     {
+        services.AddSingleton<ICategoryRepository, CategoryRepository>();
+        services.AddSingleton<IProductRepository, ProductRepository>();
+        
         return services;
     }
 }
