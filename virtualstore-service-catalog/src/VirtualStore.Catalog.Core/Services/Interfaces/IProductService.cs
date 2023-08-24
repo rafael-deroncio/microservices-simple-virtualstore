@@ -16,10 +16,12 @@ public interface IProductService
     Task<ProductResponse> GetProduct(int id);
 
     /// <summary>
-    /// Retrieves a collection of all products.
+    /// Retrieves a paginated collection of products.
     /// </summary>
-    /// <returns>A task representing the asynchronous operation. The result is an IEnumerable of ProductResponse objects.</returns>
-    Task<IEnumerable<ProductResponse>> GetProducts();
+    /// <param name="pagination">Pagination settings specifying the page number and page size.</param>
+    /// <returns>A task representing the asynchronous operation. The result is a PaginationResponse containing an IEnumerable of ProductResponse objects.</returns>
+    Task<PaginationResponse<IEnumerable<ProductResponse>>> GetProducts(PaginationRequest pagination);
+
 
     /// <summary>
     /// Creates a new product based on the provided product details.

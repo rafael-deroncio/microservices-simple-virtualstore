@@ -10,5 +10,6 @@ public class RequestToArgumentProfile : Profile
     {
         CreateMap<ProductRequest, ProductArgument>().ReverseMap();
         CreateMap<CategoryRequest, CategoryArgument>().ReverseMap();
+        CreateMap<PaginationRequest, PaginationArgument>().ReverseMap();
     }
 }

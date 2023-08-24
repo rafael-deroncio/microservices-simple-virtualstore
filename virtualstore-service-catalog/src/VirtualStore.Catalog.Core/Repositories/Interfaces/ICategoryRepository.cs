@@ -14,4 +14,6 @@ public interface ICategoryRepository
     Task<CategoryModel> UpdateCategory(CategoryArgument Category);
 
     Task<bool> DeleteCategory(int id);
+
+    Task<int> GetTotalRegisteredCategories();
 }

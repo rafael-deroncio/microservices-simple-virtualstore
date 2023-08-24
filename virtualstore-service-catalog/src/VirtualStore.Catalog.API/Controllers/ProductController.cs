@@ -48,11 +48,11 @@ public class ProductController : Controller
     /// <returns>An action result representing the response.</returns>
     [HttpGet]
     //[Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
-    [ProducesResponseType(typeof(IEnumerable<ProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PaginationResponse<IEnumerable<ProductResponse>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> GetProducts([FromQuery] PaginationRequest pagination)
-        => Ok(await _productService.GetProducts());
+        => Ok(await _productService.GetProducts(pagination));
 
     /// <summary>
     /// Creates a new product.

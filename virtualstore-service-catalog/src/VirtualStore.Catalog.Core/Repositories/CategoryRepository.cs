@@ -103,6 +103,25 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         }
     }
 
+    public async Task<int> GetTotalRegisteredCategories()
+    {
+        try
+        {
+            using IDbConnection connection = GetConnection();
+            string query = @"
+                            SELECT Count(*)
+                            FROM category
+                            WHERE active = 1";
+
+            return await connection.ExecuteScalarAsync<int>(query);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("An error occurred while getting total registered categories.", ex.Message);
+            return default;
+        }
+    }
+
     public async Task<CategoryModel> UpdateCategory(CategoryArgument category)
     {
         try

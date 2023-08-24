@@ -1,5 +1,7 @@
-﻿using VirtualStore.Catalog.Domain.Requests;
+﻿using System;
+using VirtualStore.Catalog.Domain.Requests;
 using VirtualStore.Catalog.Domain.Responses;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VirtualStore.Catalog.Core.Services.Interfaces;
 

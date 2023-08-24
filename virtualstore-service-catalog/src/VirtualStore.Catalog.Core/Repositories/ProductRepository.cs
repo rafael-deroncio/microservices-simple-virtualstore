@@ -83,7 +83,7 @@ public class ProductRepository : BaseRepository, IProductRepository
         }
     }
 
-    public async Task<IEnumerable<ProductModel>> GetProducts()
+    public async Task<IEnumerable<ProductModel>> GetProducts(PaginationArgument pagination)
     {
         try
         {
@@ -100,14 +100,35 @@ public class ProductRepository : BaseRepository, IProductRepository
                                     registration_date AS RegistrationDate, 
                                     modification_date AS ModificationDate
                             FROM product 
-                            WHERE active = 1";
+                            WHERE active = 1
+                            OFFSET @Skip ROWS
+                            FETCH NEXT @PageSize ROWS ONLY;";
 
-            return await connection.QueryAsync<ProductModel>(query);
+            return await connection.QueryAsync<ProductModel>(query, pagination);
         }
         catch (Exception ex)
         {
             _logger.LogError("An error occurred while fetching products.", ex.Message);
             return null;
+        }
+    }
+
+    public async Task<int> GetTotalRegisteredProducts()
+    {
+        try
+        {
+            using IDbConnection connection = GetConnection();
+            string query = @"
+                            SELECT Count(*)
+                            FROM product
+                            WHERE active = 1";
+
+            return await connection.ExecuteScalarAsync<int>(query);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("An error occurred while getting total registered products.", ex.Message);
+            return default;
         }
     }
 

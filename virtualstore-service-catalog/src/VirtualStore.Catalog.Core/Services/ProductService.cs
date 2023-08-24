@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using VirtualStore.Catalog.Core.Arguments;
 using VirtualStore.Catalog.Core.Configurations.Mappers;
+using VirtualStore.Catalog.Core.Helpers;
 using VirtualStore.Catalog.Core.Model;
 using VirtualStore.Catalog.Core.Repositories.Interfaces;
 using VirtualStore.Catalog.Core.Services.Interfaces;
@@ -34,7 +35,7 @@ public class ProductService : IProductService
 
         try
         {
-            ProductModel existingProduct = (await _productRepository.GetProducts())
+            ProductModel existingProduct = (await _productRepository.GetProducts(new PaginationArgument()))
                 .FirstOrDefault(
                     c => c.Name.ToUpper().Trim() == product.Name.ToUpper().Trim() &&
                     c.Description.ToUpper().Trim() == product.Description.ToUpper().Trim() &&
@@ -75,18 +76,19 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<IEnumerable<ProductResponse>> GetProducts()
+    public async Task<PaginationResponse<IEnumerable<ProductResponse>>> GetProducts(PaginationRequest pagination)
     {
         _logger.LogInformation("Starting treatment of the request in {0} of {1}", nameof(ProductService), nameof(GetProducts));
 
         try
         {
-            IEnumerable<ProductModel> products = await _productRepository.GetProducts();
+            PaginationArgument paginationArgument = _objectConverter.Map<PaginationArgument>(pagination);
+            IEnumerable<ProductModel> products = await _productRepository.GetProducts(paginationArgument);
 
             if (products is null)
                 return default;
 
-            return products.Join(
+            IEnumerable<ProductResponse> productsResponse = products.Join(
                     await _categoryService.GetCategories(),
                     product => product.CategoryId,
                     category => category.Id,
@@ -102,6 +104,12 @@ public class ProductService : IProductService
                         Category = category
                     }
                 );
+
+            return PaginationHelper<IEnumerable<ProductResponse>>.CreateResponse(
+                data: productsResponse,
+                page: paginationArgument.PageNumber, 
+                size: paginationArgument.PageSize,
+                count: await _productRepository.GetTotalRegisteredProducts());
         }
         catch (Exception ex)
         {
