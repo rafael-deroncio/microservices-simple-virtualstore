@@ -83,7 +83,7 @@ public class ProductRepository : BaseRepository, IProductRepository
         }
     }
 
-    public async Task<IEnumerable<ProductModel>> GetProducts(PaginationArgument pagination)
+    public async Task<IEnumerable<ProductModel>> GetPagedProducts(PaginationArgument pagination)
     {
         try
         {
@@ -102,9 +102,37 @@ public class ProductRepository : BaseRepository, IProductRepository
                             FROM product 
                             WHERE active = 1
                             OFFSET @Skip ROWS
-                            FETCH NEXT @PageSize ROWS ONLY;";
+                            FETCH NEXT @Size ROWS ONLY;";
 
             return await connection.QueryAsync<ProductModel>(query, pagination);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("An error occurred while fetching products.", ex.Message);
+            return null;
+        }
+    }
+
+    public async Task<IEnumerable<ProductModel>> GetProducts()
+    {
+        try
+        {
+            using IDbConnection connection = GetConnection();
+            string query = @"
+                            SELECT  id_product AS Id, 
+                                    name, 
+                                    description, 
+                                    brand, 
+                                    price, 
+                                    stock, 
+                                    active, 
+                                    id_category AS CategoryId, 
+                                    registration_date AS RegistrationDate, 
+                                    modification_date AS ModificationDate
+                            FROM product 
+                            WHERE active = 1;";
+
+            return await connection.QueryAsync<ProductModel>(query);
         }
         catch (Exception ex)
         {

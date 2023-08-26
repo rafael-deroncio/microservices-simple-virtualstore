@@ -5,17 +5,17 @@ public class PaginationArgument
     private int pageNumber = 1;
     private int pagesize = 5;
 
-    public int PageNumber
+    public int Page
     {
         get { return pageNumber; }
-        set { pageNumber = value < 1 ? 1 : value; }
+        set { pageNumber = value < 1 || value == default ? 1 : value; }
     }
 
-    public int PageSize
+    public int Size
     {
         get { return pagesize; }
-        set { pagesize = value > 10 ? 10 : value; }
+        set { pagesize = value > 10 || value == default  ? 10 : value; }
     }
 
-    public int Skip => (PageNumber - 1) * PageSize;
+    public int Skip => (Page - 1) * Size;
 }

@@ -7,7 +7,9 @@ public interface IProductRepository
 {
     Task<ProductModel> GetProduct(int id);
 
-    Task<IEnumerable<ProductModel>> GetProducts(PaginationArgument pagination);
+    Task<IEnumerable<ProductModel>> GetPagedProducts(PaginationArgument pagination);
+
+    Task<IEnumerable<ProductModel>> GetProducts();
 
     Task<ProductModel> CreateProduct(ProductArgument product);
 

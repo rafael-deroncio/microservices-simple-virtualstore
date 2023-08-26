@@ -222,6 +222,15 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ICategoryService, CategoryService>();
 
+        // Service URI
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddSingleton<IUriService, UriService>(
+            context =>
+            {
+                IHttpContextAccessor accessor = context.GetRequiredService<IHttpContextAccessor>();
+                return new UriService(accessor);
+            });
+
         return services;
     }
 

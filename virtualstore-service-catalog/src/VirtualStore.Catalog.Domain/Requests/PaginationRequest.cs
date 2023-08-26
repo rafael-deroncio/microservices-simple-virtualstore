@@ -1,12 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace VirtualStore.Catalog.Domain.Requests;
 
 public class PaginationRequest
 {
-    [Range(1, int.MaxValue, ErrorMessage = "Page number should be greater than or equal to 1.")]
-    public int PageNumber { get; set; }
+    [JsonPropertyName("page")]
+    public int Page { get; set; }
 
-
-    public int PageSize { get; set; }
+    [JsonPropertyName("size")]
+    public int Size { get; set; }
 }

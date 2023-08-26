@@ -16,17 +16,20 @@ public class ProductService : IProductService
     private readonly IProductRepository _productRepository;
     private readonly ILogger<ProductService> _logger;
     private readonly ICategoryService _categoryService;
+    private readonly IUriService _uriService;
 
     public ProductService(
         IObjectConverter objectConverter,
         IProductRepository productRepository,
         ILogger<ProductService> logger,
-        ICategoryService categoryService)
+        ICategoryService categoryService,
+        IUriService uriService)
     {
         _objectConverter = objectConverter;
         _productRepository = productRepository;
         _logger = logger;
         _categoryService = categoryService;
+        _uriService = uriService;
     }
 
     public async Task<ProductResponse> CreateProduct(ProductRequest product)
@@ -35,7 +38,7 @@ public class ProductService : IProductService
 
         try
         {
-            ProductModel existingProduct = (await _productRepository.GetProducts(new PaginationArgument()))
+            ProductModel existingProduct = (await _productRepository.GetProducts())
                 .FirstOrDefault(
                     c => c.Name.ToUpper().Trim() == product.Name.ToUpper().Trim() &&
                     c.Description.ToUpper().Trim() == product.Description.ToUpper().Trim() &&
@@ -83,7 +86,7 @@ public class ProductService : IProductService
         try
         {
             PaginationArgument paginationArgument = _objectConverter.Map<PaginationArgument>(pagination);
-            IEnumerable<ProductModel> products = await _productRepository.GetProducts(paginationArgument);
+            IEnumerable<ProductModel> products = await _productRepository.GetPagedProducts(paginationArgument);
 
             if (products is null)
                 return default;
@@ -105,10 +108,11 @@ public class ProductService : IProductService
                     }
                 );
 
-            return PaginationHelper<IEnumerable<ProductResponse>>.CreateResponse(
+            return PaginationHelpers<IEnumerable<ProductResponse>>.CreateResponse(
+                service: _uriService,
                 data: productsResponse,
-                page: paginationArgument.PageNumber, 
-                size: paginationArgument.PageSize,
+                page: paginationArgument.Page, 
+                size: paginationArgument.Size,
                 count: await _productRepository.GetTotalRegisteredProducts());
         }
         catch (Exception ex)
