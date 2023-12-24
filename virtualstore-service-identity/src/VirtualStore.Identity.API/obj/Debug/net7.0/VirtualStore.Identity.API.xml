@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VirtualStore.Identity.API</name>
+    </assembly>
+    <members>
+        <member name="T:VirtualStore.Identity.API.Controllers.AccountController">
+            <summary>
+            Controller for managing user accounts and authentication operations.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.AccountController.#ctor(VirtualStore.Identity.Core.Services.Interfaces.IAccountService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VirtualStore.Identity.API.Controllers.AccountController"/> class.
+            </summary>
+            <param name="accountService">The service responsible for managing user accounts.</param>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.AccountController.LogIn(VirtualStore.Identity.Domain.Requests.LogInRequest)">
+            <summary>
+            Logs in a user.
+            </summary>
+            <param name="request">The login request data.</param>
+            <returns>An object containing the result of the login operation.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.AccountController.SignIn(VirtualStore.Identity.Domain.Requests.SignInRequest)">
+            <summary>
+            Signs in a user.
+            </summary>
+            <param name="request">The sign-in request data.</param>
+            <returns>An object containing the result of the sign-in operation.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.AccountController.SignOut(VirtualStore.Identity.Domain.Requests.SignOutRequest)">
+            <summary>
+            Signs out a user.
+            </summary>
+            <param name="request">The sign-out request data.</param>
+            <returns>An object containing the result of the sign-out operation.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.AccountController.Unsubscribe(VirtualStore.Identity.Domain.Requests.UnsubscribeRequest)">
+            <summary>
+            Unsubscribes a user.
+            </summary>
+            <param name="request">The unsubscribe request data.</param>
+            <returns>An object containing the result of the unsubscribe operation.</returns>
+        </member>
+        <member name="T:VirtualStore.Identity.API.Controllers.TokenController">
+            <summary>
+            Controller for handling authentication and authorization operations.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.TokenController.#ctor(VirtualStore.Identity.Core.Services.Interfaces.IAuthorizeService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VirtualStore.Identity.API.Controllers.TokenController"/> class.
+            </summary>
+            <param name="authorizeService">The service responsible for authentication and authorization.</param>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.TokenController.GetTokenAuthentication(VirtualStore.Identity.Domain.Requests.TokenRequest)">
+            <summary>
+            Gets an authentication token.
+            </summary>
+            <param name="request">The authentication request data.</param>
+            <returns>An object containing the authentication token.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.TokenController.ValidateTokenAuthentication(VirtualStore.Identity.Domain.Requests.ValidateTokenRequest)">
+            <summary>
+            Validates an authentication token.
+            </summary>
+            <param name="request">The token validation request data.</param>
+            <returns>An object containing the result of the token validation.</returns>
+        </member>
+        <member name="T:VirtualStore.Identity.API.Controllers.UserController">
+            <summary>
+            Controller to manage user profiles.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.UserController.#ctor(VirtualStore.Identity.Core.Services.Interfaces.IUserService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VirtualStore.Identity.API.Controllers.UserController"/> class.
+            </summary>
+            <param name="userProfileService">The user profile service.</param>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.UserController.GetUser(System.String)">
+            <summary>
+            Gets a user by their username.
+            </summary>
+            <param name="username">The username of the user to retrieve.</param>
+            <returns>Returns a user response if successful, or an exception response if failed.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.UserController.PostUser(VirtualStore.Identity.Domain.Requests.UserRequest)">
+            <summary>
+            Creates a new user.
+            </summary>
+            <param name="request">The user creation request.</param>
+            <returns>Returns a user response if successful, or an exception response if failed.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.UserController.UpdateUser(System.String,VirtualStore.Identity.Domain.Requests.UserRequest)">
+            <summary>
+            Updates an existing user.
+            </summary>
+            <param name="username"></param>
+            <param name="request">The user update request.</param>
+            <returns>Returns a user response if successful, or an exception response if failed.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.UserController.DeleteUser(System.String)">
+            <summary>
+            Deletes a user.
+            </summary>
+            <param name="username">The ID of the user to delete.</param>
+            <returns>Returns a user response if successful, or an exception response if failed.</returns>
+        </member>
+        <member name="T:VirtualStore.Identity.API.Extensions.ApplicationBuilderExtensions">
+            <summary>
+            Extension methods for configuring and enhancing the application pipeline.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ApplicationBuilderExtensions.UseSwaggerCustomSettings(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures Swagger UI with custom settings for documentation.
+            </summary>
+            <param name="builder">The application builder.</param>
+            <returns>The updated application builder.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ApplicationBuilderExtensions.UseHandleException(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Adds middleware for handling exceptions in the request pipeline.
+            </summary>
+            <param name="builder">The application builder.</param>
+            <returns>The updated application builder.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ConfigurationExtensions.AddSecrets(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            Adds credentials to the configuration from a Secrets object.
+            </summary>
+            <param name="configuration">The configuration builder to add the credentials to.</param>
+            <returns>The modified configuration builder.</returns>
+        </member>
+        <member name="T:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions">
+            <summary>
+            Extends IServiceCollection with custom service configuration methods.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions.AddLowerCaseRouting(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures routing to automatically convert incoming URLs to lowercase.
+            </summary>
+            <param name="services">The service collection to add the lowercase routing configuration to.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions.AddAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures JWT authentication based on provided configuration settings.
+            </summary>
+            <param name="services">The service collection to add the authentication configuration to.</param>
+            <param name="configuration">The configuration containing JWT settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions.AddSwaggerCustomSettings(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures Swagger documentation generation using settings from appsettings.json.
+            </summary>
+            <param name="services">The service collection to add the Swagger configuration to.</param>
+            <param name="configuration">The configuration containing SwaggerGenDoc settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions.AddAPIVersioningCustomSettings(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures custom settings for API versioning and API version explorer.
+            </summary>
+            <param name="services">The service collection to add the API versioning configuration to.</param>
+            <param name="configuration">The configuration containing API versioning settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions.AddCorsCustomSettings(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures custom CORS settings based on the provided configuration.
+            </summary>
+            <param name="services">The service collection to add the CORS configuration to.</param>
+            <param name="configuration">The configuration containing CORS settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions.AddAuthenticationSwaggerJwtBearer(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures Swagger to include JWT Bearer token authentication settings.
+            </summary>
+            <param name="services">The service collection to add the JWT Bearer authentication configuration to.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions.AddServicesDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds service dependencies to the provided IServiceCollection.
+            </summary>
+            <param name="services">The IServiceCollection to add service dependencies to.</param>
+            <returns>The modified IServiceCollection.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions.AddRepositoriesDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds repository dependencies to the provided IServiceCollection.
+            </summary>
+            <param name="services">The IServiceCollection to add repository dependencies to.</param>
+            <returns>The modified IServiceCollection.</returns>
+        </member>
+    </members>
+</doc>

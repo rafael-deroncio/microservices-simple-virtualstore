@@ -13,17 +13,17 @@ namespace VirtualStore.Identity.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class UserController : ControllerBase
 {
-    private readonly IUserProfileService _userProfileService;
+    private readonly IUserService _userProfileService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserController"/> class.
     /// </summary>
     /// <param name="userProfileService">The user profile service.</param>
 
-    public UserController(IUserProfileService userProfileService)
+    public UserController(IUserService userProfileService)
     {
         _userProfileService = userProfileService;
     }
@@ -34,7 +34,7 @@ public class UserController : ControllerBase
     /// <param name="username">The username of the user to retrieve.</param>
     /// <returns>Returns a user response if successful, or an exception response if failed.</returns>
     [HttpGet("{username}")]
-    [Authorize(Roles = "User, Admnin")]
+    //[Authorize(Roles = "User, Admnin")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -42,25 +42,12 @@ public class UserController : ControllerBase
         => Ok(await _userProfileService.GetUserProfile(username));
 
     /// <summary>
-    /// Gets a list of all users.
-    /// </summary>
-    /// <returns>Returns a list of user responses if successful, or an exception response if failed.</returns>
-    [HttpGet]
-    [Authorize(Roles = "Admnin")]
-    [ProducesResponseType(typeof(IEnumerable<UserResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(IEnumerable<UserResponse>), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> GetUsers()
-        => Ok(await _userProfileService.GetUsersProfiles());
-
-    /// <summary>
     /// Creates a new user.
     /// </summary>
     /// <param name="request">The user creation request.</param>
     /// <returns>Returns a user response if successful, or an exception response if failed.</returns>
     [HttpPost]
-    [Authorize(Roles = "User, Admnin")]
+    //[Authorize(Roles = "User, Admnin")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -70,15 +57,16 @@ public class UserController : ControllerBase
     /// <summary>
     /// Updates an existing user.
     /// </summary>
+    /// <param name="username"></param>
     /// <param name="request">The user update request.</param>
     /// <returns>Returns a user response if successful, or an exception response if failed.</returns>
     [HttpPut("{username}")]
-    [Authorize(Roles = "User, Admnin")]
+    //[Authorize(Roles = "User, Admnin")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> UpdateUser(UserRequest request)
-        => Ok(await _userProfileService.UpdateUserProfile(request));
+    public async Task<ActionResult> UpdateUser(string username, [FromBody] UserRequest request)
+        => Ok(await _userProfileService.UpdateUserProfile(username, request));
 
     /// <summary>
     /// Deletes a user.
@@ -86,7 +74,7 @@ public class UserController : ControllerBase
     /// <param name="username">The ID of the user to delete.</param>
     /// <returns>Returns a user response if successful, or an exception response if failed.</returns>
     [HttpDelete("{username}")]
-    [Authorize(Roles = "User, Admnin")]
+    //[Authorize(Roles = "User, Admnin")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]

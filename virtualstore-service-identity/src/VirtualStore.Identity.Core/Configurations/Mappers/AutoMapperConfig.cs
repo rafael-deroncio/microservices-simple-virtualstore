@@ -12,6 +12,7 @@ public class AutoMapperConfig
                 cfg.AddProfile(new RequestToResponseProfile());
                 cfg.AddProfile(new RequestToArgumentProfile());
                 cfg.AddProfile(new ModelToResponseProfile());
+                cfg.AddProfile(new ArgumentToModelProfile());
             });
     }
 }

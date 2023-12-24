@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "QfBUv0IaUAWube0ahmPDI/76iLaT1of3gr/O1DrtEkE=",
+  "Source": "VirtualStore.Identity.API",
+  "BasePath": "_content/VirtualStore.Identity.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

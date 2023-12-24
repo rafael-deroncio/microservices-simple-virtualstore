@@ -4,7 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
+using VirtualStore.Catalog.Core.Services;
 using VirtualStore.Identity.API.Settings;
+using VirtualStore.Identity.Core.Middlewares;
+using VirtualStore.Identity.Core.Repositories;
+using VirtualStore.Identity.Core.Repositories.Interfaces;
 using VirtualStore.Identity.Core.Services;
 using VirtualStore.Identity.Core.Services.Interfaces;
 
@@ -216,7 +220,18 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddServicesDependencyInjection(this IServiceCollection services)
     {
         services.AddScoped<IAccountService, AccountService>();
-        services.AddScoped<IUserProfileService, UserProfileService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IAuthorizeService, AuthorizeService>();
+
+        // Service URI
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddSingleton<IUriService, UriService>(
+            context =>
+            {
+                IHttpContextAccessor accessor = context.GetRequiredService<IHttpContextAccessor>();
+                return new UriService(accessor);
+            });
 
         return services;
     }
@@ -228,6 +243,8 @@ public static class ServiceCollectionExtensions
     /// <returns>The modified IServiceCollection.</returns>
     public static IServiceCollection AddRepositoriesDependencyInjection(this IServiceCollection services)
     {
+        services.AddSingleton<IUserRepository, UserRepository>();
+
         return services;
     }
 }

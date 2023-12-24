@@ -1,18 +1,11 @@
 ﻿namespace VirtualStore.Identity.Domain.Responses;
 
-public class UserResponse : ApiResponse
+public class UserResponse
 {
-    public int Id { get; set; }
-
     public string Name { get; set; }
-
-    public string CPF { get; set; }
-
+    public string UserName { get; set; }
+    public string Email { get; set; }
     public DateTime DateOfBirth { get; set; }
-
-    public int Age { get; set; }
-
-    public string Gender { get; set; }
-
-    public bool Active { get; set; }
+    public List<AddressResponse> Addresses { get; set; }
+    public List<TelephoneResponse> Telephones { get; set; }
 }

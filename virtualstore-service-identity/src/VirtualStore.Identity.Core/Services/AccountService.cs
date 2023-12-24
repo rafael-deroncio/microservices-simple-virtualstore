@@ -20,4 +20,9 @@ public class AccountService : IAccountService
     {
         throw new NotImplementedException();
     }
+
+    public Task<UnsubscribeResponse> Unsubscribe(UnsubscribeRequest request)
+    {
+        throw new NotImplementedException();
+    }
 }

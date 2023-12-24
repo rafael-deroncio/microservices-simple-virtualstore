@@ -10,4 +10,6 @@ public interface IAccountService
     Task<SignOutResponse> SignOut(SignOutRequest request);
 
     Task<LogInResponse> LogIn(LogInRequest request);
+
+    Task<UnsubscribeResponse> Unsubscribe(UnsubscribeRequest request);
 }
