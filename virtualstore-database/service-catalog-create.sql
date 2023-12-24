@@ -1,25 +1,25 @@
 DROP TABLE IF EXISTS product;
-DROP TABLE IF EXISTS catalog;
 DROP TABLE IF EXISTS category;
 
 CREATE TABLE category (
-    id_category SERIAL PRIMARY KEY,
-    name TEXT,
-    description TEXT,
-    active INTEGER,
-    registration_date DATE
+    CategoryId SERIAL PRIMARY KEY,
+    Name TEXT,
+    Description TEXT,
+    CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    LastModifiedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
 CREATE TABLE product (
-    id_product SERIAL PRIMARY KEY,
-    name TEXT,
-    description TEXT,
-    brand TEXT,
-    price REAL,
-    stock INTEGER,
-    active INTEGER,
-    id_category INTEGER,
-    registration_date DATE,
-    modification_date DATE,
-    FOREIGN KEY (id_category) REFERENCES category(id_category)
+    ProductId SERIAL PRIMARY KEY,
+    Name TEXT,
+    Description TEXT,
+    Brand TEXT,
+    Price REAL,
+    Stock INTEGER,
+    CategoryId INTEGER,
+    CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    LastModifiedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    IsActive BOOLEAN NOT NULL DEFAULT true
+    FOREIGN KEY (CategoryId) REFERENCES category(CategoryId)
 );

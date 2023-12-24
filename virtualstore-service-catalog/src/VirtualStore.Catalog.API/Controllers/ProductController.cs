@@ -14,10 +14,11 @@ namespace VirtualStore.Catalog.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [ApiController]
-//[Authorize]
+[Authorize]
 public class ProductController : Controller
 {
     private readonly IProductService _productService;
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ProductController"/> class.
@@ -34,7 +35,7 @@ public class ProductController : Controller
     /// <param name="id">The ID of the product.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpGet("{id:int}")]
-    //[Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    [Authorize(Roles = "Microservice, Client")]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -47,7 +48,7 @@ public class ProductController : Controller
     /// <param name="pagination">contains 'page number' and 'page size' to pagination request</param>
     /// <returns>An action result representing the response.</returns>
     [HttpGet]
-    //[Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    [Authorize(Roles = "Microservice, Client")]
     [ProducesResponseType(typeof(PaginationResponse<IEnumerable<ProductResponse>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -60,7 +61,7 @@ public class ProductController : Controller
     /// <param name="request">The product information to create.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpPost]
-    //[Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    [Authorize(Roles = nameof(UserClaimType.Admin))]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -74,7 +75,7 @@ public class ProductController : Controller
     /// <param name="request">The updated product information.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpPut("{id:int}")]
-    //[Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    [Authorize(Roles = nameof(UserClaimType.Admin))]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -87,7 +88,7 @@ public class ProductController : Controller
     /// <param name="id">The ID of the product to delete.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpDelete("{id:int}")]
-    //[Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    [Authorize(Roles = nameof(UserClaimType.Admin))]
     [ProducesResponseType(typeof(bool), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]

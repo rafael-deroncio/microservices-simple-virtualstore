@@ -43,10 +43,10 @@ public class ProductService : IProductService
                     c => c.Name.ToUpper().Trim() == product.Name.ToUpper().Trim() &&
                     c.Description.ToUpper().Trim() == product.Description.ToUpper().Trim() &&
                     c.Brand.ToUpper().Trim() == product.Brand.ToUpper().Trim() &&
-                    c.Active);
+                    c.IsActive);
 
             if (existingProduct != null)
-                throw new Exception($"Product already registered at id {existingProduct.Id} at {existingProduct.RegistrationDate}");
+                throw new Exception($"Product already registered at id {existingProduct.CategoryId} at {existingProduct.CreatedDate}");
 
             ProductModel newProduct = await _productRepository.CreateProduct(_objectConverter.Map<ProductArgument>(product));
 
@@ -67,7 +67,7 @@ public class ProductService : IProductService
         {
             ProductModel product = await _productRepository.GetProduct(id);
 
-            if (product is null || !product.Active)
+            if (product is null || !product.IsActive)
                 return default;
 
             return await _productRepository.DeleteProduct(id);
@@ -89,7 +89,7 @@ public class ProductService : IProductService
             IEnumerable<ProductModel> products = await _productRepository.GetPagedProducts(paginationArgument);
 
             if (products is null)
-                return default;
+                return new PaginationResponse<IEnumerable<ProductResponse>>();
 
             IEnumerable<ProductResponse> productsResponse = products.Join(
                     await _categoryService.GetCategories(),
@@ -97,13 +97,13 @@ public class ProductService : IProductService
                     category => category.Id,
                     (product, category) => new ProductResponse
                     {
-                        Id = product.Id,
+                        Id = product.CategoryId,
                         Name = product.Name,
                         Description = product.Description,
                         Brand = product.Brand,
                         Price = product.Price,
                         Stock = product.Stock,
-                        Active = product.Active,
+                        Active = product.IsActive,
                         Category = category
                     }
                 );
@@ -130,7 +130,7 @@ public class ProductService : IProductService
         {
             ProductModel product = await _productRepository.GetProduct(id);
 
-            if (product is null || !product.Active)
+            if (product is null || !product.IsActive)
                 return default;
 
             ProductResponse response = _objectConverter.Map<ProductResponse>(product);
@@ -155,7 +155,7 @@ public class ProductService : IProductService
         {
             ProductModel categoryModel = await _productRepository.GetProduct(id);
 
-            if (product is null || !categoryModel.Active)
+            if (product is null || !categoryModel.IsActive)
                 return default;
 
             ProductArgument argument = _objectConverter.Map<ProductArgument>(product);

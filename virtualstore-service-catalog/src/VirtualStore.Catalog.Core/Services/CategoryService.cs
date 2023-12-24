@@ -35,10 +35,10 @@ public class CategoryService : ICategoryService
                 .FirstOrDefault(
                     c => c.Name.ToUpper().Trim() == category.Name.ToUpper().Trim() &&
                     c.Description.ToUpper().Trim() == category.Description.ToUpper().Trim() &&
-                    c.Active);
+                    c.IsActive);
 
             if (existingCategory != null)
-                throw new Exception($"Category already registered at id {existingCategory.Id} at {existingCategory.RegistrationDate}");
+                throw new Exception($"Category already registered at id {existingCategory.CategoryId} at {existingCategory.CreatedDate}");
 
             CategoryModel newCategory = await _categoryRepository.CreateCategory(_objectConverter.Map<CategoryArgument>(category));
 
@@ -59,7 +59,7 @@ public class CategoryService : ICategoryService
         {
             CategoryModel category = await _categoryRepository.GetCategory(id);
 
-            if (category is null || !category.Active)
+            if (category is null || !category.IsActive)
                 return default;
 
             return await _categoryRepository.DeleteCategory(id);
@@ -95,7 +95,7 @@ public class CategoryService : ICategoryService
         {
             CategoryModel category = await _categoryRepository.GetCategory(id);
 
-            if (category is null || !category.Active)
+            if (category is null || !category.IsActive)
                 return default;
 
             return _objectConverter.Map<CategoryResponse>(category);
@@ -115,7 +115,7 @@ public class CategoryService : ICategoryService
         {
             CategoryModel categoryModel = await _categoryRepository.GetCategory(id);
 
-            if (category is null || !categoryModel.Active)
+            if (category is null || !categoryModel.IsActive)
                 return default;
 
             CategoryArgument argument = _objectConverter.Map<CategoryArgument>(category);

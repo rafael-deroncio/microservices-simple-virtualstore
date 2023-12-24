@@ -13,26 +13,26 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualStore.Catalog.Test",
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|VirtualStore.Catalog.API = Debug|VirtualStore.Catalog.API
+		Release|VirtualStore.Catalog.API = Release|VirtualStore.Catalog.API
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58DFA9D5-D38C-4004-A589-80748973A603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58DFA9D5-D38C-4004-A589-80748973A603}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58DFA9D5-D38C-4004-A589-80748973A603}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58DFA9D5-D38C-4004-A589-80748973A603}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15C6A036-E461-4022-874B-607842097AD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15C6A036-E461-4022-874B-607842097AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15C6A036-E461-4022-874B-607842097AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15C6A036-E461-4022-874B-607842097AD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Debug|VirtualStore.Catalog.API.ActiveCfg = Debug|Any CPU
+		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Debug|VirtualStore.Catalog.API.Build.0 = Debug|Any CPU
+		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Release|VirtualStore.Catalog.API.ActiveCfg = Release|Any CPU
+		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Release|VirtualStore.Catalog.API.Build.0 = Release|Any CPU
+		{58DFA9D5-D38C-4004-A589-80748973A603}.Debug|VirtualStore.Catalog.API.ActiveCfg = Debug|Any CPU
+		{58DFA9D5-D38C-4004-A589-80748973A603}.Debug|VirtualStore.Catalog.API.Build.0 = Debug|Any CPU
+		{58DFA9D5-D38C-4004-A589-80748973A603}.Release|VirtualStore.Catalog.API.ActiveCfg = Release|Any CPU
+		{58DFA9D5-D38C-4004-A589-80748973A603}.Release|VirtualStore.Catalog.API.Build.0 = Release|Any CPU
+		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Debug|VirtualStore.Catalog.API.ActiveCfg = Debug|Any CPU
+		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Debug|VirtualStore.Catalog.API.Build.0 = Debug|Any CPU
+		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Release|VirtualStore.Catalog.API.ActiveCfg = Release|Any CPU
+		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Release|VirtualStore.Catalog.API.Build.0 = Release|Any CPU
+		{15C6A036-E461-4022-874B-607842097AD0}.Debug|VirtualStore.Catalog.API.ActiveCfg = Debug|Any CPU
+		{15C6A036-E461-4022-874B-607842097AD0}.Debug|VirtualStore.Catalog.API.Build.0 = Debug|Any CPU
+		{15C6A036-E461-4022-874B-607842097AD0}.Release|VirtualStore.Catalog.API.ActiveCfg = Release|Any CPU
+		{15C6A036-E461-4022-874B-607842097AD0}.Release|VirtualStore.Catalog.API.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

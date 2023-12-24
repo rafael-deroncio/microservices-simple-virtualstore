@@ -34,7 +34,7 @@ public class CategoryController : Controller
     /// <param name="id">The ID of the category.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpGet("{id:int}")]
-    //[Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    [Authorize(Roles = "Microservice, Client")]
     [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -46,7 +46,7 @@ public class CategoryController : Controller
     /// </summary>
     /// <returns>An action result representing the response.</returns>
     [HttpGet]
-    //[Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    [[Authorize(Roles = "Microservice, Client")]
     [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -59,7 +59,7 @@ public class CategoryController : Controller
     /// <param name="request">The category information to create.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpPost]
-    [Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    [Authorize(Roles = nameof(UserClaimType.Admin))]
     [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -73,7 +73,7 @@ public class CategoryController : Controller
     /// <param name="request">The updated category information.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpPut("{id:int}")]
-    [Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    [Authorize(Roles = nameof(UserClaimType.Admin))]
     [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -86,7 +86,7 @@ public class CategoryController : Controller
     /// <param name="id">The ID of the category to delete.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpDelete("{id:int}")]
-    [Authorize(Roles = nameof(Role.MicroserviceRequestClient))]
+    [Authorize(Roles = nameof(UserClaimType.Admin))]
     [ProducesResponseType(typeof(bool), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]

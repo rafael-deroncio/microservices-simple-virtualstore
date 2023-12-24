@@ -39,6 +39,8 @@ services:
 
   service-identity:
     image: postgres:latest
+    volumes:
+      - ./service-identity-create.sql:/docker-entrypoint-initdb.d/service-identity-create.sql
     container_name: service-identity
     restart: always
     environment:

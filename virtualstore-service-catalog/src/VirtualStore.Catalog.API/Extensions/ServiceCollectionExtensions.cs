@@ -217,8 +217,6 @@ public static class ServiceCollectionExtensions
     /// <returns>The modified IServiceCollection.</returns>
     public static IServiceCollection AddServicesDependencyInjection(this IServiceCollection services)
     {
-        services.AddScoped<IAuthorizeService, AuthorizeService>();
-        services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ICategoryService, CategoryService>();
 

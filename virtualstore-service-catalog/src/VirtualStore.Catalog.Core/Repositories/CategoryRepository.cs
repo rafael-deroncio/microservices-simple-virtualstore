@@ -23,15 +23,15 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         {
             using IDbConnection connection = GetConnection();
             string query = @"
-                            INSERT INTO category (name, description, active, registration_date)
-                            VALUES (@Name, @Description, @Ativo, @RegistrationDate)
-                            RETURNING id_category AS Id, name, description, active, registration_date AS RegistrationDate";
+                            INSERT INTO category (Name, Description, IsActive, CreatedDate, LastModifiedDate)
+                            VALUES (@Name, @Description, @IsActive, @CreatedDate, @LastModifiedDate)
+                            RETURNING CategoryId, Name, Description, IsActive, CreatedDate";
 
             return await connection.QueryFirstOrDefaultAsync(query, category);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while creating category.");
+            _logger.LogError(string.Format("An error occurred while creating category.", ex.Message));
             return null;
         }
     }
@@ -43,14 +43,14 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
             using IDbConnection connection = GetConnection();
             string query = @"
                             UPDATE category
-                            SET active = 0
-                            WHERE id_category = @Id";
+                            SET IsActive = false
+                            WHERE CategoryId = @Id";
 
             return await connection.ExecuteAsync(query) > 0;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while deleting category.");
+            _logger.LogError(string.Format("An error occurred while deleting category.", ex.Message));
             return false;
         }
     }
@@ -62,19 +62,20 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
             using IDbConnection connection = GetConnection();
             string query = @"
                             SELECT 
-                                id_category Id,
-                                name Name,
-                                name Description,
-                                active Active,
-                                registration_date RegistrationDate
+                                CategoryId,
+                                Name,
+                                Description,
+                                IsActive,
+                                CreatedDate
                             FROM category 
-                            WHERE id_category = @Id";
+                            WHERE CategoryId = @Id AND IsActive = true";
+
 
             return await connection.QueryFirstAsync<CategoryModel>(query, new { Id = id });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while fetching category.");
+            _logger.LogError(string.Format("An error occurred while fetching category.", ex.Message));
             return null;
         }
     }
@@ -86,19 +87,19 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
             using IDbConnection connection = GetConnection();
             string query = @"
                             SELECT 
-                                id_category Id,
-                                name Name,
-                                name Description,
-                                active Active,
-                                registration_date RegistrationDate
+                                CategoryId,
+                                Name,
+                                Description,
+                                IsActive,
+                                CreatedDate
                             FROM category 
-                            WHERE active = 1";
+                            WHERE IsActive = true";
 
             return await connection.QueryAsync<CategoryModel>(query);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while fetching categorys.");
+            _logger.LogError(string.Format("An error occurred while fetching categorys. {0}", ex.Message));
             return null;
         }
     }
@@ -111,13 +112,13 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
             string query = @"
                             SELECT Count(*)
                             FROM category
-                            WHERE active = 1";
+                            WHERE IsActive = true";
 
             return await connection.ExecuteScalarAsync<int>(query);
         }
         catch (Exception ex)
         {
-            _logger.LogError("An error occurred while getting total registered categories.", ex.Message);
+            _logger.LogError(string.Format("An error occurred while getting total registered categories. {0}", ex.Message));
             return default;
         }
     }
@@ -129,15 +130,15 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
             using IDbConnection connection = GetConnection();
             string query = @"
                             UPDATE category
-                            SET name = @Name, description = @Description
-                            WHERE id_category = @Id;
-                            RETURNING id_category AS Id, name, description, active, registration_date AS RegistrationDate""";
+                            SET Name = @Name, Description = @Description, LastModifiedDate = @LastModifiedDate
+                            WHERE CategoryId = @CategoryId
+                            RETURNING CategoryId, Name, Description, IsActive, CreatedDate";
 
             return await connection.QueryFirstOrDefaultAsync(query, category);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while updating category.");
+            _logger.LogError(string.Format("An error occurred while updating category. {0}", ex.Message));
             return null;
         }
     }

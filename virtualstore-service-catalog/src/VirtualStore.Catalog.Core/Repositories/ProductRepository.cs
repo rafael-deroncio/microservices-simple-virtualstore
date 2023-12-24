@@ -23,15 +23,15 @@ public class ProductRepository : BaseRepository, IProductRepository
         {
             using IDbConnection connection = GetConnection();
             string query = @"
-                            INSERT INTO Product (name, description, brand, price, stock, active, id_category AS CategoryId, registration_date AS RegistrationDate, modification_date AS ModificationDate)
-                            VALUES (@Name, @Description, @Ativo, @RegistrationDate)
-                            RETURNING id_product AS Id, name, description, brand, price, stock, active, id_category AS CategoryId, registration_date AS RegistrationDate, modification_date AS ModificationDate";
+                            INSERT INTO product (Name, Description, Brand, Price, Stock, CategoryId, CreatedDate, LastModifiedDate, IsActive)
+                            VALUES (@Name, @Description, @Brand, @Price, @Stock, @CategoryId, @CreatedDate, @LastModifiedDate, @IsActive)
+                            RETURNING ProductId, Name, Description, Brand, Price, Stock, CategoryId, CreatedDate, LastModifiedDate";
 
             return await connection.QueryFirstOrDefaultAsync(query, Product);
         }
         catch (Exception ex)
         {
-            _logger.LogError("An error occurred while creating product.", ex.Message);
+            _logger.LogError(string.Format("An error occurred while creating product.", ex.Message));
             return null;
         }
     }
@@ -43,14 +43,14 @@ public class ProductRepository : BaseRepository, IProductRepository
             using IDbConnection connection = GetConnection();
             string query = @"
                             UPDATE product
-                            SET active = false
-                            WHERE id_product = @Id";
+                            SET IsActive = false
+                            WHERE ProductId = @Id";
 
             return await connection.ExecuteAsync(query) > 0;
         }
         catch (Exception ex)
         {
-            _logger.LogError("An error occurred while deleting product.", ex.Message);
+            _logger.LogError(string.Format("An error occurred while deleting product. {0}", ex.Message));
             return false;
         }
     }
@@ -61,24 +61,24 @@ public class ProductRepository : BaseRepository, IProductRepository
         {
             using IDbConnection connection = GetConnection();
             string query = @"
-                            SELECT  id_product AS Id, 
-                                    name, 
-                                    description, 
-                                    brand, 
-                                    price, 
-                                    stock, 
-                                    active, 
-                                    id_category AS CategoryId, 
-                                    registration_date AS RegistrationDate, 
-                                    modification_date AS ModificationDate
+                            SELECT 
+                                ProductId,
+                                Name, 
+                                Description, 
+                                Brand, 
+                                Price, 
+                                Stock, 
+                                CategoryId, 
+                                CreatedDate, 
+                                LastModifiedDate
                             FROM product 
-                            WHERE id_product = @Id";
+                            WHERE ProductId = @Id AND IsActive = true";
 
             return await connection.QueryFirstAsync<ProductModel>(query, new { Id = id });
         }
         catch (Exception ex)
         {
-            _logger.LogError("An error occurred while fetching product.", ex.Message);
+            _logger.LogError(string.Format("An error occurred while fetching product. {0}", ex.Message));
             return null;
         }
     }
@@ -89,18 +89,19 @@ public class ProductRepository : BaseRepository, IProductRepository
         {
             using IDbConnection connection = GetConnection();
             string query = @"
-                            SELECT  id_product AS Id, 
-                                    name, 
-                                    description, 
-                                    brand, 
-                                    price, 
-                                    stock, 
-                                    active, 
-                                    id_category AS CategoryId, 
-                                    registration_date AS RegistrationDate, 
-                                    modification_date AS ModificationDate
+                            SELECT 
+                                ProductId, 
+                                Name, 
+                                Description, 
+                                Brand, 
+                                Price, 
+                                Stock, 
+                                CategoryId, 
+                                CreatedDate, 
+                                LastModifiedDate
                             FROM product 
-                            WHERE active = 1
+                            WHERE IsActive = true
+                            ORDER BY ProductId
                             OFFSET @Skip ROWS
                             FETCH NEXT @Size ROWS ONLY;";
 
@@ -108,7 +109,7 @@ public class ProductRepository : BaseRepository, IProductRepository
         }
         catch (Exception ex)
         {
-            _logger.LogError("An error occurred while fetching products.", ex.Message);
+            _logger.LogError(string.Format("An error occurred while fetching products. {0}", ex.Message));
             return null;
         }
     }
@@ -119,24 +120,24 @@ public class ProductRepository : BaseRepository, IProductRepository
         {
             using IDbConnection connection = GetConnection();
             string query = @"
-                            SELECT  id_product AS Id, 
-                                    name, 
-                                    description, 
-                                    brand, 
-                                    price, 
-                                    stock, 
-                                    active, 
-                                    id_category AS CategoryId, 
-                                    registration_date AS RegistrationDate, 
-                                    modification_date AS ModificationDate
+                            SELECT 
+                                ProductId, 
+                                Name, 
+                                Description, 
+                                Brand, 
+                                Price, 
+                                Stock, 
+                                CategoryId, 
+                                CreatedDate, 
+                                LastModifiedDate
                             FROM product 
-                            WHERE active = 1;";
+                            WHERE IsActive = true;";
 
             return await connection.QueryAsync<ProductModel>(query);
         }
         catch (Exception ex)
         {
-            _logger.LogError("An error occurred while fetching products.", ex.Message);
+            _logger.LogError(string.Format("An error occurred while fetching products. {0}", ex.Message));
             return null;
         }
     }
@@ -149,13 +150,13 @@ public class ProductRepository : BaseRepository, IProductRepository
             string query = @"
                             SELECT Count(*)
                             FROM product
-                            WHERE active = 1";
+                            WHERE IsActive = true";
 
             return await connection.ExecuteScalarAsync<int>(query);
         }
         catch (Exception ex)
         {
-            _logger.LogError("An error occurred while getting total registered products.", ex.Message);
+            _logger.LogError(string.Format("An error occurred while getting total registered products. {0}", ex.Message));
             return default;
         }
     }
@@ -166,21 +167,21 @@ public class ProductRepository : BaseRepository, IProductRepository
         {
             using IDbConnection connection = GetConnection();
             string query = @"
-                            UPDATE catalog
-                            SET name = @Name, 
-                                description = @Description, 
-                                brand = @Brand, 
-                                price = @Price, 
-                                stock = @Stock, 
-                                modification_date = CURRENT_TIMESTAMP
-                            WHERE id_product = @Id;
-                            RETURNING id_product AS Id, name, description, brand, price, stock, active, id_category AS CategoryId, registration_date AS RegistrationDate, modification_date AS ModificationDate";
+                            UPDATE product
+                            SET Name = @Name, 
+                                Description = @Description, 
+                                Brand = @Brand, 
+                                Price = @Price, 
+                                Stock = @Stock, 
+                                LastModifiedDate = CURRENT_TIMESTAMP
+                            WHERE ProductId = @ProductId
+                            RETURNING ProductId, Name, Description, Brand, Price, Stock, CategoryId, CreatedDate, LastModifiedDate";
 
             return await connection.QueryFirstOrDefaultAsync(query, Product);
         }
         catch (Exception ex)
         {
-            _logger.LogError("An error occurred while updating product.", ex.Message);
+            _logger.LogError(string.Format("An error occurred while updating product. {0}", ex.Message));
             return null;
         }
     }

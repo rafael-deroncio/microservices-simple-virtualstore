@@ -48,7 +48,7 @@ public static class PaginationHelpers<T>
 
     private static Uri GetNextPage(Uri endpoint, int page, int size, int totalRecords)
     {
-        if (page - 1 >= 1 && page <= totalRecords)
+        if (page - 1 >= 0 && page <= totalRecords)
         {
             Uri uriNextPage = GetUriAddedQuery(endpoint.ToString(), nameof(page), (page + 1).ToString());
             return GetUriAddedQuery(uriNextPage.ToString(), nameof(size), size.ToString());

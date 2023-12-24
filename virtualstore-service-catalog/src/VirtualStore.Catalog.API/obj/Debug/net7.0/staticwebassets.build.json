@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "G4iGY+pid9L4tXMHivqvQpxHChqkBONDuXaazerfYaY=",
+  "Source": "VirtualStore.Catalog.API",
+  "BasePath": "_content/VirtualStore.Catalog.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

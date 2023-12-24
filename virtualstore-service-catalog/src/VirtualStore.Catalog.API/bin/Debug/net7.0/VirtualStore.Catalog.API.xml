@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VirtualStore.Catalog.API</name>
+    </assembly>
+    <members>
+        <member name="T:VirtualStore.Catalog.API.Controllers.CategoryController">
+            <summary>
+            Represents the API endpoint for managing categories.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.CategoryController.#ctor(VirtualStore.Catalog.Core.Services.Interfaces.ICategoryService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VirtualStore.Catalog.API.Controllers.CategoryController"/> class.
+            </summary>
+            <param name="categoryService">The category service instance used for category management operations.</param>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.CategoryController.GetCategory(System.Int32)">
+            <summary>
+            Retrieves a category by its ID.
+            </summary>
+            <param name="id">The ID of the category.</param>
+            <returns>An action result representing the response.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.CategoryController.GetCategories">
+            <summary>
+            Retrieves a list of categories.
+            </summary>
+            <returns>An action result representing the response.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.CategoryController.PostCategory(VirtualStore.Catalog.Domain.Requests.CategoryRequest)">
+            <summary>
+            Creates a new category.
+            </summary>
+            <param name="request">The category information to create.</param>
+            <returns>An action result representing the response.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.CategoryController.UpdateCategory(System.Int32,VirtualStore.Catalog.Domain.Requests.CategoryRequest)">
+            <summary>
+            Updates an existing category.
+            </summary>
+            <param name="id">The ID of the category to update.</param>
+            <param name="request">The updated category information.</param>
+            <returns>An action result representing the response.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.CategoryController.DeleteCategory(System.Int32)">
+            <summary>
+            Deletes a category by its ID.
+            </summary>
+            <param name="id">The ID of the category to delete.</param>
+            <returns>An action result representing the response.</returns>
+        </member>
+        <member name="T:VirtualStore.Catalog.API.Controllers.ProductController">
+            <summary>
+            Represents the API endpoint for managing products.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.ProductController.#ctor(VirtualStore.Catalog.Core.Services.Interfaces.IProductService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VirtualStore.Catalog.API.Controllers.ProductController"/> class.
+            </summary>
+            <param name="productService">The product service instance used for product management operations.</param>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.ProductController.GetProduct(System.Int32)">
+            <summary>
+            Retrieves a product by its ID.
+            </summary>
+            <param name="id">The ID of the product.</param>
+            <returns>An action result representing the response.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.ProductController.GetProducts(VirtualStore.Catalog.Domain.Requests.PaginationRequest)">
+            <summary>
+            Retrieves a paged list of products.
+            </summary>
+            <param name="pagination">contains 'page number' and 'page size' to pagination request</param>
+            <returns>An action result representing the response.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.ProductController.PostProduct(VirtualStore.Catalog.Domain.Requests.ProductRequest)">
+            <summary>
+            Creates a new product.
+            </summary>
+            <param name="request">The product information to create.</param>
+            <returns>An action result representing the response.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.ProductController.UpdateProduct(System.Int32,VirtualStore.Catalog.Domain.Requests.ProductRequest)">
+            <summary>
+            Updates an existing product.
+            </summary>
+            <param name="id">The ID of the product to update.</param>
+            <param name="request">The updated product information.</param>
+            <returns>An action result representing the response.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Controllers.ProductController.DeleteProduct(System.Int32)">
+            <summary>
+            Deletes a product by its ID.
+            </summary>
+            <param name="id">The ID of the product to delete.</param>
+            <returns>An action result representing the response.</returns>
+        </member>
+        <member name="T:VirtualStore.Catalog.API.Extensions.ApplicationBuilderExtensions">
+            <summary>
+            Extension methods for configuring and enhancing the application pipeline.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ApplicationBuilderExtensions.UseSwaggerCustomSettings(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures Swagger UI with custom settings for documentation.
+            </summary>
+            <param name="builder">The application builder.</param>
+            <returns>The updated application builder.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ApplicationBuilderExtensions.UseHandleException(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Adds middleware for handling exceptions in the request pipeline.
+            </summary>
+            <param name="builder">The application builder.</param>
+            <returns>The updated application builder.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ConfigurationExtensions.AddSecrets(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            Adds credentials to the configuration from a Secrets object.
+            </summary>
+            <param name="configuration">The configuration builder to add the credentials to.</param>
+            <returns>The modified configuration builder.</returns>
+        </member>
+        <member name="T:VirtualStore.Catalog.API.Extensions.ServiceCollectionExtensions">
+            <summary>
+            Extends IServiceCollection with custom service configuration methods.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ServiceCollectionExtensions.AddLowerCaseRouting(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures routing to automatically convert incoming URLs to lowercase.
+            </summary>
+            <param name="services">The service collection to add the lowercase routing configuration to.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ServiceCollectionExtensions.AddAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures JWT authentication based on provided configuration settings.
+            </summary>
+            <param name="services">The service collection to add the authentication configuration to.</param>
+            <param name="configuration">The configuration containing JWT settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ServiceCollectionExtensions.AddSwaggerCustomSettings(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures Swagger documentation generation using settings from appsettings.json.
+            </summary>
+            <param name="services">The service collection to add the Swagger configuration to.</param>
+            <param name="configuration">The configuration containing SwaggerGenDoc settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ServiceCollectionExtensions.AddAPIVersioningCustomSettings(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures custom settings for API versioning and API version explorer.
+            </summary>
+            <param name="services">The service collection to add the API versioning configuration to.</param>
+            <param name="configuration">The configuration containing API versioning settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ServiceCollectionExtensions.AddCorsCustomSettings(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures custom CORS settings based on the provided configuration.
+            </summary>
+            <param name="services">The service collection to add the CORS configuration to.</param>
+            <param name="configuration">The configuration containing CORS settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ServiceCollectionExtensions.AddAuthenticationSwaggerJwtBearer(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures Swagger to include JWT Bearer token authentication settings.
+            </summary>
+            <param name="services">The service collection to add the JWT Bearer authentication configuration to.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ServiceCollectionExtensions.AddServicesDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds service dependencies to the provided IServiceCollection.
+            </summary>
+            <param name="services">The IServiceCollection to add service dependencies to.</param>
+            <returns>The modified IServiceCollection.</returns>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ServiceCollectionExtensions.AddRepositoriesDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds repository dependencies to the provided IServiceCollection.
+            </summary>
+            <param name="services">The IServiceCollection to add repository dependencies to.</param>
+            <returns>The modified IServiceCollection.</returns>
+        </member>
+    </members>
+</doc>
