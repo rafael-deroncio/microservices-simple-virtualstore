@@ -4,7 +4,7 @@ using VirtualStore.Identity.Domain.Responses;
 
 namespace VirtualStore.Catalog.Core.Helpers;
 
-public static class PaginationHelpers<T>
+public static class PaginationHelper<T>
 {
     public static PaginationResponse<T> CreateResponse(IUriService service, T data, int page, int size, int count)
     {

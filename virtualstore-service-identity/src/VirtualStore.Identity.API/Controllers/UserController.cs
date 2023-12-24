@@ -34,7 +34,7 @@ public class UserController : ControllerBase
     /// <param name="username">The username of the user to retrieve.</param>
     /// <returns>Returns a user response if successful, or an exception response if failed.</returns>
     [HttpGet("{username}")]
-    //[Authorize(Roles = "User, Admnin")]
+    [Authorize(Roles = $", Admnin")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]

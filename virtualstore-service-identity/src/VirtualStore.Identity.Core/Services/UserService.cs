@@ -3,6 +3,7 @@ using VirtualStore.Identity.Core.Arguments;
 using VirtualStore.Identity.Core.Configurations.Enums;
 using VirtualStore.Identity.Core.Configurations.Mappers;
 using VirtualStore.Identity.Core.Exceptions;
+using VirtualStore.Identity.Core.Helpers;
 using VirtualStore.Identity.Core.Models;
 using VirtualStore.Identity.Core.Repositories.Interfaces;
 using VirtualStore.Identity.Core.Services.Interfaces;
@@ -42,6 +43,8 @@ public class UserService : IUserService
                     Email = request.Email,
                     CPF = request.CPF,
                 });
+
+            request.Password = await PasswordHelper.GeneratePasswordHashSHA256(request.Password);
 
             UserModel user = await _userRepository.InsertUser(
                 _objectConverter.Map<UserArgument>(request));
