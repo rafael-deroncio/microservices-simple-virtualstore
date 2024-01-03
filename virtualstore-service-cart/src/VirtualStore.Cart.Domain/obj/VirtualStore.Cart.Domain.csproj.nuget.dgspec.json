@@ -1,0 +1,63 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\rafael-deroncio\\OneDrive\\Documentos\\github\\dotnet\\microservices-simple-virtualstore\\virtualstore-service-cart\\src\\VirtualStore.Cart.Domain\\VirtualStore.Cart.Domain.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\rafael-deroncio\\OneDrive\\Documentos\\github\\dotnet\\microservices-simple-virtualstore\\virtualstore-service-cart\\src\\VirtualStore.Cart.Domain\\VirtualStore.Cart.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rafael-deroncio\\OneDrive\\Documentos\\github\\dotnet\\microservices-simple-virtualstore\\virtualstore-service-cart\\src\\VirtualStore.Cart.Domain\\VirtualStore.Cart.Domain.csproj",
+        "projectName": "VirtualStore.Cart.Domain",
+        "projectPath": "C:\\Users\\rafael-deroncio\\OneDrive\\Documentos\\github\\dotnet\\microservices-simple-virtualstore\\virtualstore-service-cart\\src\\VirtualStore.Cart.Domain\\VirtualStore.Cart.Domain.csproj",
+        "packagesPath": "C:\\Users\\rafael-deroncio\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rafael-deroncio\\OneDrive\\Documentos\\github\\dotnet\\microservices-simple-virtualstore\\virtualstore-service-cart\\src\\VirtualStore.Cart.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\rafael-deroncio\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://www.nuget.org/api/v2": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

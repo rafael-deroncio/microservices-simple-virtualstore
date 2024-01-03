@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VirtualStore.Cart.API</name>
+    </assembly>
+    <members>
+        <member name="T:VirtualStore.Cart.API.Extensions.ApplicationBuilderExtensions">
+            <summary>
+            Extension methods for configuring and enhancing the application pipeline.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ApplicationBuilderExtensions.UseSwaggerCustomSettings(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures Swagger UI with custom settings for documentation.
+            </summary>
+            <param name="builder">The application builder.</param>
+            <returns>The updated application builder.</returns>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ApplicationBuilderExtensions.UseHandleException(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Adds middleware for handling exceptions in the request pipeline.
+            </summary>
+            <param name="builder">The application builder.</param>
+            <returns>The updated application builder.</returns>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ConfigurationExtensions.AddSecrets(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            Adds credentials to the configuration from a Secrets object.
+            </summary>
+            <param name="configuration">The configuration builder to add the credentials to.</param>
+            <returns>The modified configuration builder.</returns>
+        </member>
+        <member name="T:VirtualStore.Cart.API.Extensions.ConfigureHostBuilderExtensions">
+            <summary>
+            Extension for configuring Serilog usage in the host.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ConfigureHostBuilderExtensions.UseSerilog(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Configures the usage of Serilog in the host.
+            </summary>
+            <param name="hostBuilder">The host builder.</param>
+            <returns>The configured host builder.</returns>
+        </member>
+        <member name="T:VirtualStore.Cart.API.Extensions.ServiceCollectionExtensions">
+            <summary>
+            Extends IServiceCollection with custom service configuration methods.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ServiceCollectionExtensions.AddLowerCaseRouting(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures routing to automatically convert incoming URLs to lowercase.
+            </summary>
+            <param name="services">The service collection to add the lowercase routing configuration to.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ServiceCollectionExtensions.AddAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures JWT authentication based on provided configuration settings.
+            </summary>
+            <param name="services">The service collection to add the authentication configuration to.</param>
+            <param name="configuration">The configuration containing JWT settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ServiceCollectionExtensions.AddSwaggerCustomSettings(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures Swagger documentation generation using settings from appsettings.json.
+            </summary>
+            <param name="services">The service collection to add the Swagger configuration to.</param>
+            <param name="configuration">The configuration containing SwaggerGenDoc settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ServiceCollectionExtensions.AddAPIVersioningCustomSettings(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures custom settings for API versioning and API version explorer.
+            </summary>
+            <param name="services">The service collection to add the API versioning configuration to.</param>
+            <param name="configuration">The configuration containing API versioning settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ServiceCollectionExtensions.AddCorsCustomSettings(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures custom CORS settings based on the provided configuration.
+            </summary>
+            <param name="services">The service collection to add the CORS configuration to.</param>
+            <param name="configuration">The configuration containing CORS settings.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ServiceCollectionExtensions.AddAuthenticationSwaggerJwtBearer(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures Swagger to include JWT Bearer token authentication settings.
+            </summary>
+            <param name="services">The service collection to add the JWT Bearer authentication configuration to.</param>
+            <returns>The modified service collection.</returns>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ServiceCollectionExtensions.AddServicesDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds service dependencies to the provided IServiceCollection.
+            </summary>
+            <param name="services">The IServiceCollection to add service dependencies to.</param>
+            <returns>The modified IServiceCollection.</returns>
+        </member>
+        <member name="M:VirtualStore.Cart.API.Extensions.ServiceCollectionExtensions.AddRepositoriesDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds repository dependencies to the provided IServiceCollection.
+            </summary>
+            <param name="services">The IServiceCollection to add repository dependencies to.</param>
+            <returns>The modified IServiceCollection.</returns>
+        </member>
+    </members>
+</doc>
