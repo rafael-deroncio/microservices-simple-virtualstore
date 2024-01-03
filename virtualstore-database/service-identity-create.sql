@@ -1,4 +1,3 @@
--- Antes de excluir as tabelas, remova as chaves estrangeiras que dependem da tabela Users
 ALTER TABLE IF EXISTS UserClaims DROP CONSTRAINT IF EXISTS userclaims_userid_fkey;
 ALTER TABLE IF EXISTS UserLogins DROP CONSTRAINT IF EXISTS userlogins_userid_fkey;
 ALTER TABLE IF EXISTS UserRoles DROP CONSTRAINT IF EXISTS userroles_userid_fkey;
@@ -6,22 +5,20 @@ ALTER TABLE IF EXISTS UserTokens DROP CONSTRAINT IF EXISTS usertokens_userid_fke
 ALTER TABLE IF EXISTS UserAddresses DROP CONSTRAINT IF EXISTS useraddresses_userid_fkey;
 ALTER TABLE IF EXISTS UserTelephones DROP CONSTRAINT IF EXISTS usertelephones_userid_fkey;
 
--- Agora, você pode excluir as tabelas
-DROP TABLE IF EXISTS UserRoles;
-DROP TABLE IF EXISTS UserClaims;
-DROP TABLE IF EXISTS UserTokens;
-DROP TABLE IF EXISTS UserLogins;
-DROP TABLE IF EXISTS UserAddresses;
-DROP TABLE IF EXISTS UserTelephones;
+DROP TABLE IF EXISTS UserRoles CASCADE;
+DROP TABLE IF EXISTS UserClaims CASCADE;
+DROP TABLE IF EXISTS UserTokens CASCADE;
+DROP TABLE IF EXISTS UserLogins CASCADE;
+DROP TABLE IF EXISTS UserAddresses CASCADE;
+DROP TABLE IF EXISTS UserTelephones CASCADE;
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS Roles CASCADE;
 DROP TABLE IF EXISTS Addresses CASCADE;
 DROP TABLE IF EXISTS Telephones CASCADE;
-DROP TABLE IF EXISTS Claims;
-DROP TABLE IF EXISTS Tokens;
-DROP TABLE IF EXISTS Logins;
+DROP TABLE IF EXISTS Claims CASCADE;
+DROP TABLE IF EXISTS Tokens CASCADE;
+DROP TABLE IF EXISTS Logins CASCADE;
 
--- Tabela de Papeis
 CREATE TABLE Roles
 (
     RoleId SERIAL PRIMARY KEY,
@@ -31,7 +28,6 @@ CREATE TABLE Roles
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Tabela de Reivindicações (Claims)
 CREATE TABLE Claims
 (
     ClaimId SERIAL PRIMARY KEY,
@@ -42,26 +38,32 @@ CREATE TABLE Claims
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Tabela de Tokens
 CREATE TABLE Tokens
 (
     TokenId SERIAL PRIMARY KEY,
-    TokenValue VARCHAR(128) NOT NULL,
+    TokenValue VARCHAR(1024) NOT NULL,
+    TokenType VARCHAR(128) NOT NULL,
     Expires TIMESTAMPTZ NOT NULL,
     Message VARCHAR(128) NOT NULL,
-    CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+    CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    LastModifiedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Tabela de Logins
 CREATE TABLE Logins
 (
     LoginId SERIAL PRIMARY KEY,
-    LoginProvider VARCHAR(128) NOT NULL,
-    ProviderKey VARCHAR(128) NOT NULL,
-    CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+    LoginProvider VARCHAR(128),
+    ProviderKey VARCHAR(128),
+    RequestIdentifier VARCHAR(512),
+    ActionType VARCHAR(128),
+    IpAddressess VARCHAR(128),
+    UserAgent VARCHAR(128),
+    CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    LastModifiedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Tabela de Endereços
 CREATE TABLE Addresses
 (
     AddressId SERIAL PRIMARY KEY,
@@ -75,7 +77,6 @@ CREATE TABLE Addresses
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Tabela de Telefones
 CREATE TABLE Telephones
 (
     TelephoneId SERIAL PRIMARY KEY,
@@ -86,7 +87,6 @@ CREATE TABLE Telephones
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Tabela de Usuários
 CREATE TABLE Users
 (
     UserId SERIAL PRIMARY KEY,
@@ -107,8 +107,6 @@ CREATE TABLE Users
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
-
--- Tabela de Associação entre Usuários e Endereços
 CREATE TABLE UserAddresses
 (
     Id SERIAL PRIMARY KEY,
@@ -119,7 +117,6 @@ CREATE TABLE UserAddresses
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Tabela de Associação entre Usuários e Telefones
 CREATE TABLE UserTelephones
 (
     Id SERIAL PRIMARY KEY,
@@ -130,10 +127,9 @@ CREATE TABLE UserTelephones
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Tabela de Associação entre Usuários e Papeis
 CREATE TABLE UserRoles
 (
-    Id SERIAL PRIMARY KEY,
+    UserRoleId SERIAL PRIMARY KEY,
     UserId INT REFERENCES Users(UserId) NOT NULL,
     RoleId INT REFERENCES Roles(RoleId) NOT NULL,
     CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
@@ -141,10 +137,9 @@ CREATE TABLE UserRoles
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Tabela de Associação entre Usuários e Reivindicações
 CREATE TABLE UserClaims
 (
-    Id SERIAL PRIMARY KEY,
+    UserClaimId SERIAL PRIMARY KEY,
     UserId INT REFERENCES Users(UserId) NOT NULL,
     ClaimId INT REFERENCES Claims(ClaimId) NOT NULL,
     CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
@@ -152,10 +147,9 @@ CREATE TABLE UserClaims
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Tabela de Tokens de Usuário
 CREATE TABLE UserTokens
 (
-    Id SERIAL PRIMARY KEY,
+    UserTokenId SERIAL PRIMARY KEY,
     UserId INT REFERENCES Users(UserId) NOT NULL,
     TokenId INT REFERENCES Tokens(TokenId) NOT NULL,
     CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
@@ -163,10 +157,9 @@ CREATE TABLE UserTokens
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Tabela de Associação entre Usuários e Logins
 CREATE TABLE UserLogins
 (
-    Id SERIAL PRIMARY KEY,
+    UserLoginId SERIAL PRIMARY KEY,
     UserId INT REFERENCES Users(UserId) NOT NULL,
     LoginId INT REFERENCES Logins(LoginId) NOT NULL,
     CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,

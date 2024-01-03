@@ -49,3 +49,16 @@ services:
       POSTGRES_DB: service-identity
     ports:
       - "5435:5432"
+
+  service-log:
+    image: postgres:latest
+    volumes:
+      - ./service-log-create.sql:/docker-entrypoint-initdb.d/service-log-create.sql
+    container_name: service-log
+    restart: always
+    environment:
+      POSTGRES_USER: virtualstore_db_creator
+      POSTGRES_PASSWORD: mNO40!XRZ7lS7
+      POSTGRES_DB: service-log
+    ports:
+      - "5436:5432"
