@@ -4,7 +4,7 @@ namespace VirtualStore.Identity.Core.Models;
 
 public class UserClaimModel : EntityConventionsDTO
 {
-    public int Id { get; set; }
+    public int UserClaimId { get; set; }
     public int UserId { get; set; }
     public int ClaimId { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace VirtualStore.Identity.Domain.Responses;
+﻿using System.Data;
+
+namespace VirtualStore.Identity.Domain.Responses;
 
 public class ApiResponse
 {
@@ -10,5 +12,5 @@ public class ApiResponse
 
     public string Role { get; set; }
 
-    public string Token { get; set; }
+    public TokenResponse Token { get; set; }
 }

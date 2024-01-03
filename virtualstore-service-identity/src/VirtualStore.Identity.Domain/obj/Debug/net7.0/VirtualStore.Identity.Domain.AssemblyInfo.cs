@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VirtualStore.Identity.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c274ca87f2c4fad85d613d77291ee76616717460")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09464240fafe7d7d9296e9391a85c2f8a299d76b")]
 [assembly: System.Reflection.AssemblyProductAttribute("VirtualStore.Identity.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VirtualStore.Identity.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

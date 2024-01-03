@@ -28,7 +28,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// Logs in a user.
+    /// LogIn a user.
     /// </summary>
     /// <param name="request">The login request data.</param>
     /// <returns>An object containing the result of the login operation.</returns>
@@ -39,7 +39,21 @@ public class AccountController : ControllerBase
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> LogIn(LogInRequest request)
-        => Ok(await _accountService.LogIn(request));
+        => Ok(await _accountService.LogIn(request, GetUserAgent(), GetIpAddresses()));
+
+    /// <summary>
+    /// LogOut a user.
+    /// </summary>
+    /// <param name="request">The unsubscribe request data.</param>
+    /// <returns>An object containing the result of the unsubscribe operation.</returns>
+    [HttpPost("logout")]
+    [Authorize(Roles = "Customer, Admin, Manager")]
+    [ProducesResponseType(typeof(SignOutResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult> LogOut(LogOutRequest request)
+        => Ok(await _accountService.LogOut(request, GetUserAgent(), GetIpAddresses()));
 
     /// <summary>
     /// Signs in a user.
@@ -53,7 +67,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> SignIn(SignInRequest request)
-        => Ok(await _accountService.SignIn(request));
+        => Ok(await _accountService.SignIn(request, GetUserAgent(), GetIpAddresses()));
 
     /// <summary>
     /// Signs out a user.
@@ -61,25 +75,15 @@ public class AccountController : ControllerBase
     /// <param name="request">The sign-out request data.</param>
     /// <returns>An object containing the result of the sign-out operation.</returns>
     [HttpPost("signout")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Customer, Admin, Manager")]
     [ProducesResponseType(typeof(SignOutResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> SignOut(SignOutRequest request)
-        => Ok(await _accountService.SignOut(request));
+        => Ok(await _accountService.SignOut(request, GetUserAgent(), GetIpAddresses()));
 
-    /// <summary>
-    /// Unsubscribes a user.
-    /// </summary>
-    /// <param name="request">The unsubscribe request data.</param>
-    /// <returns>An object containing the result of the unsubscribe operation.</returns>
-    [HttpPost("unsubscribe")]
-    [AllowAnonymous]
-    [ProducesResponseType(typeof(SignOutResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> Unsubscribe(UnsubscribeRequest request)
-        => Ok(await _accountService.Unsubscribe(request));
+    private string GetUserAgent() => HttpContext.Request.Headers["User-Agent"];
+    private string GetIpAddresses() => HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault()?.Trim() ?? 
+                                       HttpContext.Connection.RemoteIpAddress?.ToString();
 }

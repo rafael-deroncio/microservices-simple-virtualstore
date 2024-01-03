@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -6,6 +7,9 @@ using System.Reflection;
 using System.Text;
 using VirtualStore.Catalog.Core.Services;
 using VirtualStore.Identity.API.Settings;
+using VirtualStore.Identity.Core.Configurations.Mappers;
+using VirtualStore.Identity.Core.Managers;
+using VirtualStore.Identity.Core.Managers.Interfaces;
 using VirtualStore.Identity.Core.Middlewares;
 using VirtualStore.Identity.Core.Repositories;
 using VirtualStore.Identity.Core.Repositories.Interfaces;
@@ -221,8 +225,11 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IAuthorizeService, AuthorizeService>();
+
+        services.AddScoped<IRoleManager, RoleManager>();
+        services.AddScoped<IUserManager, UserManager>();
 
         // Service URI
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -244,6 +251,41 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddRepositoriesDependencyInjection(this IServiceCollection services)
     {
         services.AddSingleton<IUserRepository, UserRepository>();
+        services.AddSingleton <IRoleManagerRepository, RoleManagerRepository>();
+        services.AddSingleton<ITokenRepository, TokenRepository>();
+        services.AddSingleton<IAccountRepository, AccountRepository>();
+
+        return services;
+    }
+
+    /// <summary>
+    /// Adds an object converter to the dependency injection container.
+    /// </summary>
+    /// <param name="services">The collection of services to add to.</param>
+    /// <returns>The modified collection of services.</returns>
+    public static IServiceCollection AddObjectConverter(this IServiceCollection services)
+    {
+        services.AddSingleton<IObjectConverter, ObjectConverter>();
+
+        return services;
+    }
+
+    /// <summary>
+    /// Adds an identity initializer to the dependency injection container.
+    /// </summary>
+    /// <param name="services">The collection of services to add to.</param>
+    /// <returns>The modified collection of services.</returns>
+
+    public static IServiceCollection AddIdentityInitializer(this IServiceCollection services)
+    {
+        using (var serviceProvider = services.BuildServiceProvider())
+        {
+            var roleManager = serviceProvider.GetRequiredService<IRoleManager>();
+            var userManager = serviceProvider.GetRequiredService<IUserManager>();
+
+            roleManager.InitializeSeedRoles().Wait();
+            userManager.InitializeSeedUsers().Wait();
+        }
 
         return services;
     }

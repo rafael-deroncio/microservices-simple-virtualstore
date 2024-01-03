@@ -48,11 +48,4 @@ public static class ApplicationBuilderExtensions
 
         return builder;
     }
-
-    public static IApplicationBuilder UseIdentityInitializer(this IApplicationBuilder builder)
-    {
-        builder.UseMiddleware<IdentityMiddleware>();
-
-        return builder;
-    }
 }

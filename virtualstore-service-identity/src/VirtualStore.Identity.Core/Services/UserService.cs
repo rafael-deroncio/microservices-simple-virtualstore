@@ -4,8 +4,10 @@ using VirtualStore.Identity.Core.Configurations.Enums;
 using VirtualStore.Identity.Core.Configurations.Mappers;
 using VirtualStore.Identity.Core.Exceptions;
 using VirtualStore.Identity.Core.Helpers;
+using VirtualStore.Identity.Core.Managers.Interfaces;
 using VirtualStore.Identity.Core.Models;
 using VirtualStore.Identity.Core.Repositories.Interfaces;
+using VirtualStore.Identity.Core.Responses;
 using VirtualStore.Identity.Core.Services.Interfaces;
 using VirtualStore.Identity.Domain.Requests;
 using VirtualStore.Identity.Domain.Responses;
@@ -17,15 +19,18 @@ public class UserService : IUserService
     private readonly IUserRepository _userRepository;
     private readonly ILogger<UserService> _logger;
     private readonly IObjectConverter _objectConverter;
+    private readonly IRoleManager _roleManager;
 
     public UserService(
         IUserRepository userRepository,
         ILogger<UserService> logger,
-        IObjectConverter objectConverter)
+        IObjectConverter objectConverter,
+        IRoleManager roleManager)
     {
         _userRepository = userRepository;
         _logger = logger;
         _objectConverter = objectConverter;
+        _roleManager = roleManager;
     }
 
     public async Task<UserResponse> CreateUserProfile(UserRequest request)
@@ -46,10 +51,12 @@ public class UserService : IUserService
 
             request.Password = await PasswordHelper.GeneratePasswordHashSHA256(request.Password);
 
-            UserModel user = await _userRepository.InsertUser(
-                _objectConverter.Map<UserArgument>(request));
+            UserModel user = await _userRepository.InsertUser(_objectConverter.Map<UserArgument>(request));
 
-            return _objectConverter.Map<UserResponse>(user);
+            await _roleManager.SetRole(RoleType.Customer, request.Username);
+            await _roleManager.SetClaimByRole(RoleType.Customer, request.Username);
+
+            return _objectConverter.Map<UserResponse>(await _userRepository.GetUser(request.Username));
         }
         catch (UserException)
         {
@@ -70,14 +77,14 @@ public class UserService : IUserService
 
             UserModel user = await _userRepository.GetUser(username) ??
                 throw new UserException($"Username '{username}' not found!",
-                    ExceptionResponseType.Error,
+                    ExceptionType.Error,
                     System.Net.HttpStatusCode.NotFound);
 
             return await _userRepository.DeleteUser(username);
         }
         catch (UserException)
         {
-            throw; // No need to log or handle UserException, as it may be intentional.
+            throw; 
         }
         catch (Exception e)
         {
@@ -94,14 +101,14 @@ public class UserService : IUserService
 
             UserModel user = await _userRepository.GetUser(username) ??
                 throw new UserException($"Username '{username}' not found!",
-                    ExceptionResponseType.Error,
+                    ExceptionType.Error,
                     System.Net.HttpStatusCode.NotFound);
 
             return _objectConverter.Map<UserResponse>(user);
         }
         catch (UserException)
         {
-            throw; // No need to log or handle UserException, as it may be intentional.
+            throw; 
         }
         catch (Exception e)
         {
@@ -120,7 +127,7 @@ public class UserService : IUserService
 
             UserModel user = await _userRepository.GetUser(username) ??
                 throw new UserException($"Username '{username}' not found!",
-                    ExceptionResponseType.Error,
+                    ExceptionType.Error,
                     System.Net.HttpStatusCode.NotFound);
 
             UserArgument userUpdate = _objectConverter.Map<UserArgument>(request);
@@ -142,6 +149,38 @@ public class UserService : IUserService
         {
             _logger.LogError($"An error occurred while updating a user profile. {e.Message}");
             throw;
+        }
+    }
+
+    public async Task<UserLoginResponse> GetUserLogin(string username)
+    {
+        {
+            try
+            {
+                _logger.LogInformation($"Starting user search at {username}");
+
+                UserModel user = await _userRepository.GetUser(username) ??
+                    throw new UserException($"Username '{username}' not found!",
+                        ExceptionType.Error,
+                        System.Net.HttpStatusCode.NotFound);
+
+                return new UserLoginResponse()
+                {
+                    UserName = user.UserName,
+                    Password = user.PasswordHash,
+                    Role = _objectConverter.Map<RoleResponse>(user.Roles.First()),
+                    Claims = _objectConverter.Map<IEnumerable<ClaimResponse>>(user.Claims),
+                };
+            }
+            catch (UserException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"An error occurred while retrieving a user profile. {e.Message}");
+                throw;
+            }
         }
     }
 
@@ -181,17 +220,17 @@ public class UserService : IUserService
         {
             if (username != request.Username && !await _userRepository.UserNameExists(request.Username))
                 throw new UserException($"Username {request.Username} is not available!",
-                    ExceptionResponseType.Error,
+                    ExceptionType.Error,
                     System.Net.HttpStatusCode.NotFound);
 
-            if (!await _userRepository.EmailExists(request.Email, request.Username))
+            if (await _userRepository.EmailExists(request.Email, request.Username))
                 throw new UserException($"Email {request.Email} is not available!",
-                    ExceptionResponseType.Error,
+                    ExceptionType.Error,
                     System.Net.HttpStatusCode.NotFound);
 
-            if (!await _userRepository.CPFExists(request.CPF, request.Username))
+            if (await _userRepository.CPFExists(request.CPF, request.Username))
                 throw new UserException($"CPF {request.CPF} is not available!",
-                    ExceptionResponseType.Error,
+                    ExceptionType.Error,
                     System.Net.HttpStatusCode.NotFound);
         }
         catch (UserException e)

@@ -1,4 +1,14 @@
-﻿using VirtualStore.Identity.Core.Services.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Security.Claims;
+using VirtualStore.Identity.Core.Arguments;
+using VirtualStore.Identity.Core.Configurations.Enums;
+using VirtualStore.Identity.Core.Configurations.Mappers;
+using VirtualStore.Identity.Core.Exceptions;
+using VirtualStore.Identity.Core.Managers.Interfaces;
+using VirtualStore.Identity.Core.Models;
+using VirtualStore.Identity.Core.Repositories.Interfaces;
+using VirtualStore.Identity.Core.Services.Interfaces;
 using VirtualStore.Identity.Domain.Requests;
 using VirtualStore.Identity.Domain.Responses;
 
@@ -6,32 +16,89 @@ namespace VirtualStore.Identity.Core.Services;
 
 public class AuthorizeService : IAuthorizeService
 {
-    private readonly IJwtTokenService _jwtTokenService;
+    private readonly ITokenService _tokenService;
+    private readonly IRoleManager _roleManager;
 
-    public AuthorizeService(IJwtTokenService jwtTokenService)
+    public AuthorizeService(
+        ITokenService jwtTokenService, 
+        IRoleManager roleManager)
     {
-        _jwtTokenService = jwtTokenService;
+        _tokenService = jwtTokenService;
+        _roleManager = roleManager;
+
     }
 
-    private async Task<TokenResponse> GenerateAuthorizationToken()
+    public async Task DisableUserTokens(string username)
     {
-        var jwt = await _jwtTokenService.GenerateBearerToken();
+        await _tokenService.DisableUserTokens(username);
+    }
+
+    public async Task<TokenResponse> GetTokensAuthentication(TokenRequest request)
+    {
+        RoleType role = (RoleType)Enum.Parse(typeof(RoleType), request.Role);
+        IEnumerable<ClaimType> claims = request.Claims.Select(claim => (ClaimType)Enum.Parse(typeof(ClaimType), claim));
+
+        if (!await _roleManager.ContainsRole(role, request.Username))
+            throw new AuthorizationTokenException(
+                string.Format("User {0} canot contains role {1} in your profile.", request.Username, role.GetDescription()),
+                ExceptionType.Error,
+                System.Net.HttpStatusCode.Unauthorized);
+
+
+        request.Claims.ToList().ForEach(async claim =>
+        {
+            ClaimType claimType = (ClaimType)Enum.Parse(typeof(ClaimType), claim);
+
+            if (!await _roleManager.ContainsClaim(claimType, request.Username))
+                throw new AuthorizationTokenException(
+                    string.Format("User {0} canot contains claim {1} in your profile.", request.Username, claimType.GetDescription()),
+                    ExceptionType.Error,
+                    System.Net.HttpStatusCode.Unauthorized);
+        });
+
+        Models.TokenModel accessToken = await _tokenService.SaveUserToken(request.Username, role, claims, TokenType.AccessToken);
+        Models.TokenModel refreshToken = await _tokenService.SaveUserToken(request.Username, role, claims, TokenType.RefreshToken);
 
         return new TokenResponse
         {
-            Token = jwt.TokenValue,
-            Expires = jwt.Expires,
-            Message = jwt.Message
+            AccessToken = new()
+            {
+                Token = accessToken.TokenValue,
+                Expires = accessToken.Expires,
+                Message = accessToken.Message
+            },
+            RefreshToken = new()
+            {
+                Token = refreshToken.TokenValue,
+                Expires = refreshToken.Expires,
+                Message = refreshToken.Message
+            }
         };
     }
 
-    public Task<TokenResponse> GetTokenAuthentication(TokenRequest request)
+    public async Task<TokenResponse> RefreshTokensAuthentication(ValidateTokenRequest request)
     {
-        return GenerateAuthorizationToken();
+        (TokenModel accessToken, TokenModel refreshToken) = await _tokenService.RefreshToken(request);
+
+        return new TokenResponse
+        {
+            AccessToken = new()
+            {
+                Token = accessToken.TokenValue,
+                Expires = accessToken.Expires,
+                Message = accessToken.Message
+            },
+            RefreshToken = new()
+            {
+                Token = refreshToken.TokenValue,
+                Expires = refreshToken.Expires,
+                Message = refreshToken.Message
+            }
+        };
     }
 
-    public Task<TokenResponse> ValidateTokenAuthentication(ValidateTokenRequest request)
+    public async Task<bool> ValidateRefreshToken(string refreshToken, string username)
     {
-        throw new NotImplementedException();
+        return await _tokenService.GetUserToken(TokenType.RefreshToken, username) != null;
     }
 }

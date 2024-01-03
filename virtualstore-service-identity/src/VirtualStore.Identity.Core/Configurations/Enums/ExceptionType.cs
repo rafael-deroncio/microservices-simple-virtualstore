@@ -2,7 +2,7 @@
 
 namespace VirtualStore.Identity.Core.Configurations.Enums; 
 
-public enum ExceptionResponseType
+public enum ExceptionType
 {
     [Description("Information")]
     Information,
@@ -16,7 +16,7 @@ public enum ExceptionResponseType
 
 public static class ExceptionResponseExtensions
 {
-    public static string GetDescription(this UserClaimType value)
+    public static string GetDescription(this ExceptionType value)
     {
         System.Reflection.FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VirtualStore.Identity.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09464240fafe7d7d9296e9391a85c2f8a299d76b")]
 [assembly: System.Reflection.AssemblyProductAttribute("VirtualStore.Identity.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VirtualStore.Identity.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

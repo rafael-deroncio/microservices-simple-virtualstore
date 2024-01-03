@@ -1,5 +1,5 @@
 ﻿namespace VirtualStore.Identity.Domain.Responses;
-public class UnsubscribeResponse : ApiResponse
+public class LogOutResponse : ApiResponse
 {
 
 }

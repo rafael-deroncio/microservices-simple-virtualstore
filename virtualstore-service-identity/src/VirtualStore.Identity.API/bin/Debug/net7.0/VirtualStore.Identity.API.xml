@@ -17,10 +17,17 @@
         </member>
         <member name="M:VirtualStore.Identity.API.Controllers.AccountController.LogIn(VirtualStore.Identity.Domain.Requests.LogInRequest)">
             <summary>
-            Logs in a user.
+            LogIn a user.
             </summary>
             <param name="request">The login request data.</param>
             <returns>An object containing the result of the login operation.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Controllers.AccountController.LogOut(VirtualStore.Identity.Domain.Requests.LogOutRequest)">
+            <summary>
+            LogOut a user.
+            </summary>
+            <param name="request">The unsubscribe request data.</param>
+            <returns>An object containing the result of the unsubscribe operation.</returns>
         </member>
         <member name="M:VirtualStore.Identity.API.Controllers.AccountController.SignIn(VirtualStore.Identity.Domain.Requests.SignInRequest)">
             <summary>
@@ -36,13 +43,6 @@
             <param name="request">The sign-out request data.</param>
             <returns>An object containing the result of the sign-out operation.</returns>
         </member>
-        <member name="M:VirtualStore.Identity.API.Controllers.AccountController.Unsubscribe(VirtualStore.Identity.Domain.Requests.UnsubscribeRequest)">
-            <summary>
-            Unsubscribes a user.
-            </summary>
-            <param name="request">The unsubscribe request data.</param>
-            <returns>An object containing the result of the unsubscribe operation.</returns>
-        </member>
         <member name="T:VirtualStore.Identity.API.Controllers.TokenController">
             <summary>
             Controller for handling authentication and authorization operations.
@@ -54,19 +54,12 @@
             </summary>
             <param name="authorizeService">The service responsible for authentication and authorization.</param>
         </member>
-        <member name="M:VirtualStore.Identity.API.Controllers.TokenController.GetTokenAuthentication(VirtualStore.Identity.Domain.Requests.TokenRequest)">
+        <member name="M:VirtualStore.Identity.API.Controllers.TokenController.RefreshTokensAuthentication(VirtualStore.Identity.Domain.Requests.ValidateTokenRequest)">
             <summary>
-            Gets an authentication token.
-            </summary>
-            <param name="request">The authentication request data.</param>
-            <returns>An object containing the authentication token.</returns>
-        </member>
-        <member name="M:VirtualStore.Identity.API.Controllers.TokenController.ValidateTokenAuthentication(VirtualStore.Identity.Domain.Requests.ValidateTokenRequest)">
-            <summary>
-            Validates an authentication token.
+            Refreshes authentication tokens.
             </summary>
             <param name="request">The token validation request data.</param>
-            <returns>An object containing the result of the token validation.</returns>
+            <returns>An object containing the refreshed authentication tokens.</returns>
         </member>
         <member name="T:VirtualStore.Identity.API.Controllers.UserController">
             <summary>
@@ -134,6 +127,18 @@
             <param name="configuration">The configuration builder to add the credentials to.</param>
             <returns>The modified configuration builder.</returns>
         </member>
+        <member name="T:VirtualStore.Identity.API.Extensions.ConfigureHostBuilderExtensions">
+            <summary>
+            Extension for configuring Serilog usage in the host.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ConfigureHostBuilderExtensions.UseSerilog(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Configures the usage of Serilog in the host.
+            </summary>
+            <param name="hostBuilder">The host builder.</param>
+            <returns>The configured host builder.</returns>
+        </member>
         <member name="T:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions">
             <summary>
             Extends IServiceCollection with custom service configuration methods.
@@ -198,6 +203,20 @@
             </summary>
             <param name="services">The IServiceCollection to add repository dependencies to.</param>
             <returns>The modified IServiceCollection.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions.AddObjectConverter(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds an object converter to the dependency injection container.
+            </summary>
+            <param name="services">The collection of services to add to.</param>
+            <returns>The modified collection of services.</returns>
+        </member>
+        <member name="M:VirtualStore.Identity.API.Extensions.ServiceCollectionExtensions.AddIdentityInitializer(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds an identity initializer to the dependency injection container.
+            </summary>
+            <param name="services">The collection of services to add to.</param>
+            <returns>The modified collection of services.</returns>
         </member>
     </members>
 </doc>

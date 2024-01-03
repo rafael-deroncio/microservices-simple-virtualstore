@@ -2,21 +2,18 @@
 
 namespace VirtualStore.Identity.Core.Configurations.Enums;
 
-public enum UserClaimType
+public enum RequestType
 {
-    [Description("Administrator")]
-    Admin,
+    [Description("Microservice")]
+    Microservice,
 
-    [Description("Customer")]
-    Customer,
-
-    [Description("Manager")]
-    Manager,
+    [Description("Client")]
+    Client,
 }
 
-public static class UserRoleExtensions
+public static class RequestTypeExtensions
 {
-    public static string GetDescription(this UserClaimType value)
+    public static string GetDescription(this RequestType value)
     {
         System.Reflection.FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
 

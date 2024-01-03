@@ -1,4 +1,5 @@
-﻿using VirtualStore.Identity.Domain.Requests;
+﻿using VirtualStore.Identity.Core.Responses;
+using VirtualStore.Identity.Domain.Requests;
 using VirtualStore.Identity.Domain.Responses;
 
 namespace VirtualStore.Identity.Core.Services.Interfaces;
@@ -36,4 +37,12 @@ public interface IUserService
     /// <param name="username">The username of the user profile to delete.</param>
     /// <returns>A task that represents the asynchronous operation and returns true if the user profile is successfully deleted.</returns>
     Task<bool> DeleteUserProfile(string username);
+
+    /// <summary>
+    /// Retrieves login information for a user based on the username.
+    /// </summary>
+    /// <param name="username">Username of the user.</param>
+    /// <returns>A task representing the asynchronous operation. The task result contains a UserLoginResponse object.</returns>
+    Task<UserLoginResponse> GetUserLogin(string username);
+
 }

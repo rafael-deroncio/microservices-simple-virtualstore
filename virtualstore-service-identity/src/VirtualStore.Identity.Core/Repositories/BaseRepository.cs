@@ -16,7 +16,7 @@ public class BaseRepository
     public IDbConnection GetConnection()
     {
         string connectionString = _configuration["IdentityConnectionString"];
-        NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+        NpgsqlConnection connection = new(connectionString);
         connection.Open();
         return connection;
     }

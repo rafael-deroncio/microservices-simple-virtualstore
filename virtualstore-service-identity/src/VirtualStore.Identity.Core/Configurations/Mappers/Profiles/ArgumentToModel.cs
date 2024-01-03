@@ -11,5 +11,8 @@ public class ArgumentToModelProfile : Profile
         CreateMap<UserArgument, UserModel>().ReverseMap();
         CreateMap<AddressArgument, AddressModel>().ReverseMap();
         CreateMap<TelephoneArgument, TelephoneModel>().ReverseMap();
+        CreateMap<RoleArgument, RoleModel>().ReverseMap();
+        CreateMap<ClaimArgument, ClaimModel>().ReverseMap();
+        CreateMap<TokenArgument, TokenModel>().ReverseMap();
     }
 }

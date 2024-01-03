@@ -6,10 +6,9 @@ namespace VirtualStore.Identity.Domain.Requests;
 public class LogInRequest
 {
     [JsonIgnore]
-    public string RequestId => Guid.NewGuid().ToString();
+    public string RequestId {  get => Guid.NewGuid().ToString(); }
 
     [Required(ErrorMessage = "The user field is required")]
-    [DataType(DataType.EmailAddress)]
     public string Username { get; set; }
 
     [Required(ErrorMessage = "The password field is required")]

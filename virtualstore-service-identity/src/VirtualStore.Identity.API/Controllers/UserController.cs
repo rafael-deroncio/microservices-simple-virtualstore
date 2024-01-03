@@ -4,6 +4,7 @@ using VirtualStore.Identity.Core.Services.Interfaces;
 using VirtualStore.Identity.Core.Responses;
 using VirtualStore.Identity.Domain.Requests;
 using VirtualStore.Identity.Domain.Responses;
+using VirtualStore.Identity.Core.Configurations.Enums;
 
 namespace VirtualStore.Identity.API.Controllers;
 
@@ -13,7 +14,7 @@ namespace VirtualStore.Identity.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [ApiController]
-//[Authorize]
+[Authorize]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userProfileService;
@@ -22,7 +23,6 @@ public class UserController : ControllerBase
     /// Initializes a new instance of the <see cref="UserController"/> class.
     /// </summary>
     /// <param name="userProfileService">The user profile service.</param>
-
     public UserController(IUserService userProfileService)
     {
         _userProfileService = userProfileService;
@@ -34,7 +34,7 @@ public class UserController : ControllerBase
     /// <param name="username">The username of the user to retrieve.</param>
     /// <returns>Returns a user response if successful, or an exception response if failed.</returns>
     [HttpGet("{username}")]
-    [Authorize(Roles = $", Admnin")]
+    [Authorize(Roles = "Admin, Manager")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -47,7 +47,7 @@ public class UserController : ControllerBase
     /// <param name="request">The user creation request.</param>
     /// <returns>Returns a user response if successful, or an exception response if failed.</returns>
     [HttpPost]
-    //[Authorize(Roles = "User, Admnin")]
+    [Authorize(Roles = "Admin, Manager")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -61,7 +61,7 @@ public class UserController : ControllerBase
     /// <param name="request">The user update request.</param>
     /// <returns>Returns a user response if successful, or an exception response if failed.</returns>
     [HttpPut("{username}")]
-    //[Authorize(Roles = "User, Admnin")]
+    [Authorize(Roles = "Customer, Admin, Manager")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -74,7 +74,7 @@ public class UserController : ControllerBase
     /// <param name="username">The ID of the user to delete.</param>
     /// <returns>Returns a user response if successful, or an exception response if failed.</returns>
     [HttpDelete("{username}")]
-    //[Authorize(Roles = "User, Admnin")]
+    [Authorize(Roles = "Admin, Manager")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]

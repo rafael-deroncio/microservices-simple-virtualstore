@@ -71,50 +71,5 @@ public interface IUserRepository
     /// </summary>
     /// <returns>A task that represents the asynchronous operation and returns the count of users.</returns>
     Task<int> GetCountUsers();
-
-    #endregion
-
-    #region User Address Operations
-
-    /// <summary>
-    /// Inserts a collection of addresses into the database.
-    /// </summary>
-    /// <param name="addressArguments">The collection of address arguments for insertion.</param>
-    /// <param name="connection">Optional: The database connection.</param>
-    /// <param name="transaction">Optional: The database transaction.</param>
-    /// <returns>A task that represents the asynchronous operation and returns the inserted addresses.</returns>
-    Task<IEnumerable<AddressModel>> InsertAddresses(IEnumerable<AddressArgument> addressArguments, IDbConnection connection = null, IDbTransaction transaction = null);
-
-    /// <summary>
-    /// Inserts a collection of user addresses into the database.
-    /// </summary>
-    /// <param name="userAddressUpdate">The collection of user address arguments for insertion.</param>
-    /// <param name="connection">Optional: The database connection.</param>
-    /// <param name="transaction">Optional: The database transaction.</param>
-    /// <returns>A task that represents the asynchronous operation and returns the inserted user addresses.</returns>
-    Task<IEnumerable<UserAddressModel>> InsertUserAddresses(IEnumerable<UserAddressArgument> userAddressUpdate, IDbConnection connection = null, IDbTransaction transaction = null);
-
-    #endregion
-
-    #region User Telephones Operations
-
-    /// <summary>
-    /// Inserts a collection of telephones into the database.
-    /// </summary>
-    /// <param name="telephoneArguments">The collection of telephone arguments for insertion.</param>
-    /// <param name="connection">Optional: The database connection.</param>
-    /// <param name="transaction">Optional: The database transaction.</param>
-    /// <returns>A task that represents the asynchronous operation and returns the inserted telephones.</returns>
-    Task<IEnumerable<TelephoneModel>> InsertTelephones(IEnumerable<TelephoneArgument> telephoneArguments, IDbConnection connection = null, IDbTransaction transaction = null);
-
-    /// <summary>
-    /// Inserts a collection of user telephones into the database.
-    /// </summary>
-    /// <param name="userAddressUpdate">The collection of user telephone arguments for insertion.</param>
-    /// <param name="connection">Optional: The database connection.</param>
-    /// <param name="transaction">Optional: The database transaction.</param>
-    /// <returns>A task that represents the asynchronous operation and returns the inserted user telephones.</returns>
-    Task<IEnumerable<UserTelephoneModel>> InsertUserTelephones(IEnumerable<UserTelephoneArgument> userAddressUpdate, IDbConnection connection = null, IDbTransaction transaction = null);
-
     #endregion
 }

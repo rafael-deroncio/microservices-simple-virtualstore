@@ -1,13 +1,16 @@
 using VirtualStore.Identity.API.Extensions;
-using VirtualStore.Identity.Core.Configurations.Mappers;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddSecrets();
 
+builder.Host.UseSerilog();
+
 builder.Services.AddLowerCaseRouting();
 
 builder.Services.AddControllers();
+
+builder.Services.AddObjectConverter();
 
 builder.Services.AddServicesDependencyInjection();
 
@@ -25,7 +28,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddAuthenticationSwaggerJwtBearer();
 
-builder.Services.AddSingleton<IObjectConverter, ObjectConverter>();
+builder.Services.AddIdentityInitializer();
 
 WebApplication app = builder.Build();
 

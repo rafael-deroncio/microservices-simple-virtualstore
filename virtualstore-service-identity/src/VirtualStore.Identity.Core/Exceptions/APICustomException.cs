@@ -5,17 +5,20 @@ namespace VirtualStore.Identity.Core.Exceptions;
 
 public class APICustomException : Exception
 {
-    public ExceptionResponseType ResponseType { get; set; }
+    public ExceptionType ResponseType { get; set; }
     public HttpStatusCode StatusCode { get; set; }
 
+    public APICustomException(string message) : base(message)
+    {
+    }
 
-    public APICustomException(string message, ExceptionResponseType responseType, HttpStatusCode statusCode) : base(message)
+    public APICustomException(string message, ExceptionType responseType = ExceptionType.Error, HttpStatusCode statusCode = HttpStatusCode.UnprocessableEntity) : base(message)
     {
         ResponseType = responseType;
         StatusCode = statusCode;
     }
 
-    public APICustomException(string message, ExceptionResponseType responseType, Exception innerException, HttpStatusCode statusCode) : base(message, innerException)
+    public APICustomException(string message, Exception innerException, ExceptionType responseType = ExceptionType.Error, HttpStatusCode statusCode = HttpStatusCode.UnprocessableEntity) : base(message, innerException)
     {
         ResponseType = responseType;
         StatusCode = statusCode;
@@ -23,6 +26,7 @@ public class APICustomException : Exception
 
     public APICustomException(string message, Exception innerException) : base(message, innerException)
     {
-
+        ResponseType = ExceptionType.Error;
+        StatusCode = HttpStatusCode.UnprocessableEntity;
     }
 }

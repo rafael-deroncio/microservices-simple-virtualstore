@@ -16,7 +16,9 @@ public static class ConfigurationExtensions
         configuration.AddInMemoryCollection(new Dictionary<string, string>
         {
             {"IdentityConnectionString", secrets.IdentityConnectionString},
+            {"LogDBConnectionString", secrets.LogDBConnectionString },
             {"JwtSymmetricSecurityKey", secrets.JwtSymmetricSecurityKey},
+            {"SecretHashRefreshToken", secrets.SecretHashRefreshToken}
         });
 
         return configuration;

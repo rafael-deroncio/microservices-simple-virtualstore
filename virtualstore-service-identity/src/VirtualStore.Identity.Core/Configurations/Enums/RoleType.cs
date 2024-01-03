@@ -1,19 +1,23 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace VirtualStore.Identity.Core.Configurations.Enums;
 
-public enum RequestRoleType
+public  enum RoleType
 {
-    [Description("Microservice")]
-    Microservice,
+    [Description("Administrator")]
+    Admin,
 
-    [Description("Client")]
-    Client,
+    [Description("Customer")]
+    Customer,
+
+    [Description("Manager")]
+    Manager,
 }
 
-public static class RequestRoleExtensions
+public static class RoleTypeExtensions
 {
-    public static string GetDescription(this UserClaimType value)
+    public static string GetDescription(this RoleType value)
     {
         System.Reflection.FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
 

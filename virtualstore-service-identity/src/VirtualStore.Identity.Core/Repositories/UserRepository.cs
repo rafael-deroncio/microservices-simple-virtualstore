@@ -7,6 +7,7 @@ using VirtualStore.Identity.Core.Arguments;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using System.Transactions;
+using VirtualStore.Identity.Core.Exceptions;
 
 namespace VirtualStore.Identity.Core.Repositories;
 
@@ -109,8 +110,8 @@ public class UserRepository : BaseRepository, IUserRepository
                 LEFT JOIN UserTelephones UP ON U.UserId = UP.UserId
                 LEFT JOIN Telephones P ON UP.TelephoneId = P.TelephoneId
 
-                WHERE U.UserName = @Username"
-            ;
+                WHERE U.UserName = @Username
+                    AND U.IsActive = true";
 
             Dictionary<int, UserModel> dataUserDict = new Dictionary<int, UserModel>();
 
@@ -181,8 +182,9 @@ public class UserRepository : BaseRepository, IUserRepository
         }
         catch(Exception ex)
         {
-            _logger.LogError(ex, "Error getting user.");
-            throw;
+            string message = "Error getting user.";
+            _logger.LogError(ex, message);
+            throw new UserException(message, ex);
         }
     }
 
@@ -209,11 +211,20 @@ public class UserRepository : BaseRepository, IUserRepository
 
             return await GetUser(argument.UserName);
         }
-        catch(Exception ex)
+        catch(UserAddressException)
+        {
+            throw;
+        }
+        catch (UserTelephoneException)
+        {
+            throw;
+        }
+        catch (Exception ex)
         {
             transaction.Rollback();
-            _logger.LogError(ex, "Error inserting user.");
-            throw;
+            string message = "Error inserting user.";
+            _logger.LogError(ex, message);
+            throw new UserException(message, ex);
         }
     }
     
@@ -247,42 +258,21 @@ public class UserRepository : BaseRepository, IUserRepository
 
             return await GetUser(argument.UserName);
         }
+        catch (UserAddressException)
+        {
+            throw;
+        }
+        catch (UserTelephoneException)
+        {
+            throw;
+        }
         catch (Exception ex)
         {
             transaction.Rollback();
-            _logger.LogError(ex, "Error updating user.");
-            throw;
+            string message = "Error updating user.";
+            _logger.LogError(ex, message);
+            throw new UserException(message, ex);
         }
-    }
-
-    private async Task SaveAndAssociateTelephones(UserArgument argument, IDbConnection connection, IDbTransaction transaction)
-    {
-        string sql = string.Format(
-                    @"WITH inserted_telephone AS (
-                          INSERT INTO Telephones (PhoneNumber, PhoneType, CreatedDate, LastModifiedDate, IsActive)
-                          VALUES (@PhoneNumber, @PhoneType, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true)
-                          RETURNING TelephoneId, PhoneNumber, PhoneType, CreatedDate, LastModifiedDate, IsActive
-                        )
-                        INSERT INTO UserTelephones (UserId, TelephoneId, CreatedDate, LastModifiedDate, IsActive)
-                        VALUES ({0}, (SELECT TelephoneId FROM inserted_telephone), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true)",
-                    argument.UserId);
-
-        await connection.ExecuteAsync(sql, argument.Telephones, transaction: transaction);
-    }
-
-    private async Task SaveAndAssociateAddresses(UserArgument argument, IDbConnection connection, IDbTransaction transaction)
-    {
-        string sql = string.Format(
-                    @"WITH inserted_address AS (
-                          INSERT INTO Addresses (Street, City, State, ZipCode, Country, CreatedDate, LastModifiedDate, IsActive)
-                          VALUES (@Street, @City, @State, @ZipCode, @Country, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true)
-                          RETURNING AddressId, Street, City, State, ZipCode, Country, CreatedDate, LastModifiedDate, IsActive
-                        )
-                        INSERT INTO UserAddresses (UserId, AddressId, CreatedDate, LastModifiedDate, IsActive)
-                        VALUES ({0}, (SELECT AddressId FROM inserted_address), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true)",
-                    argument.UserId);
-
-        await connection.ExecuteAsync(sql, argument.Addresses, transaction: transaction);
     }
 
     public async Task<bool> DeleteUser(string username)
@@ -291,169 +281,303 @@ public class UserRepository : BaseRepository, IUserRepository
         using IDbTransaction transaction = connection.BeginTransaction();
         try
         {
-            await DeleteUserAssociations(username, connection, transaction);
+            await DisableUserAddresses(username, connection, transaction);
+            await DisableUserTelephones(username, connection, transaction);
+            await DisableUserRoles(username, connection, transaction);
+            await DisableUserClaims(username, connection, transaction);
+            await DisableUserLogins(username, connection, transaction);
+            await DisableUserTokens(username, connection, transaction);
 
-            string deleteUserQuery = @"DELETE FROM Users WHERE UserName = @UserName";
-            await connection.ExecuteAsync(deleteUserQuery, new { UserName = username }, transaction);
+            string query = @"
+                            UPDATE Users 
+                            SET IsActive = false,
+                                LastModifiedDate = CURRENT_TIMESTAMP
+                            WHERE UserName = @UserName";
 
-            transaction.Commit();
+            if (await connection.ExecuteAsync(query, new { UserName = username }, transaction) > 0)
+            {
+                transaction.Commit();
+                return true;
+            }
 
-            return true;
+            throw new UserException(
+                "Error deleting user.", 
+                Configurations.Enums.ExceptionType.Error, 
+                System.Net.HttpStatusCode.UnprocessableEntity);
+
+        }
+        catch (UserException ex)
+        {
+            transaction.Rollback();
+            throw new UserException(ex.Message, ex);
+        }
+        catch (UserAddressException) { transaction.Rollback(); throw; }
+        catch (UserTelephoneException) { transaction.Rollback(); throw; }
+        catch (UserRoleException) { transaction.Rollback(); throw; }
+        catch (UserClaimException) { transaction.Rollback(); throw; }
+        catch (UserLogInException) { transaction.Rollback(); throw; }
+        catch (UserTokenException) { transaction.Rollback(); throw; }
+        catch (Exception ex)
+        {
+            string message = string.Format("Error deleting user. {0}", ex.Message);
+            _logger.LogInformation(ex, message);
+            throw new UserException(message, ex);
+        }
+    }
+
+    private async Task SaveAndAssociateTelephones(UserArgument argument, IDbConnection connection, IDbTransaction transaction)
+    {
+        try
+        {
+            string sql = string.Format(
+                        @"WITH inserted_telephone AS (
+                          INSERT INTO Telephones (PhoneNumber, PhoneType, CreatedDate, LastModifiedDate, IsActive)
+                          VALUES (@PhoneNumber, @PhoneType, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true)
+                          RETURNING TelephoneId, PhoneNumber, PhoneType, CreatedDate, LastModifiedDate, IsActive
+                        )
+                        INSERT INTO UserTelephones (UserId, TelephoneId, CreatedDate, LastModifiedDate, IsActive)
+                        VALUES ({0}, (SELECT TelephoneId FROM inserted_telephone), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true)",
+                        argument.UserId);
+
+            await connection.ExecuteAsync(sql, argument.Telephones, transaction: transaction);
         }
         catch (Exception ex)
         {
-            transaction.Rollback();
-            _logger.LogError(ex, "Error deleting user.");
-            throw;
+            string message = "Error inserting or associate user telephones.";
+            _logger.LogError(ex, message);
+            throw new UserAddressException(message, ex);
         }
     }
-    public async Task<IEnumerable<AddressModel>> InsertAddresses(IEnumerable<AddressArgument> addressArguments, IDbConnection connection = null, IDbTransaction transaction = null)
+
+    private async Task SaveAndAssociateAddresses(UserArgument argument, IDbConnection connection, IDbTransaction transaction)
     {
-        string sql = @"INSERT INTO Addresses (Street, City, State, ZipCode, Country, CreatedDate, LastModifiedDate, IsActive)
-                       VALUES (@Street, @City, @State, @ZipCode, @Country, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true)
-                       RETURNING AddressId, Street, City, State, ZipCode, Country, CreatedDate, LastModifiedDate, IsActive";
-
-        List<AddressModel> addresses = new List<AddressModel>();
-
-        if (connection == null)
-            using (connection = GetConnection())
-
-        if (transaction == null)
-            using (connection.BeginTransaction())
-
-        foreach (AddressArgument addressUpdate in addressArguments)
-        {                            
-            addresses.Add(await connection.QueryFirstOrDefaultAsync<AddressModel>(sql, addressUpdate, transaction: transaction));
-        }
-
-        transaction.Commit();
-
-        return addresses.AsEnumerable();
-    }
-
-    public async Task<IEnumerable<UserAddressModel>> InsertUserAddresses(IEnumerable<UserAddressArgument> userAddressArguments, IDbConnection connection = null, IDbTransaction transaction = null)
-    {
-        string sql = @"INSERT INTO UserAddresses (UserId, AddressId, CreatedDate, LastModifiedDate, IsActive)
-                       VALUES (@UserId, @AddressId, @CreatedDate, @LastModifiedDate, true)
-                       RETURNING Id, UserId, AddressId, CreatedDate, LastModifiedDate, IsActive";
-
-        List<UserAddressModel> userAddresses = new List<UserAddressModel>();
-        
-        if (connection == null)
-            using (connection = GetConnection())
-
-        if (transaction == null)
-            using (connection.BeginTransaction())
-        
-        foreach (UserAddressArgument addressUpdate in userAddressArguments)
+        try
         {
-            userAddresses.Add(await connection.QueryFirstOrDefaultAsync<UserAddressModel>(sql, addressUpdate, transaction: transaction));
+            string sql = string.Format(
+                        @"WITH inserted_address AS (
+                          INSERT INTO Addresses (Street, City, State, ZipCode, Country, CreatedDate, LastModifiedDate, IsActive)
+                          VALUES (@Street, @City, @State, @ZipCode, @Country, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true)
+                          RETURNING AddressId, Street, City, State, ZipCode, Country, CreatedDate, LastModifiedDate, IsActive
+                        )
+                        INSERT INTO UserAddresses (UserId, AddressId, CreatedDate, LastModifiedDate, IsActive)
+                        VALUES ({0}, (SELECT AddressId FROM inserted_address), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true)",
+                        argument.UserId);
+
+            await connection.ExecuteAsync(sql, argument.Addresses, transaction: transaction);
         }
-
-        transaction.Commit();
-
-        return userAddresses.AsEnumerable();
+        catch (Exception ex)
+        {
+            string message = "Error inserting or associate user address.";
+            _logger.LogError(ex, message);
+            throw new UserAddressException(message, ex);
+        }
     }
 
-    public async Task<IEnumerable<TelephoneModel>> InsertTelephones(IEnumerable<TelephoneArgument> telephoneArguments, IDbConnection connection = null, IDbTransaction transaction = null)
+    private async Task DisableUserAddresses(string username, IDbConnection connection, IDbTransaction transaction)
     {
-        string sql = @"INSERT INTO Telephones (PhoneNumber, PhoneType, CreatedDate, LastModifiedDate, IsActive)
-                       VALUES (@PhoneNumber, @PhoneType, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true)
-                       RETURNING TelephoneId, PhoneNumber, PhoneType, CreatedDate, LastModifiedDate, IsActive";
-
-        List<TelephoneModel> telephones = new List<TelephoneModel>();
-
-        foreach (TelephoneArgument telephone in telephoneArguments)
+        try
         {
-            if (connection == null)
-                using (connection = GetConnection())
-                    telephones.Add(await connection.QueryFirstOrDefaultAsync<TelephoneModel>(sql, telephone, transaction: transaction));
-            else
-                telephones.Add(await connection.QueryFirstOrDefaultAsync<TelephoneModel>(sql, telephone, transaction: transaction));
-        }
+            string query = @"
+                            UPDATE UserAddresses 
+                            SET IsActive = false, 
+                                LastModifiedDate = CURRENT_TIMESTAMP
+                            WHERE UserId = (SELECT UserId FROM Users WHERE UserName = @UserName);";
 
-        return telephones.AsEnumerable();
+            await connection.ExecuteAsync(query, new { UserName = username }, transaction);
+        }
+        catch (Exception ex)
+        {
+            string message = "Error when disassociating the user's address";
+            _logger.LogError(ex, message);
+            throw new UserAddressException(message, ex);
+        }
     }
 
-    public async Task<IEnumerable<UserTelephoneModel>> InsertUserTelephones(IEnumerable<UserTelephoneArgument> userTelephoneArguments, IDbConnection connection = null, IDbTransaction transaction = null)
+    private async Task DisableUserTelephones(string username, IDbConnection connection, IDbTransaction transaction)
     {
-        string sql = @"INSERT INTO UserTelephones (UserId, TelephoneId, CreatedDate, LastModifiedDate, IsActive)
-                       VALUES (@UserId, @TelephoneId, @CreatedDate, @LastModifiedDate, true)
-                       RETURNING Id, UserId, TelephoneId, CreatedDate, LastModifiedDate, IsActive";
-
-        List<UserTelephoneModel> userTelephones = new List<UserTelephoneModel>();
-
-        if (connection == null)
-            using (connection = GetConnection())
-
-        if (transaction == null)
-            using (connection.BeginTransaction())
-                        
-        foreach (UserTelephoneArgument userTelephone in userTelephoneArguments)
+        try
         {
-            userTelephones.Add(await connection.QueryFirstOrDefaultAsync<UserTelephoneModel>(sql, userTelephone, transaction: transaction));
-        }
+            string query = @"
+                            UPDATE UserTelephones
+                            SET IsActive = false, 
+                                LastModifiedDate = CURRENT_TIMESTAMP
+                            WHERE UserId = (SELECT UserId FROM Users WHERE UserName = @UserName);";
 
-        return userTelephones.AsEnumerable();
+            await connection.ExecuteAsync(query, new { UserName = username }, transaction);
+        }
+        catch (Exception ex)
+        {
+            string message = "Error when disassociating the user's number telephones";
+            _logger.LogError(ex, message);
+            throw new UserTelephoneException(message, ex);
+        }
+    }
+
+    private async Task DisableUserRoles(string username, IDbConnection connection, IDbTransaction transaction)
+    {
+        try
+        {
+            string query = @"
+                            UPDATE UserRoles
+                            SET IsActive = false, 
+                                LastModifiedDate = CURRENT_TIMESTAMP
+                            WHERE UserId = (SELECT UserId FROM Users WHERE UserName = @UserName);";
+
+            await connection.ExecuteAsync(query, new { UserName = username }, transaction);
+        }
+        catch (Exception ex)
+        {
+            string message = "Error when disassociating the user's roles";
+            _logger.LogError(ex, message);
+            throw new UserRoleException(message, ex);
+        }
+    }
+
+    private async Task DisableUserClaims(string username, IDbConnection connection, IDbTransaction transaction)
+    {
+        try
+        {
+            string query = @"
+                            UPDATE UserClaims
+                            SET IsActive = false, 
+                                LastModifiedDate = CURRENT_TIMESTAMP
+                            WHERE UserId = (SELECT UserId FROM Users WHERE UserName = @UserName);";
+
+            await connection.ExecuteAsync(query, new { UserName = username }, transaction);
+        }
+        catch (Exception ex)
+        {
+            string message = "Error when disassociating the user's claims";
+            _logger.LogError(ex, message);
+            throw new UserClaimException(message, ex);
+        }
+    }
+
+    private async Task DisableUserLogins(string username, IDbConnection connection, IDbTransaction transaction)
+    {
+        try
+        {
+            string query = @"
+                            UPDATE UserLogins
+                            SET IsActive = false, 
+                                LastModifiedDate = CURRENT_TIMESTAMP
+                            WHERE UserId = (SELECT UserId FROM Users WHERE UserName = @UserName);";
+
+            await connection.ExecuteAsync(query, new { UserName = username }, transaction);
+        }
+        catch (Exception ex)
+        {
+            string message = "Error when disassociating the user's logins";
+            _logger.LogError(ex, message);
+            throw new UserLogInException(message, ex);
+        }
+    }
+
+    private async Task DisableUserTokens(string username, IDbConnection connection, IDbTransaction transaction)
+    {
+        try
+        {
+            string query = @"
+                            UPDATE UserTokens
+                            SET IsActive = false, 
+                                LastModifiedDate = CURRENT_TIMESTAMP
+                            WHERE UserId = (SELECT UserId FROM Users WHERE UserName = @UserName);";
+
+            await connection.ExecuteAsync(query, new { UserName = username }, transaction);
+        }
+        catch (Exception ex)
+        {
+            string message = "Error when disassociating the user's tokens";
+            _logger.LogError(ex, message);
+            throw new UserTokenException(message, ex);
+        }
     }
 
     public async Task<bool> UserNameExists(string username)
     {
-        using IDbConnection connection = GetConnection();
-        string query = @"SELECT Count(*) FROM Users WHERE UserName = @UserName";
-        return await connection.ExecuteScalarAsync<int>(query, new { UserName = username }) > 0;
+        try
+        {
+            using IDbConnection connection = GetConnection();
+            string query = @"SELECT UserId FROM Users WHERE UserName = @UserName AND IsActive = true";
+            var result = await connection.ExecuteScalarAsync<int>(query, new { UserName = username });
+            return result > 0;
+        }
+        catch(Exception ex)
+        {
+            string message = "Error when checking if the user already exists.";
+            _logger.LogError(ex, message);
+            throw new UserException(message, ex);
+        }
     }
 
     public async Task<bool> EmailExists(string email, string username = null)
     {
-        StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.Append("SELECT Count(*) FROM Users WHERE Email = @Email");
-
-        DynamicParameters parameters = new DynamicParameters();
-        parameters.Add("Email", email);
-
-        if (!string.IsNullOrEmpty(username))
+        try
         {
-            queryBuilder.Append(" AND UserName = @UserName");
-            parameters.Add("UserName", username);
-        }
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.Append("SELECT Count(*) FROM Users WHERE Email = @Email AND IsActive = true");
 
-        using IDbConnection connection = GetConnection();
-        return await connection.ExecuteScalarAsync<int>(queryBuilder.ToString(), parameters) > 0;
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("Email", email);
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                queryBuilder.Append(" AND UserName = @UserName");
+                parameters.Add("UserName", username);
+            }
+
+            using IDbConnection connection = GetConnection();
+            return await connection.ExecuteScalarAsync<int>(queryBuilder.ToString(), parameters) > 0;
+        }
+        catch (Exception ex)
+        {
+            string message = "Error when checking if the e-mail already exists.";
+            _logger.LogError(ex, message);
+            throw new UserException(message, ex);
+        }
     }
 
     public async Task<bool> CPFExists(string cpf, string username = null)
     {
-        StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.Append("SELECT Count(*) FROM Users WHERE CPF = @CPF");
-
-        DynamicParameters parameters = new DynamicParameters();
-        parameters.Add("CPF", cpf);
-
-        if (!string.IsNullOrEmpty(username))
+        try
         {
-            queryBuilder.Append(" AND UserName = @UserName");
-            parameters.Add("UserName", username);
-        }
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.Append("SELECT Count(*) FROM Users WHERE CPF = @CPF AND IsActive = true");
 
-        using IDbConnection connection = GetConnection();
-        return await connection.ExecuteScalarAsync<int>(queryBuilder.ToString(), parameters) > 0;
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("CPF", cpf);
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                queryBuilder.Append(" AND UserName = @UserName");
+                parameters.Add("UserName", username);
+            }
+
+            using IDbConnection connection = GetConnection();
+            return await connection.ExecuteScalarAsync<int>(queryBuilder.ToString(), parameters) > 0;
+        }
+        catch (Exception ex)
+        {
+            string message = "Error when checking if the cpf already exists.";
+            _logger.LogError(ex, message);
+            throw new UserException(message, ex);
+        }
     }
 
     public async Task<int> GetCountUsers()
     {
-        using IDbConnection connection = GetConnection();
-        string query = @"SELECT Count(*) FROM Users";
-        return await connection.ExecuteScalarAsync<int>(query);
-    }
-    
-    private async Task DeleteUserAssociations(string username, IDbConnection connection, IDbTransaction transaction)
-    {
-        string deleteAssociationsQuery = @"
-        DELETE FROM UserAddresses WHERE UserId = (SELECT UserId FROM Users WHERE UserName = @UserName);
-        DELETE FROM UserTelephones WHERE UserId = (SELECT UserId FROM Users WHERE UserName = @UserName);";
-
-        await connection.ExecuteAsync(deleteAssociationsQuery, new { UserName = username }, transaction);
+        try
+        {
+            using IDbConnection connection = GetConnection();
+            string query = @"SELECT Count(*) FROM Users WHERE IsActive = true";
+            return await connection.ExecuteScalarAsync<int>(query);
+        }
+        catch (Exception ex)
+        {
+            string message = "Error when checking number of users.";
+            _logger.LogError(ex, message);
+            throw new UserException(message, ex);
+        }
     }
     #endregion
 }

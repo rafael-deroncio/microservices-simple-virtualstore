@@ -10,7 +10,7 @@ public static class SecretsConfigurations
         try
         {
             IDeserializer deserializer = new DeserializerBuilder().Build();
-            using StreamReader reader = new StreamReader(@"./secrets.yaml");
+            using StreamReader reader = new(@"./secrets.yaml");
             return deserializer.Deserialize<Secrets>(reader);
         }
         catch (Exception ex)

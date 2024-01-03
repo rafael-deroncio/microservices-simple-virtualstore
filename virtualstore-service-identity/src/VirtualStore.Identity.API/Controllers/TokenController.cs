@@ -13,6 +13,7 @@ namespace VirtualStore.Identity.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [ApiController]
+[Authorize]
 public class TokenController : ControllerBase
 {
     private readonly IAuthorizeService _authorizeService;
@@ -25,30 +26,17 @@ public class TokenController : ControllerBase
     {
         _authorizeService = authorizeService;
     }
-
+    
     /// <summary>
-    /// Gets an authentication token.
-    /// </summary>
-    /// <param name="request">The authentication request data.</param>
-    /// <returns>An object containing the authentication token.</returns>
-    [HttpPost]
-    [AllowAnonymous]
-    [ProducesResponseType(typeof(TokenResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetTokenAuthentication([FromBody] TokenRequest request)
-        => Ok(await _authorizeService.GetTokenAuthentication(request));
-
-    /// <summary>
-    /// Validates an authentication token.
+    /// Refreshes authentication tokens.
     /// </summary>
     /// <param name="request">The token validation request data.</param>
-    /// <returns>An object containing the result of the token validation.</returns>
-    [HttpPost("valid")]
-    [AllowAnonymous]
+    /// <returns>An object containing the refreshed authentication tokens.</returns>
+    [HttpPost("refresh")]
+    [Authorize(Roles = "Customer, Admin, Manager")]
     [ProducesResponseType(typeof(TokenResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> ValidateTokenAuthentication([FromBody] ValidateTokenRequest request)
-        => Ok(await _authorizeService.ValidateTokenAuthentication(request));
+    public async Task<IActionResult> RefreshTokensAuthentication([FromBody] ValidateTokenRequest request)
+        => Ok(await _authorizeService.RefreshTokensAuthentication(request));
 }

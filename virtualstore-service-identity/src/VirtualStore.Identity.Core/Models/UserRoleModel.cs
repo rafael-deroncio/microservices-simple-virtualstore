@@ -4,7 +4,7 @@ namespace VirtualStore.Identity.Core.Models;
 
 public class UserRoleModel : EntityConventionsDTO
 {
-    public int Id { get; set; }
+    public int UserRoleId { get; set; }
     public int UserId { get; set; }
     public int RoleId { get; set; }
 }
