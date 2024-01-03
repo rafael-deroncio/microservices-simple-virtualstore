@@ -2,7 +2,7 @@
 
 namespace VirtualStore.Catalog.Core.Configurations.Enums;
 
-public enum ExceptionResponseType
+public enum ExceptionType
 {
     [Description("Information")]
     Information,

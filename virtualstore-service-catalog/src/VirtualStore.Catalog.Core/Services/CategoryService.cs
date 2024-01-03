@@ -1,7 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using VirtualStore.Catalog.Core.Arguments;
 using VirtualStore.Catalog.Core.Configurations.Mappers;
+using VirtualStore.Catalog.Core.Exceptions;
+using VirtualStore.Catalog.Core.Helpers;
 using VirtualStore.Catalog.Core.Model;
+using VirtualStore.Catalog.Core.Repositories;
 using VirtualStore.Catalog.Core.Repositories.Interfaces;
 using VirtualStore.Catalog.Core.Services.Interfaces;
 using VirtualStore.Catalog.Domain.Requests;
@@ -14,15 +17,18 @@ public class CategoryService : ICategoryService
     private readonly IObjectConverter _objectConverter;
     private readonly ICategoryRepository _categoryRepository;
     private readonly ILogger<CategoryService> _logger;
+    private readonly IUriService _uriService;
 
     public CategoryService(
         IObjectConverter objectConverter,
         ICategoryRepository categoryRepository,
-        ILogger<CategoryService> logger)
+        ILogger<CategoryService> logger,
+        IUriService uriService)
     {
         _objectConverter = objectConverter;
         _categoryRepository = categoryRepository;
         _logger = logger;
+        _uriService = uriService;
     }
 
     public async Task<CategoryResponse> CreateCategory(CategoryRequest category)
@@ -31,60 +37,92 @@ public class CategoryService : ICategoryService
 
         try
         {
-            CategoryModel existingCategory = (await _categoryRepository.GetCategorys())
-                .FirstOrDefault(
-                    c => c.Name.ToUpper().Trim() == category.Name.ToUpper().Trim() &&
-                    c.Description.ToUpper().Trim() == category.Description.ToUpper().Trim() &&
-                    c.IsActive);
+            if (await _categoryRepository.CategoryExists(category.Name))
+                throw new CategoryException(
+                    $"Category {category.Name} is not available!",
+                    Configurations.Enums.ExceptionType.Error,
+                    System.Net.HttpStatusCode.NotFound);
 
-            if (existingCategory != null)
-                throw new Exception($"Category already registered at id {existingCategory.CategoryId} at {existingCategory.CreatedDate}");
-
-            CategoryModel newCategory = await _categoryRepository.CreateCategory(_objectConverter.Map<CategoryArgument>(category));
-
-            return _objectConverter.Map<CategoryResponse>(newCategory);
+            return _objectConverter.Map<CategoryResponse>(
+                await _categoryRepository.CreateCategory(
+                    _objectConverter.Map<CategoryArgument>(category)
+                    )
+                );
         }
+        catch (CategoryException) { throw; }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-            return default;
+            throw;
         }
     }
 
     public async Task<bool> DeleteCategory(int id)
     {
-        _logger.LogInformation("Starting treatment of the request in {0} of {1} to {2}", nameof(CategoryService), nameof(DeleteCategory), id);
+        _logger.LogInformation("Starting treatment of the request in {0} of {1} to ID: {2}", nameof(CategoryService), nameof(DeleteCategory), id);
 
         try
         {
-            CategoryModel category = await _categoryRepository.GetCategory(id);
-
-            if (category is null || !category.IsActive)
-                return default;
+            CategoryModel categoryModel = await _categoryRepository.GetCategory(id) ??
+                throw new CategoryException($"Category ID: {id} not found!",
+                    Configurations.Enums.ExceptionType.Error,
+                    System.Net.HttpStatusCode.NotFound);
 
             return await _categoryRepository.DeleteCategory(id);
         }
+        catch (CategoryException) { throw; }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-            return default;
+            throw;
+        }
+    }
+
+    public async Task<PaginationResponse<IEnumerable<CategoryResponse>>> GetCategories(PaginationRequest pagination)
+    {
+        _logger.LogInformation("Starting treatment of the request in {0} of {1}. Page {2} Size {3}", nameof(CategoryService), nameof(GetCategories), pagination.Page, pagination.Size);
+
+        try
+        {
+            PaginationArgument paginationArgument = _objectConverter.Map<PaginationArgument>(pagination);
+            IEnumerable<CategoryModel> categories = await _categoryRepository.GetCategories(paginationArgument);
+
+            return PaginationHelpers<IEnumerable<CategoryResponse>>.CreateResponse(
+                service: _uriService,
+                data: _objectConverter.Map<IEnumerable<CategoryResponse>>(categories),
+                page: paginationArgument.Page,
+                size: paginationArgument.Size,
+                count: await _categoryRepository.GetTotalRegisteredCategories());
+        }
+        catch (CategoryException) { throw; }
+        catch (Exception ex)
+        {
+            _logger.LogError("An error occurred while retrieving categories. {0}", ex.Message);
+            throw;
         }
     }
 
     public async Task<IEnumerable<CategoryResponse>> GetCategories()
     {
-        _logger.LogInformation("Starting treatment of the request in {0} of {1}", nameof(CategoryService), nameof(GetCategories));
-
         try
         {
-            IEnumerable<CategoryModel> categories = await _categoryRepository.GetCategorys();
-            return _objectConverter.Map<IEnumerable<CategoryResponse>>(categories).OrderBy(category => category.Id);
+            IEnumerable<CategoryModel> categories = await _categoryRepository.GetCategories();
+            return _objectConverter.Map<IEnumerable<CategoryResponse>>(categories.OrderBy(category => category.CategoryId));
+        }
+        catch (CategoryException)
+        {
+            throw;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message);
-            return default;
+            _logger.LogError($"An error occurred while retrieving categories. {ex.Message}");
+            throw;
         }
+    }
+
+    public async Task<CategoryResponse> GetCategorieByProduct(int productId)
+    {
+        return await _categoryRepository.GetCategoryByProduct(productId);
     }
 
     public async Task<CategoryResponse> GetCategory(int id)
@@ -93,41 +131,43 @@ public class CategoryService : ICategoryService
 
         try
         {
-            CategoryModel category = await _categoryRepository.GetCategory(id);
-
-            if (category is null || !category.IsActive)
-                return default;
+            CategoryModel category = await _categoryRepository.GetCategory(id) ??
+                throw new CategoryException($"Category ID: {id} not found!",
+                    Configurations.Enums.ExceptionType.Error,
+                    System.Net.HttpStatusCode.NotFound);
 
             return _objectConverter.Map<CategoryResponse>(category);
         }
+        catch (CategoryException) { throw; }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-            return default;
+            throw;
         }
     }
 
     public async Task<CategoryResponse> UpdateCategory(int id, CategoryRequest category)
     {
-        _logger.LogInformation("Starting treatment of the request in {0} of {1} to {2}", nameof(CategoryService), nameof(UpdateCategory), category);
+        _logger.LogInformation("Starting treatment of the request in {0} of {1} to {2}", nameof(CategoryService), nameof(UpdateCategory), category.Name);
 
         try
         {
-            CategoryModel categoryModel = await _categoryRepository.GetCategory(id);
+            CategoryModel categoryModel = await _categoryRepository.GetCategory(id) ??
+                throw new CategoryException($"Category '{category.Name}' not found!",
+                    Configurations.Enums.ExceptionType.Error,
+                    System.Net.HttpStatusCode.NotFound);
 
-            if (category is null || !categoryModel.IsActive)
-                return default;
-
-            CategoryArgument argument = _objectConverter.Map<CategoryArgument>(category);
-
-            categoryModel = await _categoryRepository.UpdateCategory(argument);
-
-            return _objectConverter.Map<CategoryResponse>(categoryModel);
+            return _objectConverter.Map<CategoryResponse>(
+                await _categoryRepository.UpdateCategory(
+                    _objectConverter.Map<CategoryArgument>(category)
+                    )
+                );
         }
+        catch (CategoryException) {  throw; }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-            return default;
+            throw;
         }
     }
 }

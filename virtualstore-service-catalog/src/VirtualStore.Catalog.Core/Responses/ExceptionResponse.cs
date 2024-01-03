@@ -4,7 +4,7 @@ namespace VirtualStore.Catalog.Core.Responses;
 
 public class ExceptionResponse
 {
-    public ExceptionResponseType ResponseType { get; set; }
+    public ExceptionType ResponseType { get; set; }
 
     public string Tittle { get; set; }
 

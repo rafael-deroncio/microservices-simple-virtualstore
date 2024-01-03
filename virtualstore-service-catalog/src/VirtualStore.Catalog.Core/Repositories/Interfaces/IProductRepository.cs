@@ -1,4 +1,5 @@
-﻿using VirtualStore.Catalog.Core.Arguments;
+﻿using System.Data;
+using VirtualStore.Catalog.Core.Arguments;
 using VirtualStore.Catalog.Core.Model;
 
 namespace VirtualStore.Catalog.Core.Repositories.Interfaces;
@@ -13,7 +14,7 @@ public interface IProductRepository
     /// </summary>
     /// <param name="id">The ID of the product to retrieve.</param>
     /// <returns>A task representing the asynchronous operation. The result is a ProductModel object if found, otherwise null.</returns>
-    Task<ProductModel> GetProduct(int id);
+    Task<ProductModel> GetProduct(int id, IDbConnection connection = null);
 
     /// <summary>
     /// Retrieves a paginated collection of products.
@@ -54,4 +55,14 @@ public interface IProductRepository
     /// </summary>
     /// <returns>A task representing the asynchronous operation. The result is an integer representing the total count of products.</returns>
     Task<int> GetTotalRegisteredProducts();
+
+    /// <summary>
+    /// Checks if a product with the specified name already exists.
+    /// </summary>
+    /// <param name="product">The name of the product to check for existence.</param>
+    /// <returns>
+    /// A task representing the asynchronous operation. The result is a boolean indicating 
+    /// whether a product with the specified name already exists (true) or not (false).
+    /// </returns>
+    Task<bool> ProductExists(string product);
 }

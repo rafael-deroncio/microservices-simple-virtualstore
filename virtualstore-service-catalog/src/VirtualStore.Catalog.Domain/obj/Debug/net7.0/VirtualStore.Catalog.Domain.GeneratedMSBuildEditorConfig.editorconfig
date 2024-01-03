@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = VirtualStore.Catalog.Domain
-build_property.ProjectDir = c:\Users\rafael-deroncio\OneDrive\Documentos\github\dotnet\microservices-simple-virtualstore\virtualstore-service-catalog\src\VirtualStore.Catalog.Domain\
+build_property.ProjectDir = C:\Users\rafael-deroncio\OneDrive\Documentos\github\dotnet\microservices-simple-virtualstore\virtualstore-service-catalog\src\VirtualStore.Catalog.Domain\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

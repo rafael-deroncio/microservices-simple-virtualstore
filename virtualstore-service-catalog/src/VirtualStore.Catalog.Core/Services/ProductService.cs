@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using VirtualStore.Catalog.Core.Arguments;
 using VirtualStore.Catalog.Core.Configurations.Mappers;
+using VirtualStore.Catalog.Core.Exceptions;
 using VirtualStore.Catalog.Core.Helpers;
 using VirtualStore.Catalog.Core.Model;
+using VirtualStore.Catalog.Core.Repositories;
 using VirtualStore.Catalog.Core.Repositories.Interfaces;
 using VirtualStore.Catalog.Core.Services.Interfaces;
 using VirtualStore.Catalog.Domain.Requests;
@@ -38,24 +40,29 @@ public class ProductService : IProductService
 
         try
         {
-            ProductModel existingProduct = (await _productRepository.GetProducts())
-                .FirstOrDefault(
-                    c => c.Name.ToUpper().Trim() == product.Name.ToUpper().Trim() &&
-                    c.Description.ToUpper().Trim() == product.Description.ToUpper().Trim() &&
-                    c.Brand.ToUpper().Trim() == product.Brand.ToUpper().Trim() &&
-                    c.IsActive);
+            if (await _productRepository.ProductExists(product.Name))
+                throw new ProductException(
+                    $"Product {product.Name} is not available!",
+                    Configurations.Enums.ExceptionType.Error,
+                    System.Net.HttpStatusCode.NotFound);
 
-            if (existingProduct != null)
-                throw new Exception($"Product already registered at id {existingProduct.CategoryId} at {existingProduct.CreatedDate}");
+            if(await _categoryService.GetCategory(product.CategoryId) == null)
+                throw new ProductException(
+                    $"Category with ID {product.CategoryId} not exists!",
+                    Configurations.Enums.ExceptionType.Error,
+                    System.Net.HttpStatusCode.NotFound);
 
-            ProductModel newProduct = await _productRepository.CreateProduct(_objectConverter.Map<ProductArgument>(product));
-
-            return _objectConverter.Map<ProductResponse>(newProduct);
+            return _objectConverter.Map<ProductResponse>(
+                await _productRepository.CreateProduct(
+                    _objectConverter.Map<ProductArgument>(product)
+                    )
+                );
         }
+        catch (ProductException) { throw; }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-            return default;
+            throw;
         }
     }
 
@@ -65,17 +72,18 @@ public class ProductService : IProductService
 
         try
         {
-            ProductModel product = await _productRepository.GetProduct(id);
-
-            if (product is null || !product.IsActive)
-                return default;
+            ProductModel product = await _productRepository.GetProduct(id) ??
+                throw new ProductException($"Product ID: {id} not found!",
+                    Configurations.Enums.ExceptionType.Error,
+                    System.Net.HttpStatusCode.NotFound);
 
             return await _productRepository.DeleteProduct(id);
         }
+        catch (ProductException) { throw; }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-            return default;
+            throw;
         }
     }
 
@@ -91,34 +99,20 @@ public class ProductService : IProductService
             if (products is null)
                 return new PaginationResponse<IEnumerable<ProductResponse>>();
 
-            IEnumerable<ProductResponse> productsResponse = products.Join(
-                    await _categoryService.GetCategories(),
-                    product => product.CategoryId,
-                    category => category.Id,
-                    (product, category) => new ProductResponse
-                    {
-                        Id = product.CategoryId,
-                        Name = product.Name,
-                        Description = product.Description,
-                        Brand = product.Brand,
-                        Price = product.Price,
-                        Stock = product.Stock,
-                        Active = product.IsActive,
-                        Category = category
-                    }
-                );
 
             return PaginationHelpers<IEnumerable<ProductResponse>>.CreateResponse(
                 service: _uriService,
-                data: productsResponse,
+                data: _objectConverter.Map<IEnumerable<ProductResponse>>(products),
                 page: paginationArgument.Page, 
                 size: paginationArgument.Size,
                 count: await _productRepository.GetTotalRegisteredProducts());
         }
+        catch (ProductException) { throw; }
+        catch (CategoryException) { throw; }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message);
-            return default;
+            _logger.LogError("An error occurred while retrieving products. {0}", ex.Message);
+            throw;
         }
     }
 
@@ -128,18 +122,15 @@ public class ProductService : IProductService
 
         try
         {
-            ProductModel product = await _productRepository.GetProduct(id);
+            ProductModel product = await _productRepository.GetProduct(id) ??
+                throw new ProductException($"Product ID: {id} not found!",
+                    Configurations.Enums.ExceptionType.Error,
+                    System.Net.HttpStatusCode.NotFound);
 
-            if (product is null || !product.IsActive)
-                return default;
-
-            ProductResponse response = _objectConverter.Map<ProductResponse>(product);
-            CategoryResponse category = await _categoryService.GetCategory(product.CategoryId);
-
-            response.Category = category;
-
-            return response;
+            return _objectConverter.Map<ProductResponse>(product); ;
         }
+        catch (ProductException) { throw; }
+        catch (CategoryException) { throw; }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
@@ -153,17 +144,24 @@ public class ProductService : IProductService
 
         try
         {
-            ProductModel categoryModel = await _productRepository.GetProduct(id);
+            ProductModel productModel = await _productRepository.GetProduct(id) ??
+                throw new CategoryException($"Product '{product.Name}' not found!",
+                    Configurations.Enums.ExceptionType.Error,
+                    System.Net.HttpStatusCode.NotFound);
 
-            if (product is null || !categoryModel.IsActive)
-                return default;
+            CategoryResponse categoryModel = await _categoryService.GetCategory(product.CategoryId) ??
+                throw new CategoryException($"Category with id '{product.CategoryId}' not found!",
+                    Configurations.Enums.ExceptionType.Error,
+                    System.Net.HttpStatusCode.NotFound);
 
             ProductArgument argument = _objectConverter.Map<ProductArgument>(product);
+            argument.ProductId = id;
 
-            categoryModel = await _productRepository.UpdateProduct(argument);
-
-            return _objectConverter.Map<ProductResponse>(categoryModel);
+            return _objectConverter.Map<ProductResponse>(
+                await _productRepository.UpdateProduct(argument));
         }
+        catch (ProductException) { throw; }
+        catch (CategoryException) { throw; }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);

@@ -17,6 +17,7 @@ public static class ConfigurationExtensions
         {
             {"CatalogConnectionString", secrets.CatalogConnectionString},
             {"JwtSymmetricSecurityKey", secrets.JwtSymmetricSecurityKey},
+            {"LogDBConnectionString", secrets.LogDBConnectionString}
         });
 
         return configuration;

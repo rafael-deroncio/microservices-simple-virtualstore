@@ -34,7 +34,7 @@ public class CategoryController : Controller
     /// <param name="id">The ID of the category.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpGet("{id:int}")]
-    [Authorize(Roles = "Microservice, Client")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -46,12 +46,12 @@ public class CategoryController : Controller
     /// </summary>
     /// <returns>An action result representing the response.</returns>
     [HttpGet]
-    [[Authorize(Roles = "Microservice, Client")]
+    [Authorize(Roles = "Admin, Manager")]
     [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult> GetCategories() 
-        => Ok(await _categoryService.GetCategories());
+    public async Task<ActionResult> GetCategories([FromBody] PaginationRequest pagination) 
+        => Ok(await _categoryService.GetCategories(pagination));
 
     /// <summary>
     /// Creates a new category.
@@ -59,7 +59,7 @@ public class CategoryController : Controller
     /// <param name="request">The category information to create.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpPost]
-    [Authorize(Roles = nameof(UserClaimType.Admin))]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -73,8 +73,8 @@ public class CategoryController : Controller
     /// <param name="request">The updated category information.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpPut("{id:int}")]
-    [Authorize(Roles = nameof(UserClaimType.Admin))]
-    [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Admin, Manager")]
+    [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> UpdateCategory(int id, [FromBody] CategoryRequest request) 
@@ -86,7 +86,8 @@ public class CategoryController : Controller
     /// <param name="id">The ID of the category to delete.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpDelete("{id:int}")]
-    [Authorize(Roles = nameof(UserClaimType.Admin))]
+    [Authorize(Roles = "Admin, Manager")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(bool), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]

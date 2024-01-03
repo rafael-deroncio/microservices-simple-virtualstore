@@ -8,10 +8,8 @@ public class ModelToResponseProfile : Profile
 {
     public ModelToResponseProfile()
     {
-        CreateMap<ProductModel, ProductResponse>()
-            .ForPath(dest => dest.Category.Id,
-                    opts => opts.MapFrom(src => src.CategoryId)).ReverseMap();
+        CreateMap<ProductModel, ProductResponse>();
 
-        CreateMap<CategoryModel, CategoryResponse>().ReverseMap();
+        CreateMap<CategoryModel, CategoryResponse>().ReverseMap(); ;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using VirtualStore.Catalog.Domain.Requests;
 using VirtualStore.Catalog.Domain.Responses;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VirtualStore.Catalog.Core.Services.Interfaces;
 
@@ -18,10 +17,27 @@ public interface ICategoryService
     Task<CategoryResponse> GetCategory(int id);
 
     /// <summary>
-    /// Retrieves a collection of all categories.
+    /// Retrieves a collection of categories with pagination.
     /// </summary>
-    /// <returns>A task representing the asynchronous operation. The result is an IEnumerable of CategoryResponse objects.</returns>
+    /// <param name="pagination">The pagination details.</param>
+    /// <returns>A task representing the asynchronous operation. The result is a collection of CategoryResponse objects.</returns>
+    Task<PaginationResponse<IEnumerable<CategoryResponse>>> GetCategories(PaginationRequest pagination);
+
+    /// <summary>
+    /// Retrieves a collection of categories.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation. The result is a collection of CategoryResponse objects.</returns>
     Task<IEnumerable<CategoryResponse>> GetCategories();
+
+    /// <summary>
+    /// Retrieves a category associated with a specific product.
+    /// </summary>
+    /// <param name="productId">The ID of the product for which the category is retrieved.</param>
+    /// <returns>
+    /// A task representing the asynchronous operation. 
+    /// The result is a CategoryResponse object representing the category associated with the specified product.
+    /// </returns>
+    Task<CategoryResponse> GetCategorieByProduct(int productId);
 
     /// <summary>
     /// Creates a new category based on the provided category details.

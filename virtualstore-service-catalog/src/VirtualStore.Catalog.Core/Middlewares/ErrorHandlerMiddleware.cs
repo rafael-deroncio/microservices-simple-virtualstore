@@ -27,7 +27,7 @@ public class ExceptionHandlerMiddleware
             ExceptionResponse errorResponse = new()
             {
                 ResponseType = ex.ResponseType,
-                Tittle = "Erro",
+                Tittle = "Error",
                 Messages = new[] { ex.Message }
             };
 
@@ -41,7 +41,7 @@ public class ExceptionHandlerMiddleware
         {
             ExceptionResponse errorResponse = new()
             {
-                ResponseType = ExceptionResponseType.Error,
+                ResponseType = ExceptionType.Error,
                 Tittle = "Erro",
                 Messages = new[] { $"An error occurred while processing the request. {ex.Message}" }
             };

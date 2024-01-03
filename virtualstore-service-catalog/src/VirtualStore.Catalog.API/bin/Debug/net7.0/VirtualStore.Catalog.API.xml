@@ -22,7 +22,7 @@
             <param name="id">The ID of the category.</param>
             <returns>An action result representing the response.</returns>
         </member>
-        <member name="M:VirtualStore.Catalog.API.Controllers.CategoryController.GetCategories">
+        <member name="M:VirtualStore.Catalog.API.Controllers.CategoryController.GetCategories(VirtualStore.Catalog.Domain.Requests.PaginationRequest)">
             <summary>
             Retrieves a list of categories.
             </summary>
@@ -122,6 +122,18 @@
             </summary>
             <param name="configuration">The configuration builder to add the credentials to.</param>
             <returns>The modified configuration builder.</returns>
+        </member>
+        <member name="T:VirtualStore.Catalog.API.Extensions.ConfigureHostBuilderExtensions">
+            <summary>
+            Extension for configuring Serilog usage in the host.
+            </summary>
+        </member>
+        <member name="M:VirtualStore.Catalog.API.Extensions.ConfigureHostBuilderExtensions.UseSerilog(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Configures the usage of Serilog in the host.
+            </summary>
+            <param name="hostBuilder">The host builder.</param>
+            <returns>The configured host builder.</returns>
         </member>
         <member name="T:VirtualStore.Catalog.API.Extensions.ServiceCollectionExtensions">
             <summary>

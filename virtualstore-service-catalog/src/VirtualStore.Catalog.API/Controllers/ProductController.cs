@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VirtualStore.Catalog.Core.Configurations.Enums;
 using VirtualStore.Catalog.Core.Responses;
 using VirtualStore.Catalog.Core.Services.Interfaces;
 using VirtualStore.Catalog.Domain.Requests;
@@ -35,7 +34,7 @@ public class ProductController : Controller
     /// <param name="id">The ID of the product.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpGet("{id:int}")]
-    [Authorize(Roles = "Microservice, Client")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -48,7 +47,7 @@ public class ProductController : Controller
     /// <param name="pagination">contains 'page number' and 'page size' to pagination request</param>
     /// <returns>An action result representing the response.</returns>
     [HttpGet]
-    [Authorize(Roles = "Microservice, Client")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(PaginationResponse<IEnumerable<ProductResponse>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -61,7 +60,7 @@ public class ProductController : Controller
     /// <param name="request">The product information to create.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpPost]
-    [Authorize(Roles = nameof(UserClaimType.Admin))]
+    [Authorize(Roles = "Admin, Manager")]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -75,7 +74,7 @@ public class ProductController : Controller
     /// <param name="request">The updated product information.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpPut("{id:int}")]
-    [Authorize(Roles = nameof(UserClaimType.Admin))]
+    [Authorize(Roles = "Admin, Manager")]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
@@ -88,7 +87,7 @@ public class ProductController : Controller
     /// <param name="id">The ID of the product to delete.</param>
     /// <returns>An action result representing the response.</returns>
     [HttpDelete("{id:int}")]
-    [Authorize(Roles = nameof(UserClaimType.Admin))]
+    [Authorize(Roles = "Admin, Manager")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]

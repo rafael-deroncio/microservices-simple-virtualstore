@@ -3,6 +3,7 @@
 public class Secrets
 {
     public string CatalogConnectionString { get; set; }
+    public string LogDBConnectionString { get; set; }
     public string JwtSymmetricSecurityKey { get; set; }
     public string IdentityConnectionString { get; set; }
 }

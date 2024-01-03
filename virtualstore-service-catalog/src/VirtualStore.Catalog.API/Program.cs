@@ -5,6 +5,8 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddSecrets();
 
+builder.Host.UseSerilog();
+
 builder.Services.AddLowerCaseRouting();
 
 builder.Services.AddControllers();
