@@ -1,5 +1,4 @@
-﻿using System.Data;
-using VirtualStore.Catalog.Core.Arguments;
+﻿using VirtualStore.Catalog.Core.Arguments;
 using VirtualStore.Catalog.Core.Model;
 
 namespace VirtualStore.Catalog.Core.Repositories.Interfaces;
@@ -14,7 +13,7 @@ public interface IProductRepository
     /// </summary>
     /// <param name="id">The ID of the product to retrieve.</param>
     /// <returns>A task representing the asynchronous operation. The result is a ProductModel object if found, otherwise null.</returns>
-    Task<ProductModel> GetProduct(int id, IDbConnection connection = null);
+    Task<ProductModel> GetProduct(int id);
 
     /// <summary>
     /// Retrieves a paginated collection of products.

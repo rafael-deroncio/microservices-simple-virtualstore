@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Data;
+using System.Data.Common;
 using VirtualStore.Catalog.Core.Arguments;
 using VirtualStore.Catalog.Core.Exceptions;
 using VirtualStore.Catalog.Core.Model;
@@ -34,7 +35,7 @@ public class ProductRepository : BaseRepository, IProductRepository
             };
             CategoryProductModel categoryProductModel = await SaveCategoryProduct(argument, connection, transaction);
 
-            productModel = await GetProduct(productModel.ProductId, connection);
+            productModel = await GetProduct(productModel.ProductId);
 
             transaction.Commit();
 
@@ -69,9 +70,9 @@ public class ProductRepository : BaseRepository, IProductRepository
         }
     }
 
-    public async Task<ProductModel> GetProduct(int id, IDbConnection connection = null)
+    public async Task<ProductModel> GetProduct(int id)
     {
-        using (connection ?? GetConnection())
+        using (IDbConnection connection = GetConnection())
 
         try
         {
@@ -263,7 +264,7 @@ public class ProductRepository : BaseRepository, IProductRepository
             await UpdateCategoryProduct(argument, connection, transaction);
             transaction.Commit();
 
-            product = await GetProduct(product.ProductId, connection);
+            product = await GetProduct(product.ProductId);
             return product;
         }
         catch(ProductException) { transaction.Rollback(); throw; }
