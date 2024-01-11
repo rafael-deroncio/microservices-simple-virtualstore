@@ -3,6 +3,8 @@ version: '3.8'
 services:
   service-cart:
     image: postgres:latest
+    volumes:
+      - ./service-cart-create.sql:/docker-entrypoint-initdb.d/service-cart-create.sql
     container_name: service-cart
     restart: always
     environment:
@@ -28,6 +30,8 @@ services:
 
   service-discount:
     image: postgres:latest
+    volumes:
+      - ./service-discount-create.sql:/docker-entrypoint-initdb.d/service-catalog-discount.sql
     container_name: service-discount
     restart: always
     environment:
