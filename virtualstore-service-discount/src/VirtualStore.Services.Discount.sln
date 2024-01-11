@@ -3,12 +3,41 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualStore.Discount.API", "VirtualStore.Discount.API\VirtualStore.Discount.API.csproj", "{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualStore.Discount.Core", "VirtualStore.Discount.Core\VirtualStore.Discount.Core.csproj", "{58DFA9D5-D38C-4004-A589-80748973A603}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualStore.Discount.Domain", "VirtualStore.Discount.Domain\VirtualStore.Discount.Domain.csproj", "{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualStore.Discount.Test", "VirtualStore.Discount.Test\VirtualStore.Discount.Test.csproj", "{15C6A036-E461-4022-874B-607842097AD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|VirtualStore.Discount.API = Debug|VirtualStore.Discount.API
+		Release|VirtualStore.Discount.API = Release|VirtualStore.Discount.API
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Debug|VirtualStore.Discount.API.ActiveCfg = Debug|Any CPU
+		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Debug|VirtualStore.Discount.API.Build.0 = Debug|Any CPU
+		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Release|VirtualStore.Discount.API.ActiveCfg = Release|Any CPU
+		{E06008F6-698D-4BD0-8529-16AEFA0CD2C7}.Release|VirtualStore.Discount.API.Build.0 = Release|Any CPU
+		{58DFA9D5-D38C-4004-A589-80748973A603}.Debug|VirtualStore.Discount.API.ActiveCfg = Debug|Any CPU
+		{58DFA9D5-D38C-4004-A589-80748973A603}.Debug|VirtualStore.Discount.API.Build.0 = Debug|Any CPU
+		{58DFA9D5-D38C-4004-A589-80748973A603}.Release|VirtualStore.Discount.API.ActiveCfg = Release|Any CPU
+		{58DFA9D5-D38C-4004-A589-80748973A603}.Release|VirtualStore.Discount.API.Build.0 = Release|Any CPU
+		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Debug|VirtualStore.Discount.API.ActiveCfg = Debug|Any CPU
+		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Debug|VirtualStore.Discount.API.Build.0 = Debug|Any CPU
+		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Release|VirtualStore.Discount.API.ActiveCfg = Release|Any CPU
+		{1D37EB5D-4E7D-47B1-B567-8CC51EF7E5A4}.Release|VirtualStore.Discount.API.Build.0 = Release|Any CPU
+		{15C6A036-E461-4022-874B-607842097AD0}.Debug|VirtualStore.Discount.API.ActiveCfg = Debug|Any CPU
+		{15C6A036-E461-4022-874B-607842097AD0}.Debug|VirtualStore.Discount.API.Build.0 = Debug|Any CPU
+		{15C6A036-E461-4022-874B-607842097AD0}.Release|VirtualStore.Discount.API.ActiveCfg = Release|Any CPU
+		{15C6A036-E461-4022-874B-607842097AD0}.Release|VirtualStore.Discount.API.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4CA3CF70-6D5E-4096-92CB-E2DE6C42E8A9}
 	EndGlobalSection
 EndGlobal
