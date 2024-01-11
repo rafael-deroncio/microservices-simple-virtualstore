@@ -257,7 +257,8 @@ public class RoleManagerRepository : BaseRepository, IRoleManagerRepository
         {
             using IDbConnection connection = GetConnection();
             await connection.ExecuteAsync(sql, roles);
-            roles.ToList().ForEach(role => _logger.LogInformation(string.Format("Claim to be saved: {0}", role.RoleName)));
+            roles.ToList().ForEach(role => _logger.LogInformation(string.Format("Role to be saved: {0}", role.RoleName)));
+
         }
         catch (Exception ex)
         {

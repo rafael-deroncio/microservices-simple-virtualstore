@@ -58,25 +58,16 @@ public class TokenRepository : BaseRepository, ITokenRepository
 
         try
         {
-            await DisableToken(username, argument.TokenType, transaction);
-            await DisableUserToken(username, argument.TokenType, transaction);
             TokenModel tokenModel = await SaveToken(argument, transaction);
             UserTokenModel userTokenModel = await SaveUserToken(username, tokenModel.TokenId, transaction);
-
             transaction.Commit();
-            
             return tokenModel;
         }
-        catch (UserClaimException)
-        {
-            throw;
-        }
-        catch (TokenException)
-        {
-            throw;
-        }
+        catch (UserClaimException)  { transaction.Rollback(); throw; }
+        catch (TokenException) { transaction.Rollback(); throw; }
         catch (Exception ex)
         {
+            transaction.Rollback();
             string message = $"Unable to save {argument.TokenType} for user {username} in database.";
             _logger.LogError(ex, message);
             throw new TokenException(message, ex);
@@ -95,18 +86,11 @@ public class TokenRepository : BaseRepository, ITokenRepository
             await DisableUserToken(username, tokenType.GetDescription(), transaction);
             transaction.Commit();
         }
-        catch (TokenException)
-        {
-            transaction.Rollback();
-            throw; 
-        }
-        catch (SignOutException)
-        {
-            transaction.Rollback();
-            throw;
-        }
+        catch (TokenException) { transaction.Rollback(); throw; }
+        catch (SignOutException) { transaction.Rollback(); throw; }
     }
 
+    #region Privates
     private async Task DisableToken(string username, string tokenType, IDbTransaction transaction)
     {
         string sql = @"
@@ -207,4 +191,5 @@ public class TokenRepository : BaseRepository, ITokenRepository
             throw new UserTokenException(message, ex);
         }
     }
+    #endregion
 }

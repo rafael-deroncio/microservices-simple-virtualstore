@@ -1,3 +1,4 @@
+using Serilog;
 using VirtualStore.Identity.API.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,8 @@ builder.Services.AddAuthenticationSwaggerJwtBearer();
 builder.Services.AddIdentityInitializer();
 
 WebApplication app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 app.UseCors();
 

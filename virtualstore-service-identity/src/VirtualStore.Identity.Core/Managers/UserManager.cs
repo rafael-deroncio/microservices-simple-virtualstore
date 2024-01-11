@@ -49,7 +49,7 @@ public class UserManager : IUserManager
             new()
             {
                 Name = RoleType.Customer.GetDescription(),
-                CPF = "00000000099",
+                CPF = "USERCUSTCPF",
                 DateOfBirth = DateTime.Now,
                 Gender = "O",
                 UserName = nameof(RoleType.Customer),
@@ -74,7 +74,7 @@ public class UserManager : IUserManager
             new()
             {
                 Name = RoleType.Admin.GetDescription(),
-                CPF = "00000000099",
+                CPF = "USERADMICPF",
                 DateOfBirth = DateTime.Now,
                 Gender = "O",
                 UserName = nameof(RoleType.Admin),
@@ -99,7 +99,7 @@ public class UserManager : IUserManager
             new()
             {
                 Name = RoleType.Manager.GetDescription(),
-                CPF = "00000000099",
+                CPF = "USERMANACPF",
                 DateOfBirth = DateTime.Now,
                 Gender = "O",
                 UserName = nameof(RoleType.Manager),

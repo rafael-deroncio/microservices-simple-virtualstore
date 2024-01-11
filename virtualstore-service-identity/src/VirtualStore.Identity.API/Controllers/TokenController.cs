@@ -39,4 +39,25 @@ public class TokenController : ControllerBase
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> RefreshTokensAuthentication([FromBody] ValidateTokenRequest request)
         => Ok(await _authorizeService.RefreshTokensAuthentication(request));
+
+    /// <summary>
+    /// Retrieves authentication tokens based on the provided credentials.
+    /// </summary>
+    /// <remarks>
+    /// This endpoint allows anonymous access to obtain authentication tokens.
+    /// </remarks>
+    /// <param name="request">The request containing credentials for authentication.</param>
+    /// <returns>
+    /// A JSON object containing the authentication tokens on successful authentication.
+    /// </returns>
+    /// <response code="200">Returns the authentication tokens on successful authentication.</response>
+    /// <response code="404">If the requested resource is not found.</response>
+    /// <response code="500">If an unexpected server error occurs.</response>
+    [HttpGet]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(TokenResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetTokensAuthentication([FromBody] TokenRequest request)
+        => Ok(await _authorizeService.GetTokensAuthentication(request));
 }

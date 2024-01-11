@@ -1,13 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Security.Claims;
-using VirtualStore.Identity.Core.Arguments;
-using VirtualStore.Identity.Core.Configurations.Enums;
-using VirtualStore.Identity.Core.Configurations.Mappers;
+﻿using VirtualStore.Identity.Core.Configurations.Enums;
 using VirtualStore.Identity.Core.Exceptions;
 using VirtualStore.Identity.Core.Managers.Interfaces;
 using VirtualStore.Identity.Core.Models;
-using VirtualStore.Identity.Core.Repositories.Interfaces;
 using VirtualStore.Identity.Core.Services.Interfaces;
 using VirtualStore.Identity.Domain.Requests;
 using VirtualStore.Identity.Domain.Responses;
@@ -56,8 +50,14 @@ public class AuthorizeService : IAuthorizeService
                     System.Net.HttpStatusCode.Unauthorized);
         });
 
-        Models.TokenModel accessToken = await _tokenService.SaveUserToken(request.Username, role, claims, TokenType.AccessToken);
-        Models.TokenModel refreshToken = await _tokenService.SaveUserToken(request.Username, role, claims, TokenType.RefreshToken);
+        Models.TokenModel accessToken = await _tokenService.GetUserToken(TokenType.AccessToken, request.Username);
+        Models.TokenModel refreshToken = await _tokenService.GetUserToken(TokenType.AccessToken, request.Username);
+
+        if(accessToken == null || accessToken.Expires <= DateTime.Now || refreshToken == null)
+        {
+            accessToken = await _tokenService.SaveUserToken(request.Username, role, claims, TokenType.AccessToken);
+            refreshToken = await _tokenService.SaveUserToken(request.Username, role, claims, TokenType.RefreshToken);
+        }
 
         return new TokenResponse
         {
