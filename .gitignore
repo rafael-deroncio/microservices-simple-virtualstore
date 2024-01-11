@@ -1760,3 +1760,4 @@ virtualstore-service-identity/src/VirtualStore.Identity.Test/bin/Debug/net7.0/zh
 virtualstore-service-identity/src/VirtualStore.Identity.Test/bin/Debug/net7.0/zh-Hant/Microsoft.VisualStudio.TestPlatform.Common.resources.dll
 virtualstore-service-identity/src/VirtualStore.Identity.Test/bin/Debug/net7.0/zh-Hant/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
 .gitignore
+virtualstore-service-discount/src/VirtualStore.Discount.API/secrets.yaml
