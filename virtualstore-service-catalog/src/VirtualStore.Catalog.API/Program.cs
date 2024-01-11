@@ -1,3 +1,4 @@
+using Serilog;
 using VirtualStore.Catalog.API.Extensions;
 using VirtualStore.Catalog.Core.Configurations.Mappers;
 
@@ -30,6 +31,8 @@ builder.Services.AddAuthenticationSwaggerJwtBearer();
 builder.Services.AddSingleton<IObjectConverter, ObjectConverter>();
 
 WebApplication app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 app.UseCors();
 

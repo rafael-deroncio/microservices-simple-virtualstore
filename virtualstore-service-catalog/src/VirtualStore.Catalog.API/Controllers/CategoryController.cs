@@ -14,7 +14,7 @@ namespace VirtualStore.Catalog.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 [ApiController]
-//[Authorize]
+[Authorize]
 public class CategoryController : Controller
 {
     private readonly ICategoryService _categoryService;
