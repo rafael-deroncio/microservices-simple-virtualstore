@@ -5,3 +5,10 @@
 /virtualstore-service-catalog/src/.vs
 /virtualstore-service-identity/src/.vs/VirtualStore.Services.Identity
 /virtualstore-service-cart/src/.vs/VirtualStore.Services.Cart
+/virtualstore-service-cart/src/.vs/ProjectEvaluation
+/virtualstore-service-cart/src/VirtualStore.Cart.API/secrets.yaml
+/virtualstore-service-discount/src/.vs/VirtualStore.Services.Discount/config
+/virtualstore-service-discount/src/.vs/VirtualStore.Services.Discount/DesignTimeBuild
+/virtualstore-service-discount/src/.vs/VirtualStore.Services.Discount/FileContentIndex
+/virtualstore-service-discount/src/.vs/VirtualStore.Services.Discount/v17
+/virtualstore-service-discount/src/VirtualStore.Discount.API/secrets.yaml
