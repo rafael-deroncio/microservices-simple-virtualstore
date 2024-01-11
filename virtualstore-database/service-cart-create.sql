@@ -1,31 +1,55 @@
+-- Drop tables if they exist
+DROP TABLE IF EXISTS CartItem CASCADE;
+DROP TABLE IF EXISTS CartHeader CASCADE;
+DROP TABLE IF EXISTS Cart CASCADE;
+DROP TABLE IF EXISTS Product CASCADE;
+
 -- Create Cart table
 CREATE TABLE Cart (
     CartId INT PRIMARY KEY,
-    UserId INT NOT NULL,
-    CouponCode VARCHAR(256),
     CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     LastModifiedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Create CartHeaders table
-CREATE TABLE CartHeaders (
+-- Create CartHeader table
+CREATE TABLE CartHeader (
     CartHeaderId INT PRIMARY KEY,
     CartId INT NOT NULL,
+    UserId INT NOT NULL,
+    Username TEXT NOT NULL,
+    CouponId INT NOT NULL,
+    CouponCode VARCHAR(256),
     TotalAmount DECIMAL(10, 2) NOT NULL,
     CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     LastModifiedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    IsActive BOOLEAN NOT NULL DEFAULT true,
+    CONSTRAINT FK_CartHeader_Cart FOREIGN KEY (CartId) REFERENCES Cart(CartId) ON DELETE CASCADE
+);
+
+-- Create Product table
+CREATE TABLE Product (
+    ProductId INT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Description TEXT,
+    Brand VARCHAR(100),
+    Price DECIMAL(10, 2) NOT NULL,
+    Stock INT NOT NULL,
+    CategoryName VARCHAR(100),
+    CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    LastModifiedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     IsActive BOOLEAN NOT NULL DEFAULT true
 );
 
--- Create CartItems table
-CREATE TABLE CartItems (
+-- Create CartItem table
+CREATE TABLE CartItem (
     CartItemId INT PRIMARY KEY,
     CartHeaderId INT NOT NULL,
     ProductId INT NOT NULL,
     Quantity INT NOT NULL,
-    Price DECIMAL(10, 2) NOT NULL,
     CreatedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     LastModifiedDate TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    IsActive BOOLEAN NOT NULL DEFAULT true
+    IsActive BOOLEAN NOT NULL DEFAULT true,
+    CONSTRAINT FK_CartItem_CartHeader FOREIGN KEY (CartHeaderId) REFERENCES CartHeader(CartHeaderId) ON DELETE CASCADE,
+    CONSTRAINT FK_CartItem_Product FOREIGN KEY (ProductId) REFERENCES Product(ProductId) ON DELETE CASCADE -- New constraint
 );
