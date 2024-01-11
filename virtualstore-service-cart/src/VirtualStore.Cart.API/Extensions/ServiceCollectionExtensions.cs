@@ -5,8 +5,17 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
 using VirtualStore.Cart.API.Settings;
+using VirtualStore.Cart.Core.Repositories;
+using VirtualStore.Cart.Core.Repositories.Interfaces;
 using VirtualStore.Cart.Core.Services;
 using VirtualStore.Cart.Core.Services.Interfaces;
+using Refit;
+using VirtualStore.Cart.Core.Services.Clients;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Caching.Memory;
+using VirtualStore.Cart.Core.Handlers;
 
 namespace VirtualStore.Cart.API.Extensions;
 
@@ -215,6 +224,7 @@ public static class ServiceCollectionExtensions
     /// <returns>The modified IServiceCollection.</returns>
     public static IServiceCollection AddServicesDependencyInjection(this IServiceCollection services)
     {
+        services.AddScoped<ICartService, CartService>();
 
         // Service URI
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -235,8 +245,59 @@ public static class ServiceCollectionExtensions
     /// <returns>The modified IServiceCollection.</returns>
     public static IServiceCollection AddRepositoriesDependencyInjection(this IServiceCollection services)
     {
-
+        services.AddSingleton<ICartRepository, CartRepository>();
         
         return services;
+    }
+
+    /// <summary>
+    /// Adds configuration for RestClients using Refit with specified base addresses.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+    /// <param name="configuration">The <see cref="IConfiguration"/> containing the client base addresses.</param>
+    /// <returns>The <see cref="IServiceCollection"/> with added Refit client configurations.</returns>
+    public static IServiceCollection AddRestClientConfiguration(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddTransient<AuthenticatedHttpClientHandler>();
+
+        // Configure RefitSettings with NewtonsoftJsonContentSerializer
+        RefitSettings config = new()
+        {
+            ContentSerializer = new NewtonsoftJsonContentSerializer(
+                new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                })
+        };
+
+        // Add and configure ITokenClientService Refit client
+        services.AddRefitClient<IAccountClientService>(config)
+            .ConfigureHttpClient(client => client.BaseAddress = new Uri(configuration.GetValue<string>("ClientBaseAddresses:User")))
+            .AddHttpMessageHandler(provider =>
+            {
+                return services.GetHttpClientHandler(provider);
+            });
+
+        // Add and configure IDiscountClientService Refit client
+        services.AddRefitClient<IDiscountClientService>(config)
+            .ConfigureHttpClient(client => client.BaseAddress = new Uri(configuration["ClientBaseAddresses:Discount"]))
+            .AddHttpMessageHandler(provider =>
+            {
+                return services.GetHttpClientHandler(provider);
+            }); ;
+
+        // Add and configure ICatalogClientService Refit client
+        services.AddRefitClient<ICatalogClientService>(config)
+            .ConfigureHttpClient(client => client.BaseAddress = new Uri(configuration.GetValue<string>("ClientBaseAddresses:Catalog")));
+
+        return services;
+    }
+
+    public static AuthenticatedHttpClientHandler GetHttpClientHandler(this IServiceCollection services, IServiceProvider provider)
+    {
+        return new AuthenticatedHttpClientHandler(
+            provider.GetRequiredService<IMemoryCache>(),
+            provider.GetRequiredService<IConfiguration>()
+            );
     }
 }

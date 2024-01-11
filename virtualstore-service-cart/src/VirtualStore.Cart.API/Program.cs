@@ -1,3 +1,4 @@
+using Serilog;
 using VirtualStore.Cart.API.Extensions;
 using VirtualStore.Cart.Core.Configurations.Mappers;
 
@@ -9,11 +10,15 @@ builder.Host.UseSerilog();
 
 builder.Services.AddLowerCaseRouting();
 
+builder.Services.AddMemoryCache();
+
 builder.Services.AddControllers();
 
 builder.Services.AddServicesDependencyInjection();
 
 builder.Services.AddRepositoriesDependencyInjection();
+
+builder.Services.AddRestClientConfiguration(builder.Configuration);
 
 builder.Services.AddAPIVersioningCustomSettings(builder.Configuration);
 
@@ -30,6 +35,8 @@ builder.Services.AddAuthenticationSwaggerJwtBearer();
 builder.Services.AddSingleton<IObjectConverter, ObjectConverter>();
 
 WebApplication app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 app.UseCors();
 
